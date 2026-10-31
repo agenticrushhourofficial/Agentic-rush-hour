@@ -1,0 +1,6 @@
+{
+  "name": "Rush Hour 24",
+  "description": "Futuristic cyberpunk hackathon dashboard and mainframe management system with 24-hour live timer, WebGL shader background, audio synth effects, leaderboard, schedule timeline, and mentor desk.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

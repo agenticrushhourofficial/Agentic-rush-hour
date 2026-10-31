@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyan">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUSH HOUR 24 — Team Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #05020a;
+      --card-bg: rgba(15, 8, 30, 0.7);
+      --glass-border: rgba(168, 85, 247, 0.2);
+      --glass-border-hover: rgba(168, 85, 247, 0.4);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary-neon: #a855f7;
+      --secondary-neon: #00f2fe;
+      --font-heading: 'Orbitron', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.1) 0px, transparent 50%);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* Header styling */
+    header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .logo-text {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Card styling */
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: var(--glass-border-hover);
+      box-shadow: 0 15px 40px rgba(168, 85, 247, 0.15);
+    }
+
+    /* Profile Main Details */
+    .profile-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-badge {
+      align-self: flex-start;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid var(--primary-neon);
+      color: #dfaeff;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+
+    .team-title {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .college-name {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 15px;
+      margin-bottom: 5px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .meta-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--secondary-neon);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--secondary-neon), transparent);
+    }
+
+    /* Project Detail Fields */
+    .project-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .field-box h3 {
+      font-size: 1rem;
+      color: white;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .field-box p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Member List Cards */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .member-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s ease;
+    }
+
+    .member-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(168, 85, 247, 0.25);
+    }
+
+    .member-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .member-info {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Loader / Error states */
+    .loader-container {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border-left-color: var(--primary-neon);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error-card {
+      text-align: center;
+      padding: 50px 30px;
+      border-color: #ef4444;
+    }
+
+    .error-card h2 {
+      font-family: var(--font-heading);
+      color: #ef4444;
+      margin-bottom: 10px;
+    }
+
+    .error-card p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="main-container">
+    <!-- Header -->
+    <header>
+      <div class="logo-text">RUSH HOUR 24</div>
+      <div class="tagline">National 24-Hours Hackathon</div>
+    </header>
+
+    <!-- Loading State -->
+    <div class="glass-card loader-container" id="loader">
+      <div class="spinner"></div>
+      <p style="color: var(--text-muted);">Fetching secure team details from database...</p>
+    </div>
+
+    <!-- Details View (Initially Hidden) -->
+    <div class="glass-card profile-hero" id="hero-card" style="display: none;">
+      <div class="team-badge" id="team-id-badge">RH-0000</div>
+      <h1 class="team-title" id="team-name">Loading...</h1>
+      <p class="college-name" id="college-name">Loading College...</p>
+      
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Domain Category</span>
+          <span class="meta-value" id="team-domain">N/A</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Team Strength</span>
+          <span class="meta-value" id="team-size">0 Members</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Details Card (Initially Hidden) -->
+    <div class="glass-card" id="project-card" style="display: none;">
+      <h2 class="section-title">Project Profile</h2>
+      <div class="project-fields">
+        <div class="field-box">
+          <h3>Project Title</h3>
+          <p id="project-title">Loading...</p>
+        </div>
+        <div class="field-box">
+          <h3>Problem Statement</h3>
+          <p id="problem-statement">Loading...</p>
+        </div>
+        <div class="field-box">
+          <h3>Project Description</h3>
+          <p id="project-description">Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Members Card (Initially Hidden) -->
+    <div class="glass-card" id="members-card" style="display: none;">
+      <h2 class="section-title">Team Roster</h2>
+      <div class="members-grid" id="members-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Fetch query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const teamId = urlParams.get('id');
+
+    const els = {
+      loader: document.getElementById('loader'),
+      hero: document.getElementById('hero-card'),
+      project: document.getElementById('project-card'),
+      members: document.getElementById('members-card'),
+      teamIdBadge: document.getElementById('team-id-badge'),
+      teamName: document.getElementById('team-name'),
+      collegeName: document.getElementById('college-name'),
+      teamDomain: document.getElementById('team-domain'),
+      teamSize: document.getElementById('team-size'),
+      projectTitle: document.getElementById('project-title'),
+      problemStatement: document.getElementById('problem-statement'),
+      projectDescription: document.getElementById('project-description'),
+      membersContainer: document.getElementById('members-container'),
+      mainContainer: document.getElementById('main-container')
+    };
+
+    if (!teamId) {
+      showError("Access Denied", "No Team ID parameter provided. Please scan a valid QR code on the judge evaluation sheet.");
+    } else {
+      fetchTeamDetails();
+    }
+
+    async function fetchTeamDetails() {
+      try {
+        const response = await fetch(`/api/public/team/${teamId}`);
+        if (!response.ok) {
+          throw new Error(response.status === 404 ? "Team not found in database." : "Server error retrieving team data.");
+        }
+        
+        const data = await response.json();
+        if (data.success && data.team) {
+          renderTeamDetails(data.team);
+        } else {
+          throw new Error("Invalid response format from server.");
+        }
+      } catch (err) {
+        showError("Retrieval Error", err.message);
+      }
+    }
+
+    function renderTeamDetails(team) {
+      // Hide loader
+      els.loader.style.display = 'none';
+
+      // Populate Hero Card
+      els.teamIdBadge.innerText = `RH-${String(team.id).padStart(4, '0')}`;
+      els.teamName.innerText = team.team_name;
+      els.collegeName.innerText = team.college;
+      els.teamDomain.innerText = team.domain || 'N/A';
+      els.teamSize.innerText = `${team.team_size} Members`;
+      els.hero.style.display = 'block';
+
+      // Populate Project Card
+      els.projectTitle.innerText = team.project_title || 'Not Provided';
+      els.problemStatement.innerText = team.problem_statement || 'Not Provided';
+      els.projectDescription.innerText = team.project_description || 'Not Provided';
+      els.project.style.display = 'block';
+
+      // Populate Members Card
+      let members = [];
+      try {
+        members = typeof team.members === 'string' ? JSON.parse(team.members) : team.members;
+      } catch (e) {
+        members = team.members || [];
+      }
+
+      if (members && members.length > 0) {
+        els.membersContainer.innerHTML = members.map((m, idx) => `
+          <div class="member-card">
+            <div class="member-name">${m.name}</div>
+            <div class="member-info">
+              <span>🎓 Year: Year ${m.year}</span>
+              <span>📍 City: ${m.city}</span>
+              <span style="font-size: 11px; margin-top:4px; opacity:0.8;">${m.college}</span>
+            </div>
+          </div>
+        `).join('');
+        els.members.style.display = 'block';
+      }
+    }
+
+    function showError(title, message) {
+      els.loader.style.display = 'none';
+      els.mainContainer.innerHTML = `
+        <header>
+          <div class="logo-text">RUSH HOUR 24</div>
+          <div class="tagline">National 24-Hours Hackathon</div>
+        </header>
+        <div class="glass-card error-card">
+          <h2>${title}</h2>
+          <p>${message}</p>
+          <a href="/" class="btn">Return Home</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

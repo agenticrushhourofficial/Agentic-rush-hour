@@ -1,0 +1,3860 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="purple">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUSH HOUR 24 — Super Admin Dashboard | Sathyabama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    /* Admin specific premium dashboard styling */
+    #particleCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .admin-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--container-width);
+      margin: 120px auto 60px auto;
+      padding: 0 20px;
+    }
+
+    /* Login Box */
+    .login-wrapper {
+      max-width: 450px;
+      margin: 160px auto;
+      text-align: center;
+    }
+
+    .login-card {
+      padding: 40px;
+      border-radius: 16px;
+      background: rgba(12, 10, 20, 0.75);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-logo {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .login-logo span {
+      color: var(--theme-accent-light);
+    }
+
+    .login-subtitle {
+      color: var(--white-60);
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    /* Dashboard Interface (Hidden until Login) */
+    .dashboard-wrapper {
+      display: none;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .dashboard-title h1 {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .dashboard-title p {
+      color: var(--white-60);
+      font-size: 14px;
+    }
+
+    .admin-controls-top {
+      display: flex;
+      gap: 15px;
+    }
+
+    /* Metrics Cards */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .metric-card {
+      padding: 24px;
+      border-radius: 12px;
+      background: rgba(12, 10, 20, 0.6);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--white-60);
+    }
+
+    .metric-value {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    /* Toolbar Controls */
+    .admin-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .search-box-wrapper {
+      position: relative;
+      flex-grow: 1;
+      max-width: 450px;
+    }
+
+    .search-box-wrapper input {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 8px;
+      background: rgba(12, 10, 20, 0.5);
+      border: 1px solid var(--glass-border);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      transition: var(--transition-fast);
+    }
+
+    .search-box-wrapper input:focus {
+      outline: none;
+      border-color: var(--theme-accent-light);
+      box-shadow: 0 0 10px var(--theme-accent-glow);
+    }
+
+    /* Registrations Table */
+    .table-container {
+      background: rgba(12, 10, 20, 0.6);
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      overflow-x: auto;
+      margin-bottom: 40px;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .admin-table th {
+      padding: 18px 24px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--theme-accent-light);
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(22, 15, 38, 0.3);
+    }
+
+    .admin-table td {
+      padding: 18px 24px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--white-05);
+      color: var(--white-80);
+      vertical-align: middle;
+    }
+
+    .admin-table tbody tr.table-row-main:hover {
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+    }
+
+    .team-name-cell {
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* Status Pills */
+    .status-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-pill.pending {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+    }
+
+    .status-pill.verified {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+    }
+
+    .status-pill.rejected {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    /* Actions */
+    .action-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition-fast);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .action-btn.verify {
+      background: var(--theme-accent);
+    }
+
+    .action-btn.verify:hover {
+      background: var(--theme-accent-light);
+      box-shadow: 0 0 10px var(--theme-accent-glow);
+    }
+
+    .action-btn.reject {
+      background: #ef4444;
+    }
+
+    .action-btn.reject:hover {
+      background: #f87171;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    }
+
+    .action-btn.remove {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    }
+
+    .action-btn.remove:hover {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      box-shadow: 0 0 10px rgba(220, 38, 38, 0.6);
+    }
+
+    /* Detail / Expanded Row */
+    .row-detail {
+      display: none;
+      background: rgba(6, 4, 12, 0.5);
+    }
+
+    .row-detail.active {
+      display: table-row;
+    }
+
+    .detail-container {
+      padding: 24px 30px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .detail-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--theme-accent-light);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .member-details-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .member-details-card h4 {
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    .member-details-card p {
+      font-size: 12px;
+      color: var(--white-60);
+      margin-bottom: 3px;
+    }
+
+    .detail-col-info p {
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .detail-col-info strong {
+      color: var(--white);
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(5, 2, 8, 0.85);
+      backdrop-filter: blur(12px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-card {
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      padding: 25px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      color: var(--white-60);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .lightbox-close:hover {
+      color: var(--white);
+    }
+
+    .lightbox-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .lightbox-img-wrapper {
+      max-height: 400px;
+      overflow: auto;
+      border-radius: 8px;
+      background: #000;
+      border: 1px solid var(--white-10);
+      margin-bottom: 20px;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .lightbox-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    /* Utility */
+    .text-center {
+      text-align: center;
+    }
+
+    .no-data {
+      padding: 40px;
+      color: var(--white-40);
+      font-size: 16px;
+    }
+
+    /* Size Filter Buttons */
+    .size-filters-wrapper {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .size-filter-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: rgba(12, 10, 20, 0.4);
+      color: var(--white-60);
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .size-filter-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+      border-color: var(--white-20);
+    }
+
+    .size-filter-btn.active {
+      background: var(--theme-accent);
+      border-color: var(--theme-accent-light);
+      color: var(--white);
+      box-shadow: 0 0 12px var(--theme-accent-glow);
+    }
+    
+    .size-filter-btn .badge {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      color: var(--white-80);
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body data-page="admin">
+  <!-- ===== FLOATING PARTICLE CANVAS ===== -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html#hero" class="nav-brand" style="display: flex; align-items: center;"><img src="/assets/logo-circle.png" alt="RUSH HOUR" style="height: 50px; width: auto; object-fit: contain;" /></a>
+      <ul class="nav-links">
+        <li><a href="index.html#about" class="nav-item">About</a></li>
+        <li><a href="index.html#prizes" class="nav-item">Prizes</a></li>
+        <li><a href="timeline.html" class="nav-item">Timeline</a></li>
+        <li><a href="index.html#domains" class="nav-item">Domains</a></li>
+        <li><a href="index.html#details" class="nav-item">Details</a></li>
+        <li><a href="index.html#faq" class="nav-item">FAQ</a></li>
+        <li><a href="sponsors.html" class="nav-item">Sponsors</a></li>
+        <li><a href="#" class="nav-item disabled" style="opacity: 0.5; pointer-events: none;">Register (Closed)</a></li>
+        <li class="mobile-utility-cta"><a href="#" class="btn-primary nav-cta" id="navLogoutMobile" style="display:none">Logout</a></li>
+      </ul>
+      <div class="desktop-utility-cta">
+        <a href="#" class="btn-primary nav-cta" id="navLogout" style="display:none">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="admin-container">
+    <!-- ===== LOGIN SCREEN ===== -->
+    <div class="login-wrapper" id="loginWrapper">
+      <div class="login-card">
+        <div class="login-logo" style="display: flex; justify-content: center; margin-bottom: 16px;"><img src="/assets/logo-circle.png" alt="RUSH HOUR" style="height: 80px; width: auto; object-fit: contain;" /></div>
+        <p class="login-subtitle">Super Admin Verification Portal</p>
+        <form id="loginForm">
+          <div class="form-group" style="margin-bottom: 20px; text-align: left;">
+            <label for="adminPassword" style="margin-bottom: 8px; display: block; font-size: 13px; color: var(--white-80);">Enter Super Admin Password</label>
+            <input type="password" id="adminPassword" class="form-control" style="width: 100%; padding: 14px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: white;" required />
+            <span class="error-msg" id="loginError" style="color: #ef4444; font-size: 12px; margin-top: 5px; display: none;">Incorrect password. Please try again.</span>
+          </div>
+          <button type="submit" class="btn-primary glow-btn" style="width:100%; justify-content: center;">Authenticate →</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== MAIN DASHBOARD ===== -->
+    <div class="dashboard-wrapper" id="dashboardWrapper">
+      
+      <!-- Tab Navigation -->
+      <div class="size-filters-wrapper" style="margin-bottom: 24px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; gap: 15px; width: 100%;">
+        <button class="size-filter-btn active" id="tabTeamsBtn" style="border-radius: 6px; padding: 10px 20px;">📝 Team Registrations</button>
+        <button class="size-filter-btn" id="tabAccommodationsBtn" style="border-radius: 6px; padding: 10px 20px;">🏢 Accommodation Bookings</button>
+        <button class="size-filter-btn" id="tabTimerBtn" style="border-radius: 6px; padding: 10px 20px;">⏰ Timer &amp; Announcements</button>
+      </div>
+
+      <!-- TEAMS TAB CONTENT -->
+      <div id="teamsTabContent">
+        <!-- Dashboard Title -->
+        <div class="dashboard-header">
+          <div class="dashboard-title">
+            <h1>Super Admin Dashboard</h1>
+            <p>Verify payment proofs and manage hackathon participants</p>
+          </div>
+          <div class="admin-controls-top">
+            <button class="btn-primary" id="downloadAttendancePdfBtn" style="background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); border: none;">📋 Attendance PDF</button>
+            <button class="btn-primary" id="downloadCheckinPdfBtn" style="background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); border: none;">📋 Check-in PDF</button>
+            <button class="btn-primary" id="printEvaluationBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">📋 Print Evaluation</button>
+            <button class="btn-primary" id="printBtn" style="background: linear-gradient(135deg, var(--theme-accent) 0%, var(--theme-accent-light) 100%); border: none;">🖨️ Print Sheets</button>
+            <button class="btn-primary" id="exportCsvBtn">📥 Export CSV</button>
+          </div>
+        </div>
+
+        <!-- Metrics Widgets -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Total Teams</span>
+            <span class="metric-value" id="metricTotalTeams">0</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Pending Review</span>
+            <span class="metric-value" id="metricPending" style="color: #f59e0b;">0</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Verified Teams</span>
+            <span class="metric-value" id="metricVerified" style="color: #10b981;">0</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Total Participants</span>
+            <span class="metric-value" id="metricParticipants">0</span>
+          </div>
+          <div class="metric-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.03);">
+            <span class="metric-label" style="color: #10b981;">Total Received</span>
+            <span class="metric-value" id="metricTotalReceived" style="color: #10b981;">₹0</span>
+          </div>
+        </div>
+
+        <!-- Team Size Filters -->
+        <div class="size-filters-wrapper" id="sizeFiltersWrapper">
+          <button class="size-filter-btn active" data-size="all">
+            All Sizes <span class="badge" id="sizeCountAll">0</span>
+          </button>
+          <button class="size-filter-btn" data-size="3">
+            3 Members <span class="badge" id="sizeCount3">0</span>
+          </button>
+          <button class="size-filter-btn" data-size="4">
+            4 Members <span class="badge" id="sizeCount4">0</span>
+          </button>
+          <button class="size-filter-btn" data-size="5">
+            5 Members <span class="badge" id="sizeCount5">0</span>
+          </button>
+          <button class="size-filter-btn" data-size="6">
+            6 Members <span class="badge" id="sizeCount6">0</span>
+          </button>
+        </div>
+
+        <!-- Toolbar / Filter -->
+        <div class="admin-toolbar">
+          <div class="search-box-wrapper">
+            <input type="text" id="searchInput" placeholder="Search by team, leader name, email, or college..." />
+          </div>
+          <div>
+            <button class="action-btn" id="refreshBtn">🔄 Refresh Data</button>
+          </div>
+        </div>
+
+        <!-- Table of Registrations -->
+        <div class="table-container">
+          <table class="admin-table" id="registrationsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Team Name</th>
+                <th>College</th>
+                <th>Leader Details</th>
+                <th style="text-align: center;">Size</th>
+                <th>Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="registrationsTableBody">
+              <!-- Dynamically populated rows -->
+              <tr>
+                <td colspan="7" class="text-center no-data">Fetching registration logs...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ACCOMMODATIONS TAB CONTENT -->
+      <div id="accommodationsTabContent" style="display: none;">
+        <!-- Dashboard Title -->
+        <div class="dashboard-header">
+          <div class="dashboard-title">
+            <h1>Accommodation Bookings</h1>
+            <p>Verify stay booking proofs and monitor boys/girls capacity</p>
+          </div>
+          <div class="admin-controls-top">
+            <button class="btn-primary" id="exportAccommodationCsvBtn">📥 Export CSV</button>
+          </div>
+        </div>
+
+        <!-- Metrics Widgets -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Total Bookings</span>
+            <span class="metric-value" id="metricTotalAccomBookings">0</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Boys Booked</span>
+            <span class="metric-value" id="metricBoysBooked" style="color: #60a5fa;">0 / 30</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Girls Booked</span>
+            <span class="metric-value" id="metricGirlsBooked" style="color: #f472b6;">0 / 30</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Pending Reviews</span>
+            <span class="metric-value" id="metricAccomPending" style="color: #f59e0b;">0</span>
+          </div>
+          <div class="metric-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.03);">
+            <span class="metric-label" style="color: #10b981;">Stay Revenue</span>
+            <span class="metric-value" id="metricAccomRevenue" style="color: #10b981;">₹0</span>
+          </div>
+        </div>
+
+        <!-- Toolbar / Filter -->
+        <div class="admin-toolbar">
+          <div class="search-box-wrapper">
+            <input type="text" id="accomSearchInput" placeholder="Search accommodation by team name, email..." />
+          </div>
+          <div>
+            <button class="action-btn" id="refreshAccomBtn">🔄 Refresh Stays</button>
+          </div>
+        </div>
+
+        <!-- Table of Accommodations -->
+        <div class="table-container">
+          <table class="admin-table" id="accommodationsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Team Name</th>
+                <th>Leader Email</th>
+                <th style="text-align: center;">Boys</th>
+                <th style="text-align: center;">Girls</th>
+                <th>Booked Roster</th>
+                <th>Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="accommodationsTableBody">
+              <tr>
+                <td colspan="8" class="text-center no-data">No accommodation requests.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TIMER TAB CONTENT -->
+      <div id="timerTabContent" style="display: none;">
+        <div class="dashboard-header">
+          <div class="dashboard-title">
+            <h1>Timer &amp; Announcements Mainframe</h1>
+            <p>Configure the live hackathon countdown and broadcast announcements</p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 20px;">
+          <!-- Timer Controls Card -->
+          <div class="metric-card" style="padding: 30px; gap: 20px; display: flex; flex-direction: column;">
+            <h3 style="font-family: var(--font-heading); font-size: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">⏰ Countdown Timer Controls</h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+              <!-- Live Clock -->
+              <div style="background: rgba(0,0,0,0.4); padding: 25px; border-radius: 12px; text-align: center; border: 1px solid var(--white-10);">
+                <div style="font-size: 12px; color: var(--white-60); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Current Live Timer</div>
+                <div id="superAdminClock" style="font-family: var(--font-heading); font-size: 48px; font-weight: 700; color: #a855f7; text-shadow: 0 0 15px rgba(168,85,247,0.6);">--:--:--</div>
+                <div id="superAdminTimerStatus" style="font-size: 12px; color: #10b981; margin-top: 5px; text-transform: uppercase; font-weight: 700;">Loading status...</div>
+              </div>
+              <!-- Action Buttons -->
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button id="saStartTimerBtn" class="btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; padding: 14px; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 8px; justify-content: center;">🚀 Start Timer</button>
+                <button id="saResetTimerBtn" class="btn-primary" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border: none; padding: 14px; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 8px; justify-content: center;">↺ Reset Timer</button>
+                <button id="saToggleRedAlertBtn" class="btn-primary" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; padding: 14px; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 8px; justify-content: center;">🚨 Toggle Overdrive (Red Alert)</button>
+              </div>
+            </div>
+
+            <!-- Timer Editor -->
+            <div style="border-top: 1px solid var(--glass-border); padding-top: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 18px;">
+              <h4 style="font-size: 14px; margin-bottom: 0; color: var(--white-80);">✏️ Edit Timer Settings</h4>
+
+              <!-- Row 1: Start Date + Duration -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                  <label style="font-size: 11px; color: var(--white-60); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Start Date &amp; Time (ISO / IST)</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input type="text" id="saStartDateInput" class="form-control" style="flex: 1; padding: 11px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; font-size: 13px;" placeholder="e.g. 2026-06-23T09:00:00+05:30" />
+                    <button id="saSetStartDateBtn" class="btn-primary" style="padding: 11px 18px; border-radius: 8px; white-space: nowrap; font-size: 13px;">Save</button>
+                  </div>
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: var(--white-60); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Total Duration (hours)</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input type="number" id="saDurationInput" class="form-control" min="1" max="72" value="24" style="flex: 1; padding: 11px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; font-size: 13px;" />
+                    <button id="saSetDurationBtn" class="btn-primary" style="padding: 11px 18px; border-radius: 8px; white-space: nowrap; font-size: 13px;">Save</button>
+                  </div>
+                  <div style="font-size: 11px; color: var(--white-40); margin-top: 5px;">Current: <span id="saCurrentDuration">24h</span></div>
+                </div>
+              </div>
+
+              <!-- Row 2: Override Remaining Time -->
+              <div>
+                <label style="font-size: 11px; color: var(--white-60); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Override Remaining Time Directly</label>
+                <div style="display: grid; grid-template-columns: 80px 80px 80px 1fr; gap: 10px; align-items: flex-end;">
+                  <div>
+                    <div style="font-size: 10px; color: var(--white-40); margin-bottom: 4px;">HOURS</div>
+                    <input type="number" id="saRemainingHrs" class="form-control" min="0" max="99" style="width: 100%; padding: 11px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; font-size: 14px; text-align: center;" placeholder="23" />
+                  </div>
+                  <div>
+                    <div style="font-size: 10px; color: var(--white-40); margin-bottom: 4px;">MINS</div>
+                    <input type="number" id="saRemainingMins" class="form-control" min="0" max="59" style="width: 100%; padding: 11px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; font-size: 14px; text-align: center;" placeholder="30" />
+                  </div>
+                  <div>
+                    <div style="font-size: 10px; color: var(--white-40); margin-bottom: 4px;">SECS</div>
+                    <input type="number" id="saRemainingSecs" class="form-control" min="0" max="59" style="width: 100%; padding: 11px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; font-size: 14px; text-align: center;" placeholder="00" />
+                  </div>
+                  <button id="saSetRemainingBtn" class="btn-primary" style="padding: 11px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); border: none; cursor: pointer;">⏱ Set Remaining Time</button>
+                </div>
+                <div style="font-size: 11px; color: var(--white-40); margin-top: 6px;">Backfills the server start time so the live timer shows exactly what you enter.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Announcement Broadcaster Card -->
+          <div class="metric-card" style="padding: 30px; gap: 20px; display: flex; flex-direction: column;">
+            <h3 style="font-family: var(--font-heading); font-size: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">📢 Convey Message / Announcements</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div>
+                <label style="font-size: 12px; color: var(--white-80); display: block; margin-bottom: 5px;">Announcement Message</label>
+                <textarea id="saAnnouncementInput" class="form-control" rows="3" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; font-family: inherit; resize: none;" placeholder="Enter message to display on the live dashboard..."></textarea>
+              </div>
+              <div>
+                <label style="font-size: 12px; color: var(--white-80); display: block; margin-bottom: 5px;">Alert Level / Type</label>
+                <select id="saAnnouncementType" class="form-control" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(12,10,20,0.9); border: 1px solid var(--glass-border); color: white; cursor: pointer;">
+                  <option value="info">💡 Information (Info)</option>
+                  <option value="urgent">🔥 Urgent (Red Alert)</option>
+                  <option value="milestone">🏆 Milestone (Success)</option>
+                </select>
+              </div>
+              <button id="saBroadcastBtn" class="btn-primary" style="background: linear-gradient(135deg, var(--theme-accent) 0%, var(--theme-accent-light) 100%); border: none; padding: 14px; font-weight: 700; font-size: 14px; cursor: pointer; justify-content: center; margin-top: 10px; border-radius: 8px;">📢 Broadcast Announcement</button>
+            </div>
+            <div style="border-top: 1px solid var(--glass-border); padding-top: 20px; margin-top: 10px; display: flex; flex-direction: column;">
+              <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--white-80);">Active Announcements</h4>
+              <div id="saAnnouncementsList" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+                <div style="text-align: center; color: var(--white-40); font-size: 13px; padding: 20px;">No active announcements.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== PAYMENT PROOF LIGHTBOX ===== -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-card">
+      <span class="lightbox-close" id="lightboxClose">&times;</span>
+      <h3 class="lightbox-title" id="lightboxTitle">Payment Proof</h3>
+      <div class="lightbox-img-wrapper">
+        <img src="" alt="Payment Proof" class="lightbox-img" id="lightboxImg" />
+      </div>
+      <div class="lightbox-controls">
+        <a href="" download class="btn-secondary" id="lightboxDownload" style="font-size: 13px; text-decoration: none; padding: 10px 20px;">💾 Download Screenshot</a>
+        <button class="btn-primary" id="lightboxVerifyBtn" style="font-size: 13px; padding: 10px 20px;">✓ Verify Registration</button>
+        <button class="btn-primary" id="lightboxRejectBtn" style="font-size: 13px; padding: 10px 20px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border: none;">✗ Reject Registration</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REJECTION REASON MODAL ===== -->
+  <div class="lightbox-modal" id="rejectModal">
+    <div class="lightbox-card" style="max-width: 450px;">
+      <span class="lightbox-close" id="rejectClose">&times;</span>
+      <h3 class="lightbox-title" id="rejectModalTitle">Reject Registration</h3>
+      <div style="text-align: left; margin-bottom: 20px;">
+        <label for="rejectReasonDropdown" style="display: block; font-size: 13px; color: var(--white-80); margin-bottom: 8px;">Select Rejection Reason</label>
+        <select id="rejectReasonDropdown" class="form-control" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: white; margin-bottom: 15px; font-size: 14px; outline: none; cursor: pointer;">
+          <option value="Please upload a valid proof of payment" style="background: #111; color: white;">Please upload a valid proof of payment</option>
+          <option value="We are sorry, but all registration slots are full. You will receive a full refund shortly." style="background: #111; color: white;">We are sorry, but all registration slots are full. You will receive a full refund shortly.</option>
+          <option value="custom" style="background: #111; color: white;">Custom Reason...</option>
+        </select>
+
+        <div id="customReasonWrapper" style="display: none;">
+          <label for="customReasonInput" style="display: block; font-size: 13px; color: var(--white-80); margin-bottom: 8px;">Enter Custom Reason</label>
+          <textarea id="customReasonInput" class="form-control" style="width: 100%; height: 80px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: white; resize: none; font-size: 14px; outline: none;" placeholder="Type custom rejection reason here..."></textarea>
+        </div>
+      </div>
+      <div class="lightbox-controls" style="justify-content: flex-end;">
+        <button class="btn-secondary" id="rejectCancelBtn" style="font-size: 13px; padding: 10px 20px;">Cancel</button>
+        <button class="btn-primary" id="rejectSubmitBtn" style="font-size: 13px; padding: 10px 20px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border: none;">Confirm Rejection</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EVALUATION SHEET PRINT MODAL ===== -->
+  <div class="lightbox-modal" id="evaluationModal">
+    <div class="lightbox-card" style="max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; text-align: left;">
+      <span class="lightbox-close" id="evaluationClose">&times;</span>
+      <h3 class="lightbox-title">Generate Evaluation Sheets</h3>
+      
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; color: var(--white-80); margin-bottom: 8px; font-weight: 600;">Select Teams & Categories (Review 1 &amp; Final Review printed on one sheet)</label>
+        <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
+          <button class="action-btn" id="evalSelectAllTeams" style="padding: 6px 12px; font-size: 12px;">Select All</button>
+          <button class="action-btn" id="evalDeselectAllTeams" style="padding: 6px 12px; font-size: 12px;">Deselect All</button>
+          <button class="action-btn" id="evalSetAllSoftware" style="padding: 6px 12px; font-size: 12px; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4);">Set All Software</button>
+          <button class="action-btn" id="evalSetAllHardware" style="padding: 6px 12px; font-size: 12px; background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4);">Set All Hardware</button>
+        </div>
+        
+        <div style="max-height: 250px; overflow-y: auto; border: 1px solid var(--glass-border); border-radius: 8px; background: rgba(0,0,0,0.3); padding: 10px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13px; color: var(--white-80);">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--glass-border); text-align: left;">
+                <th style="padding: 6px; width: 40px;">Print</th>
+                <th style="padding: 6px;">Team Info</th>
+                <th style="padding: 6px; width: 120px; text-align: right;">Category</th>
+              </tr>
+            </thead>
+            <tbody id="evalTeamsListBody">
+              <!-- Dynamically filled -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="lightbox-controls" style="justify-content: flex-end; margin-top: 25px; gap: 10px;">
+        <button class="btn-secondary" id="evalCancelBtn" style="font-size: 13px; padding: 10px 20px;">Cancel</button>
+        <button class="btn-primary" id="evalGenerateBtn" style="font-size: 13px; padding: 10px 20px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">🖨️ Generate &amp; Print</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ORGANIZER ID CARD GENERATOR MODAL ===== -->
+  <div class="lightbox-modal" id="organizerIdModal">
+    <div class="lightbox-card" style="max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; text-align: left;">
+      <span class="lightbox-close" id="organizerIdClose">&times;</span>
+      <h3 class="lightbox-title">Generate Organizer ID Cards</h3>
+      
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; color: var(--white-80); margin-bottom: 8px; font-weight: 600;">1. Organizer Names (One name per line)</label>
+        <textarea id="orgNamesList" class="form-control" rows="8" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: white; font-size: 14px; outline: none; font-family: monospace; resize: vertical;" placeholder="John Doe&#10;Jane Smith&#10;Alex Johnson"></textarea>
+      </div>
+
+      <div style="margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div>
+          <label style="display: block; font-size: 13px; color: var(--white-80); margin-bottom: 8px; font-weight: 600;">2. Role / Designation</label>
+          <input type="text" id="orgRoleInput" class="form-control" value="ORGANIZER" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: white; font-size: 14px; outline: none;" />
+        </div>
+        <div>
+          <label style="display: block; font-size: 13px; color: var(--white-80); margin-bottom: 8px; font-weight: 600;">3. Accent Color Theme</label>
+          <select id="orgThemeSelect" class="form-control" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); color: white; font-size: 14px; outline: none; cursor: pointer;">
+            <option value="gold" style="background: #111; color: white;">Neon Gold (Premium)</option>
+            <option value="purple" style="background: #111; color: white;">Rush Hour Purple</option>
+            <option value="cyan" style="background: #111; color: white;">Cyberpunk Cyan</option>
+            <option value="red" style="background: #111; color: white;">Flame Red</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="lightbox-controls" style="justify-content: flex-end; margin-top: 25px; gap: 10px;">
+        <button class="btn-secondary" id="orgCancelBtn" style="font-size: 13px; padding: 10px 20px;">Cancel</button>
+        <button class="btn-primary" id="orgGenerateBtn" style="font-size: 13px; padding: 10px 20px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none;">🖨️ Generate ID Cards</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script logic -->
+  <script src="index.js"></script>
+  <script>
+    // --- Dashboard State Management ---
+    let registrations = [];
+    let accommodations = [];
+    let activeToken = localStorage.getItem('admin_token') || '';
+    let activeSizeFilter = 'all';
+    let activeTab = 'teams';
+    let currentLightboxType = 'registration';
+    let timerTabInterval = null;
+
+    const els = {
+      loginWrapper: document.getElementById('loginWrapper'),
+      dashboardWrapper: document.getElementById('dashboardWrapper'),
+      loginForm: document.getElementById('loginForm'),
+      adminPassword: document.getElementById('adminPassword'),
+      loginError: document.getElementById('loginError'),
+      registrationsTableBody: document.getElementById('registrationsTableBody'),
+      downloadAttendancePdfBtn: document.getElementById('downloadAttendancePdfBtn'),
+      downloadCheckinPdfBtn: document.getElementById('downloadCheckinPdfBtn'),
+      searchInput: document.getElementById('searchInput'),
+      exportCsvBtn: document.getElementById('exportCsvBtn'),
+      refreshBtn: document.getElementById('refreshBtn'),
+      navLogout: document.getElementById('navLogout'),
+      navLogoutMobile: document.getElementById('navLogoutMobile'),
+
+      // Tabs
+      tabTeamsBtn: document.getElementById('tabTeamsBtn'),
+      tabAccommodationsBtn: document.getElementById('tabAccommodationsBtn'),
+      teamsTabContent: document.getElementById('teamsTabContent'),
+      accommodationsTabContent: document.getElementById('accommodationsTabContent'),
+      
+      // Accommodation fields
+      accommodationsTableBody: document.getElementById('accommodationsTableBody'),
+      accomSearchInput: document.getElementById('accomSearchInput'),
+      refreshAccomBtn: document.getElementById('refreshAccomBtn'),
+      exportAccommodationCsvBtn: document.getElementById('exportAccommodationCsvBtn'),
+
+      // Accommodation Metrics
+      metricTotalAccomBookings: document.getElementById('metricTotalAccomBookings'),
+      metricBoysBooked: document.getElementById('metricBoysBooked'),
+      metricGirlsBooked: document.getElementById('metricGirlsBooked'),
+      metricAccomPending: document.getElementById('metricAccomPending'),
+      metricAccomRevenue: document.getElementById('metricAccomRevenue'),
+      
+      // Metrics
+      metricTotalTeams: document.getElementById('metricTotalTeams'),
+      metricPending: document.getElementById('metricPending'),
+      metricVerified: document.getElementById('metricVerified'),
+      metricParticipants: document.getElementById('metricParticipants'),
+      metricTotalReceived: document.getElementById('metricTotalReceived'),
+
+      // Lightbox
+      lightboxModal: document.getElementById('lightboxModal'),
+      lightboxClose: document.getElementById('lightboxClose'),
+      lightboxTitle: document.getElementById('lightboxTitle'),
+      lightboxImg: document.getElementById('lightboxImg'),
+      lightboxDownload: document.getElementById('lightboxDownload'),
+      lightboxVerifyBtn: document.getElementById('lightboxVerifyBtn'),
+      lightboxRejectBtn: document.getElementById('lightboxRejectBtn'),
+
+      // Reject Modal
+      rejectModal: document.getElementById('rejectModal'),
+      rejectClose: document.getElementById('rejectClose'),
+      rejectModalTitle: document.getElementById('rejectModalTitle'),
+      rejectReasonDropdown: document.getElementById('rejectReasonDropdown'),
+      customReasonWrapper: document.getElementById('customReasonWrapper'),
+      customReasonInput: document.getElementById('customReasonInput'),
+      rejectCancelBtn: document.getElementById('rejectCancelBtn'),
+      rejectSubmitBtn: document.getElementById('rejectSubmitBtn'),
+
+      // Evaluation Print Modal
+      printEvaluationBtn: document.getElementById('printEvaluationBtn'),
+      evaluationModal: document.getElementById('evaluationModal'),
+      evaluationClose: document.getElementById('evaluationClose'),
+      evalSelectAllTeams: document.getElementById('evalSelectAllTeams'),
+      evalDeselectAllTeams: document.getElementById('evalDeselectAllTeams'),
+      evalSetAllSoftware: document.getElementById('evalSetAllSoftware'),
+      evalSetAllHardware: document.getElementById('evalSetAllHardware'),
+      evalTeamsListBody: document.getElementById('evalTeamsListBody'),
+      evalCancelBtn: document.getElementById('evalCancelBtn'),
+      evalGenerateBtn: document.getElementById('evalGenerateBtn'),
+      
+      // Organizer ID Card Modal
+      organizerIdBtn: document.getElementById('organizerIdBtn'),
+      organizerIdModal: document.getElementById('organizerIdModal'),
+      organizerIdClose: document.getElementById('organizerIdClose'),
+      orgNamesList: document.getElementById('orgNamesList'),
+      orgRoleInput: document.getElementById('orgRoleInput'),
+      orgThemeSelect: document.getElementById('orgThemeSelect'),
+      orgCancelBtn: document.getElementById('orgCancelBtn'),
+      orgGenerateBtn: document.getElementById('orgGenerateBtn'),
+      // Timer & Announcements Tab
+      tabTimerBtn: document.getElementById('tabTimerBtn'),
+      timerTabContent: document.getElementById('timerTabContent'),
+      superAdminClock: document.getElementById('superAdminClock'),
+      superAdminTimerStatus: document.getElementById('superAdminTimerStatus'),
+      saStartTimerBtn: document.getElementById('saStartTimerBtn'),
+      saResetTimerBtn: document.getElementById('saResetTimerBtn'),
+      saToggleRedAlertBtn: document.getElementById('saToggleRedAlertBtn'),
+      saStartDateInput: document.getElementById('saStartDateInput'),
+      saSetStartDateBtn: document.getElementById('saSetStartDateBtn'),
+      saDurationInput: document.getElementById('saDurationInput'),
+      saSetDurationBtn: document.getElementById('saSetDurationBtn'),
+      saCurrentDuration: document.getElementById('saCurrentDuration'),
+      saRemainingHrs: document.getElementById('saRemainingHrs'),
+      saRemainingMins: document.getElementById('saRemainingMins'),
+      saRemainingSecs: document.getElementById('saRemainingSecs'),
+      saSetRemainingBtn: document.getElementById('saSetRemainingBtn'),
+      saAnnouncementInput: document.getElementById('saAnnouncementInput'),
+      saAnnouncementType: document.getElementById('saAnnouncementType'),
+      saBroadcastBtn: document.getElementById('saBroadcastBtn'),
+      saAnnouncementsList: document.getElementById('saAnnouncementsList')
+    };
+
+    // Initialize View State
+    if (activeToken) {
+      showDashboard();
+    } else {
+      showLogin();
+    }
+
+    // Toggle Tab Panels
+    els.tabTeamsBtn.addEventListener('click', () => {
+      [els.tabAccommodationsBtn, els.tabTimerBtn].forEach(b => b && b.classList.remove('active'));
+      els.tabTeamsBtn.classList.add('active');
+      els.accommodationsTabContent.style.display = 'none';
+      if (els.timerTabContent) els.timerTabContent.style.display = 'none';
+      els.teamsTabContent.style.display = 'block';
+      activeTab = 'teams';
+      if (timerTabInterval) { clearInterval(timerTabInterval); timerTabInterval = null; }
+    });
+
+    els.tabAccommodationsBtn.addEventListener('click', () => {
+      [els.tabTeamsBtn, els.tabTimerBtn].forEach(b => b && b.classList.remove('active'));
+      els.tabAccommodationsBtn.classList.add('active');
+      els.teamsTabContent.style.display = 'none';
+      if (els.timerTabContent) els.timerTabContent.style.display = 'none';
+      els.accommodationsTabContent.style.display = 'block';
+      activeTab = 'accommodations';
+      if (timerTabInterval) { clearInterval(timerTabInterval); timerTabInterval = null; }
+      fetchAccomData();
+    });
+
+    if (els.tabTimerBtn) {
+      els.tabTimerBtn.addEventListener('click', () => {
+        [els.tabTeamsBtn, els.tabAccommodationsBtn].forEach(b => b.classList.remove('active'));
+        els.tabTimerBtn.classList.add('active');
+        els.teamsTabContent.style.display = 'none';
+        els.accommodationsTabContent.style.display = 'none';
+        els.timerTabContent.style.display = 'block';
+        activeTab = 'timer';
+        initTimerTab();
+      });
+    }
+
+    // Toggle logout buttons on navbar
+    function updateNavbarState(isLoggedIn) {
+      if (isLoggedIn) {
+        if (els.navLogout) els.navLogout.style.display = 'inline-block';
+        if (els.navLogoutMobile) els.navLogoutMobile.style.display = 'inline-block';
+      } else {
+        if (els.navLogout) els.navLogout.style.display = 'none';
+        if (els.navLogoutMobile) els.navLogoutMobile.style.display = 'none';
+      }
+    }
+
+    function showLogin() {
+      els.loginWrapper.style.display = 'block';
+      els.dashboardWrapper.style.display = 'none';
+      updateNavbarState(false);
+    }
+
+    function showDashboard() {
+      els.loginWrapper.style.display = 'none';
+      els.dashboardWrapper.style.display = 'block';
+      updateNavbarState(true);
+      fetchData();
+    }
+
+    // Handle Login Submit
+    els.loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = els.adminPassword.value;
+      els.loginError.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/superadmin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok && data.success) {
+          activeToken = data.token;
+          localStorage.setItem('admin_token', activeToken);
+          showDashboard();
+          showToast('Authenticated successfully!', 'success');
+        } else {
+          els.loginError.style.display = 'block';
+          showToast('Authentication failed.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Error connecting to backend.', 'error');
+      }
+    });
+
+    // Logout Action
+    const handleLogout = (e) => {
+      if (e) e.preventDefault();
+      activeToken = '';
+      localStorage.removeItem('admin_token');
+      showLogin();
+      showToast('Logged out successfully.', 'info');
+    };
+
+    if (els.navLogout) els.navLogout.addEventListener('click', handleLogout);
+    if (els.navLogoutMobile) els.navLogoutMobile.addEventListener('click', handleLogout);
+
+    // Fetch Registrations
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/admin/registrations', {
+          headers: { 'Authorization': `Bearer ${activeToken}` }
+        });
+
+        if (res.status === 401) {
+          handleLogout();
+          return;
+        }
+
+        if (!res.ok) throw new Error('Failed to retrieve registrations');
+
+        registrations = await res.json();
+        renderDashboard(registrations);
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to retrieve registrations.', 'error');
+        els.registrationsTableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center no-data" style="color: #ef4444;">❌ Error retrieving registrations.</td>
+          </tr>
+        `;
+      }
+    }
+
+    els.refreshBtn.addEventListener('click', fetchData);
+
+    // Fetch Accommodation Bookings
+    async function fetchAccomData() {
+      try {
+        const res = await fetch('/api/admin/accommodations', {
+          headers: { 'Authorization': `Bearer ${activeToken}` }
+        });
+
+        if (res.status === 401) {
+          handleLogout();
+          return;
+        }
+
+        if (!res.ok) throw new Error('Failed to retrieve accommodations');
+
+        accommodations = await res.json();
+        renderAccommodationDashboard(accommodations);
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to retrieve accommodations.', 'error');
+        els.accommodationsTableBody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center no-data" style="color: #ef4444;">❌ Error retrieving accommodations.</td>
+          </tr>
+        `;
+      }
+    }
+
+    els.refreshAccomBtn.addEventListener('click', fetchAccomData);
+    els.accomSearchInput.addEventListener('input', filterAndRenderAccommodationTable);
+
+    function renderAccommodationDashboard(dataList) {
+      const totalBookings = dataList.length;
+      const verifiedList = dataList.filter(a => a.status === 'verified');
+      const pendingList = dataList.filter(a => a.status === 'pending');
+
+      let boysBooked = 0;
+      let girlsBooked = 0;
+
+      dataList.forEach(a => {
+        if (a.status !== 'rejected') {
+          boysBooked += (a.boys_count || 0);
+          girlsBooked += (a.girls_count || 0);
+        }
+      });
+
+      els.metricTotalAccomBookings.innerText = totalBookings;
+      els.metricBoysBooked.innerText = `${boysBooked} / 30`;
+      els.metricGirlsBooked.innerText = `${girlsBooked} / 30`;
+      els.metricAccomPending.innerText = pendingList.length;
+      els.metricAccomRevenue.innerText = `₹${verifiedList.length * 500}`;
+
+      filterAndRenderAccommodationTable();
+    }
+
+    function filterAndRenderAccommodationTable() {
+      const query = els.accomSearchInput.value.toLowerCase().trim();
+      const filtered = accommodations.filter(a => {
+        return (
+          a.team_name?.toLowerCase().includes(query) ||
+          a.leader_email?.toLowerCase().includes(query)
+        );
+      });
+
+      if (filtered.length === 0) {
+        els.accommodationsTableBody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center no-data">No accommodation requests found.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      els.accommodationsTableBody.innerHTML = filtered.map((a, index) => {
+        const statusClass = (a.status || 'pending').toLowerCase();
+        const displayStatus = (a.status || 'pending').toUpperCase();
+
+        const verifyBtnHtml = a.status !== 'verified' ? `<button class="action-btn" onclick="triggerVerifyAccommodation(event, ${a.id}, '${a.team_name}')">Verify</button>` : '';
+        const rejectBtnHtml = a.status !== 'rejected' ? `<button class="action-btn reject-btn" onclick="triggerRejectAccommodation(event, ${a.id}, '${a.team_name}')">Reject</button>` : '';
+        const removeBtnHtml = `<button class="action-btn remove-btn" onclick="triggerRemoveAccommodation(event, ${a.id}, '${a.team_name}')">Remove</button>`;
+
+        return `
+          <tr class="table-row-main" onclick="toggleDetails('accom-${a.id}')">
+            <td>${a.id}</td>
+            <td class="team-name-cell">${a.team_name}</td>
+            <td>
+              <div>${a.leader_email}</div>
+              <div style="font-size:11px; color:var(--white-60); margin-top:2px;">📞 ${a.leader_phone || 'N/A'}</div>
+            </td>
+            <td style="text-align: center;">${a.boys_count || 0}</td>
+            <td style="text-align: center;">${a.girls_count || 0}</td>
+            <td>Roster Details Below</td>
+            <td>
+              <span class="status-pill ${statusClass}">${displayStatus}</span>
+            </td>
+            <td style="text-align: right;" onclick="event.stopPropagation()">
+              <div class="action-btn-group" style="justify-content: flex-end;">
+                <button class="action-btn" onclick="openAccommodationProofModal('${a.team_name}', ${a.id}, '${a.status}')">View Proof</button>
+                ${verifyBtnHtml}
+                ${rejectBtnHtml}
+                ${removeBtnHtml}
+              </div>
+            </td>
+          </tr>
+          <tr class="row-detail" id="detail-accom-${a.id}">
+            <td colspan="8">
+              <div class="detail-container">
+                <div class="detail-grid">
+                  <div>
+                    <h3 class="detail-header">Accommodation Roster</h3>
+                    ${renderAccommodationRoster(a.booked_members)}
+                  </div>
+                  <div class="detail-col-info">
+                    <h3 class="detail-header">Stay Details</h3>
+                    <p><strong>Booking ID:</strong> ${a.id}</p>
+                    <p><strong>Registration ID:</strong> ${a.registration_id}</p>
+                    <p><strong>Created At:</strong> ${new Date(a.created_at).toLocaleString()}</p>
+                    <p><strong>Status:</strong> <span class="status-pill ${statusClass}">${displayStatus}</span></p>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderAccommodationRoster(rosterJson) {
+      let roster = [];
+      try {
+        roster = typeof rosterJson === 'string' ? JSON.parse(rosterJson) : rosterJson;
+      } catch (e) {
+        roster = rosterJson || [];
+      }
+
+      if (!roster || roster.length === 0) return '<p style="color: var(--white-40); font-size:13px;">No roster information.</p>';
+
+      return roster.map((m, idx) => `
+        <div class="member-details-card" style="border-left-color: ${m.gender === 'boy' ? '#60a5fa' : '#f472b6'};">
+          <h4>Member ${idx + 1}: ${m.name} (${m.gender === 'boy' ? 'Boy ♂' : 'Girl ♀'})</h4>
+          <p>📧 Email: ${m.email}</p>
+          <p>🎓 College: ${m.college}</p>
+        </div>
+      `).join('');
+    }
+
+    // Size Filter Button click handlers
+    document.querySelectorAll('.size-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.size-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeSizeFilter = btn.getAttribute('data-size');
+        filterAndRenderTable();
+      });
+    });
+
+    // Compute Metrics & Render Table
+    function renderDashboard(dataList) {
+      const totalTeams = dataList.length;
+      const verifiedTeamsList = dataList.filter(r => r.status === 'verified');
+      const verifiedTeams = verifiedTeamsList.length;
+      const pendingTeams = totalTeams - verifiedTeams;
+      const totalParticipants = dataList.reduce((acc, r) => acc + (r.team_size || 0), 0);
+      
+      // Calculate total received from verified teams (team_size * ₹200 per member)
+      const totalReceived = verifiedTeamsList.reduce((acc, r) => acc + ((r.team_size || 0) * 200), 0);
+
+      // Render metrics
+      els.metricTotalTeams.innerText = totalTeams;
+      els.metricVerified.innerText = verifiedTeams;
+      els.metricPending.innerText = pendingTeams;
+      els.metricParticipants.innerText = totalParticipants;
+      if (els.metricTotalReceived) {
+        els.metricTotalReceived.innerText = `₹${totalReceived}`;
+      }
+
+      // Update Size Count Badges
+      const count3 = dataList.filter(r => r.team_size === 3).length;
+      const count4 = dataList.filter(r => r.team_size === 4).length;
+      const count5 = dataList.filter(r => r.team_size === 5).length;
+      const count6 = dataList.filter(r => r.team_size === 6).length;
+
+      const sizeAll = document.getElementById('sizeCountAll');
+      const size3 = document.getElementById('sizeCount3');
+      const size4 = document.getElementById('sizeCount4');
+      const size5 = document.getElementById('sizeCount5');
+      const size6 = document.getElementById('sizeCount6');
+
+      if (sizeAll) sizeAll.innerText = totalTeams;
+      if (size3) size3.innerText = count3;
+      if (size4) size4.innerText = count4;
+      if (size5) size5.innerText = count5;
+      if (size6) size6.innerText = count6;
+
+      // Filter and render table
+      filterAndRenderTable();
+    }
+
+    // Filter Logic
+    els.searchInput.addEventListener('input', filterAndRenderTable);
+
+    function filterAndRenderTable() {
+      const query = els.searchInput.value.toLowerCase().trim();
+      const filtered = registrations.filter(r => {
+        const matchesQuery = (
+          r.team_name?.toLowerCase().includes(query) ||
+          r.college?.toLowerCase().includes(query) ||
+          r.leader_name?.toLowerCase().includes(query) ||
+          r.leader_email?.toLowerCase().includes(query)
+        );
+        const matchesSize = activeSizeFilter === 'all' || r.team_size === parseInt(activeSizeFilter);
+        return matchesQuery && matchesSize;
+      });
+
+      if (filtered.length === 0) {
+        els.registrationsTableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center no-data">No registrations found matching the search.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      els.registrationsTableBody.innerHTML = filtered.map((r, index) => {
+        const statusClass = (r.status || 'pending').toLowerCase();
+        const displayStatus = (r.status || 'pending').toUpperCase();
+        const emailId = r.leader_email || r.email;
+        const phoneNo = r.leader_phone || r.phone;
+        const teamLeaderName = r.leader_name || r.teamLeader;
+
+        // Render Action Buttons
+        const verifyBtnHtml = (r.status !== 'verified')
+          ? `<button class="action-btn verify" onclick="triggerVerifyRegistration(event, ${r.id}, '${r.team_name}')">Verify</button>`
+          : '';
+        const rejectBtnHtml = (r.status !== 'rejected')
+          ? `<button class="action-btn reject" onclick="triggerRejectRegistration(event, ${r.id}, '${r.team_name}', '${r.status}')">Reject</button>`
+          : '';
+        const removeBtnHtml = (r.status === 'rejected')
+          ? `<button class="action-btn remove" onclick="triggerRemoveRegistration(event, ${r.id}, '${r.team_name}')">Remove</button>`
+          : '';
+
+        return `
+          <tr class="table-row-main" onclick="toggleDetails(${r.id})">
+            <td>${r.id}</td>
+            <td class="team-name-cell">
+              <div>${r.team_name}</div>
+              <div style="font-size: 11px; color: #f59e0b; font-weight: bold; margin-top: 3px;">🪑 Table: ${r.table_no || 'Pending'}</div>
+            </td>
+            <td>${r.college}</td>
+            <td>
+              <div style="font-weight: 500; color: white;">${teamLeaderName}</div>
+              <div style="font-size: 12px; color: var(--white-60);">${emailId}</div>
+              <div style="font-size: 12px; color: var(--white-60);">${phoneNo}</div>
+            </td>
+            <td style="text-align: center; font-weight: 600;">${r.team_size}</td>
+            <td>
+              <span class="status-pill ${statusClass}">${displayStatus}</span>
+            </td>
+            <td style="text-align: right;" onclick="event.stopPropagation()">
+              <div class="action-btn-group" style="justify-content: flex-end;">
+                <button class="action-btn" onclick="openProofModal('${r.team_name}', ${r.id}, '${r.status}')">View Proof</button>
+                ${verifyBtnHtml}
+                ${rejectBtnHtml}
+                ${removeBtnHtml}
+              </div>
+            </td>
+          </tr>
+          <tr class="row-detail" id="detail-${r.id}">
+            <td colspan="7">
+              <div class="detail-container">
+                <div class="detail-grid">
+                  <div>
+                    <h3 class="detail-header">Team Roster</h3>
+                    ${renderMembersList(r.members)}
+                  </div>
+                  <div class="detail-col-info" style="max-width: 500px;">
+                    <h3 class="detail-header">Project Details</h3>
+                    <p style="margin-bottom:8px;"><strong>Title:</strong> ${r.project_title || '<em style="color:var(--white-40);">Not Provided</em>'}</p>
+                    <p style="margin-bottom:8px;"><strong>Domain:</strong> ${r.domain || '<em style="color:var(--white-40);">Not Provided</em>'}</p>
+                    <p style="margin-bottom:8px;"><strong>Problem Statement:</strong> ${r.problem_statement || '<em style="color:var(--white-40);">Not Provided</em>'}</p>
+                    <p style="margin-bottom:8px;"><strong>Description:</strong> ${r.project_description || '<em style="color:var(--white-40);">Not Provided</em>'}</p>
+                  </div>
+                  <div class="detail-col-info">
+                    <h3 class="detail-header">Meta Info</h3>
+                    <p><strong>Database ID:</strong> ${r.id}</p>
+                    <p><strong>Created At:</strong> ${new Date(r.created_at).toLocaleString()}</p>
+                    <p><strong>Status:</strong> <span class="status-pill ${statusClass}">${displayStatus}</span></p>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderMembersList(membersJson) {
+      let members = [];
+      try {
+        members = typeof membersJson === 'string' ? JSON.parse(membersJson) : membersJson;
+      } catch (e) {
+        members = membersJson || [];
+      }
+
+      if (!members || members.length === 0) return '<p style="color: var(--white-40); font-size:13px;">No member information saved.</p>';
+
+      return members.map((m, idx) => `
+        <div class="member-details-card">
+          <h4>Member ${idx + 1}: ${m.name}</h4>
+          <p>📧 Email: ${m.email}</p>
+          <p>🎓 College: ${m.college}</p>
+          <p>📍 Year of study: Year ${m.year} | City: ${m.city}</p>
+        </div>
+      `).join('');
+    }
+
+    // Toggle Detail Section
+    function toggleDetails(id) {
+      const detailRow = document.getElementById(`detail-${id}`);
+      if (detailRow) {
+        detailRow.classList.toggle('active');
+      }
+    }
+
+    // Modal Lightbox for Proofs
+    let currentLightboxRecordId = null;
+    let currentLightboxRecordStatus = '';
+
+    async function openProofModal(teamName, id, status) {
+      currentLightboxRecordId = id;
+      currentLightboxRecordStatus = status;
+      currentLightboxType = 'registration';
+
+      els.lightboxTitle.innerText = `Payment Proof — Team: ${teamName}`;
+      els.lightboxImg.src = '';
+      els.lightboxImg.alt = 'Loading payment proof screenshot...';
+      els.lightboxDownload.href = '#';
+
+      // Hide actions initially during loading
+      els.lightboxVerifyBtn.style.display = 'none';
+      els.lightboxRejectBtn.style.display = 'none';
+
+      els.lightboxModal.classList.add('active');
+
+      try {
+        const res = await fetch(`/api/admin/registration-proof/${id}`, {
+          headers: { 'Authorization': `Bearer ${activeToken}` }
+        });
+        if (!res.ok) throw new Error('Failed to load image');
+        const data = await res.json();
+        els.lightboxImg.src = data.payment_proof;
+        els.lightboxImg.alt = 'Payment Proof';
+        els.lightboxDownload.href = data.payment_proof;
+
+        // Restore verification/rejection button actions based on status
+        if (status === 'verified') {
+          els.lightboxVerifyBtn.style.display = 'none';
+          els.lightboxRejectBtn.style.display = 'inline-block';
+        } else if (status === 'rejected') {
+          els.lightboxVerifyBtn.style.display = 'inline-block';
+          els.lightboxRejectBtn.style.display = 'none';
+        } else {
+          els.lightboxVerifyBtn.style.display = 'inline-block';
+          els.lightboxRejectBtn.style.display = 'inline-block';
+        }
+      } catch (err) {
+        console.error(err);
+        els.lightboxImg.alt = '❌ Error: Failed to load payment proof screenshot.';
+      }
+    }
+
+    async function openAccommodationProofModal(teamName, id, status) {
+      currentLightboxRecordId = id;
+      currentLightboxRecordStatus = status;
+      currentLightboxType = 'accommodation';
+
+      els.lightboxTitle.innerText = `Stay Payment Proof — Team: ${teamName}`;
+      els.lightboxImg.src = '';
+      els.lightboxImg.alt = 'Loading stay proof screenshot...';
+      els.lightboxDownload.href = '#';
+
+      els.lightboxVerifyBtn.style.display = 'none';
+      els.lightboxRejectBtn.style.display = 'none';
+
+      els.lightboxModal.classList.add('active');
+
+      try {
+        const res = await fetch(`/api/admin/accommodation-proof/${id}`, {
+          headers: { 'Authorization': `Bearer ${activeToken}` }
+        });
+        if (!res.ok) throw new Error('Failed to load image');
+        const data = await res.json();
+        els.lightboxImg.src = data.payment_proof;
+        els.lightboxImg.alt = 'Stay Payment Proof';
+        els.lightboxDownload.href = data.payment_proof;
+
+        if (status === 'verified') {
+          els.lightboxVerifyBtn.style.display = 'none';
+          els.lightboxRejectBtn.style.display = 'inline-block';
+        } else if (status === 'rejected') {
+          els.lightboxVerifyBtn.style.display = 'inline-block';
+          els.lightboxRejectBtn.style.display = 'none';
+        } else {
+          els.lightboxVerifyBtn.style.display = 'inline-block';
+          els.lightboxRejectBtn.style.display = 'inline-block';
+        }
+      } catch (err) {
+        console.error(err);
+        els.lightboxImg.alt = '❌ Error: Failed to load stay proof screenshot.';
+      }
+    }
+
+    // Close Modal
+    function closeModal() {
+      els.lightboxModal.classList.remove('active');
+      els.lightboxImg.src = '';
+      currentLightboxRecordId = null;
+    }
+
+    els.lightboxClose.addEventListener('click', closeModal);
+    els.lightboxModal.addEventListener('click', (e) => {
+      if (e.target === els.lightboxModal) closeModal();
+    });
+
+    // Trigger Verify (from table button)
+    async function triggerVerifyRegistration(event, id, teamName) {
+      if (event) event.stopPropagation();
+      const confirmVerification = confirm(`Are you sure you want to verify payment and confirm registration for Team: ${teamName}? This will trigger an automated Entry Pass confirmation email.`);
+      if (!confirmVerification) return;
+
+      try {
+        const res = await fetch(`/api/admin/verify/${id}`, {
+          method: 'POST',
+          headers: { 
+            'Authorization': `Bearer ${activeToken}`,
+            'Content-Type': 'application/json' 
+          }
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Team verified successfully! Success email dispatched.`, 'success');
+          closeModal();
+          fetchData(); // reload
+        } else {
+          showToast(data.error || 'Failed to verify team.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Connection error.', 'error');
+      }
+    }
+
+    async function triggerVerifyAccommodation(event, id, teamName) {
+      if (event) event.stopPropagation();
+      const confirmVerification = confirm(`Are you sure you want to verify stay payment for Team: ${teamName}?`);
+      if (!confirmVerification) return;
+
+      try {
+        const res = await fetch(`/api/admin/accommodation/verify/${id}`, {
+          method: 'POST',
+          headers: { 
+            'Authorization': `Bearer ${activeToken}`,
+            'Content-Type': 'application/json' 
+          }
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Accommodation booking verified successfully!`, 'success');
+          closeModal();
+          fetchAccomData(); // reload stays
+        } else {
+          showToast(data.error || 'Failed to verify accommodation.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Connection error.', 'error');
+      }
+    }
+
+    function triggerRejectAccommodation(event, id, teamName) {
+      if (event) event.stopPropagation();
+      const confirmRejection = confirm(`Are you sure you want to reject stay payment for Team: ${teamName}?`);
+      if (!confirmRejection) return;
+
+      els.rejectModalTitle.innerText = `Reject Stay Booking — Team: ${teamName}`;
+      els.rejectReasonDropdown.value = "Please upload a valid proof of payment";
+      els.customReasonWrapper.style.display = 'none';
+      els.customReasonInput.value = '';
+
+      rejectCallback = async () => {
+        let reason = els.rejectReasonDropdown.value;
+        if (reason === 'custom') {
+          reason = els.customReasonInput.value.trim();
+          if (!reason) {
+            showToast('Please enter a custom rejection reason.', 'error');
+            return;
+          }
+        }
+
+        try {
+          const res = await fetch(`/api/admin/accommodation/reject/${id}`, {
+            method: 'POST',
+            headers: { 
+              'Authorization': `Bearer ${activeToken}`,
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ reason })
+          });
+
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast(`Stay booking rejected successfully.`, 'success');
+            closeRejectModal();
+            closeModal();
+            fetchAccomData();
+          } else {
+            showToast(data.error || 'Failed to reject stay.', 'error');
+          }
+        } catch (err) {
+          console.error(err);
+          showToast('Connection error.', 'error');
+        }
+      };
+
+      els.rejectModal.classList.add('active');
+    }
+
+    async function triggerRemoveAccommodation(event, id, teamName) {
+      if (event) event.stopPropagation();
+      const confirmRemove = confirm(`Are you sure you want to PERMANENTLY REMOVE Stay Booking for Team: ${teamName}?`);
+      if (!confirmRemove) return;
+
+      try {
+        const res = await fetch(`/api/admin/accommodation/${id}`, {
+          method: 'DELETE',
+          headers: { 
+            'Authorization': `Bearer ${activeToken}`,
+            'Content-Type': 'application/json' 
+          }
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Accommodation record has been permanently removed.`, 'success');
+          fetchAccomData();
+        } else {
+          showToast(data.error || 'Failed to remove accommodation.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Connection error.', 'error');
+      }
+    }
+
+    let rejectCallback = null;
+
+    // Trigger Reject (from table button or modal)
+    function triggerRejectRegistration(event, id, teamName, status) {
+      if (event) event.stopPropagation();
+
+      els.rejectModalTitle.innerText = `Reject Registration — Team: ${teamName}`;
+      
+      // Select the default dropdown option based on status
+      if (status === 'verified') {
+        els.rejectReasonDropdown.value = "We are sorry, but all registration slots are full. You will receive a full refund shortly.";
+      } else {
+        els.rejectReasonDropdown.value = "Please upload a valid proof of payment";
+      }
+      
+      // Hide custom reason input initially
+      els.customReasonWrapper.style.display = 'none';
+      els.customReasonInput.value = '';
+
+      // Set up the confirm button callback
+      rejectCallback = async () => {
+        let reason = els.rejectReasonDropdown.value;
+        if (reason === 'custom') {
+          reason = els.customReasonInput.value.trim();
+          if (!reason) {
+            showToast('Please enter a custom rejection reason.', 'error');
+            return;
+          }
+        }
+
+        try {
+          const res = await fetch(`/api/admin/reject/${id}`, {
+            method: 'POST',
+            headers: { 
+              'Authorization': `Bearer ${activeToken}`,
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ reason: reason })
+          });
+
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast(`Team status updated successfully. Email notification sent.`, 'success');
+            closeRejectModal();
+            closeModal(); // close lightbox modal too if open
+            fetchData(); // reload
+          } else {
+            showToast(data.error || 'Failed to reject team.', 'error');
+          }
+        } catch (err) {
+          console.error(err);
+          showToast('Connection error.', 'error');
+        }
+      };
+
+      els.rejectModal.classList.add('active');
+    }
+
+    // Trigger Remove (from table button)
+    async function triggerRemoveRegistration(event, id, teamName) {
+      if (event) event.stopPropagation();
+      const confirmRemove = confirm(`Are you sure you want to PERMANENTLY REMOVE Team: ${teamName} from the database? This action is irreversible.`);
+      if (!confirmRemove) return;
+
+      try {
+        const res = await fetch(`/api/admin/registrations/${id}`, {
+          method: 'DELETE',
+          headers: { 
+            'Authorization': `Bearer ${activeToken}`,
+            'Content-Type': 'application/json' 
+          }
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Team '${teamName}' has been permanently removed.`, 'success');
+          fetchData(); // reload
+        } else {
+          showToast(data.error || 'Failed to remove team.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Connection error.', 'error');
+      }
+    }
+
+    function closeRejectModal() {
+      els.rejectModal.classList.remove('active');
+      rejectCallback = null;
+    }
+
+    els.rejectClose.addEventListener('click', closeRejectModal);
+    els.rejectCancelBtn.addEventListener('click', closeRejectModal);
+    els.rejectModal.addEventListener('click', (e) => {
+      if (e.target === els.rejectModal) closeRejectModal();
+    });
+
+    els.rejectReasonDropdown.addEventListener('change', () => {
+      if (els.rejectReasonDropdown.value === 'custom') {
+        els.customReasonWrapper.style.display = 'block';
+      } else {
+        els.customReasonWrapper.style.display = 'none';
+      }
+    });
+
+    els.rejectSubmitBtn.addEventListener('click', () => {
+      if (rejectCallback) rejectCallback();
+    });
+
+    // Verify Action from Lightbox Modal
+    els.lightboxVerifyBtn.addEventListener('click', () => {
+      if (currentLightboxRecordId) {
+        if (currentLightboxType === 'accommodation') {
+          const teamNameText = els.lightboxTitle.innerText.replace('Stay Payment Proof — Team: ', '');
+          triggerVerifyAccommodation(null, currentLightboxRecordId, teamNameText);
+        } else {
+          const teamNameText = els.lightboxTitle.innerText.replace('Payment Proof — Team: ', '');
+          triggerVerifyRegistration(null, currentLightboxRecordId, teamNameText);
+        }
+      }
+    });
+
+    // Reject Action from Lightbox Modal
+    els.lightboxRejectBtn.addEventListener('click', () => {
+      if (currentLightboxRecordId) {
+        if (currentLightboxType === 'accommodation') {
+          const teamNameText = els.lightboxTitle.innerText.replace('Stay Payment Proof — Team: ', '');
+          triggerRejectAccommodation(null, currentLightboxRecordId, teamNameText);
+        } else {
+          const teamNameText = els.lightboxTitle.innerText.replace('Payment Proof — Team: ', '');
+          triggerRejectRegistration(null, currentLightboxRecordId, teamNameText, currentLightboxRecordStatus);
+        }
+      }
+    });
+
+    // Attendance PDF Download
+    if (els.downloadAttendancePdfBtn) {
+      els.downloadAttendancePdfBtn.addEventListener('click', () => {
+        showToast('Generating attendance sheets PDF...', 'info');
+        window.open(`/api/admin/download-attendance-pdf?token=${encodeURIComponent(activeToken)}`, '_blank');
+      });
+    }
+
+    // Check-in PDF Download
+    if (els.downloadCheckinPdfBtn) {
+      els.downloadCheckinPdfBtn.addEventListener('click', () => {
+        showToast('Generating check-in sheets PDF...', 'info');
+        window.open(`/api/admin/download-checkin-pdf?token=${encodeURIComponent(activeToken)}`, '_blank');
+      });
+    }
+
+    // CSV Export
+    els.exportCsvBtn.addEventListener('click', () => {
+      if (registrations.length === 0) {
+        showToast('No registration data available to export.', 'info');
+        return;
+      }
+
+      // Compile CSV header & rows
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "ID,Team Name,College,Leader Name,Leader Email,Leader Phone,Team Size,Status,Created At,Members Roster\n";
+
+      registrations.forEach(r => {
+        const teamName = `"${(r.team_name || '').replace(/"/g, '""')}"`;
+        const college = `"${(r.college || '').replace(/"/g, '""')}"`;
+        const leaderName = `"${(r.leader_name || r.teamLeader || '').replace(/"/g, '""')}"`;
+        const email = r.leader_email || r.email || '';
+        const phone = r.leader_phone || r.phone || '';
+        const size = r.team_size || '';
+        const status = r.status || 'pending';
+        const date = new Date(r.created_at).toISOString();
+
+        // Format members roster as single cell list
+        let membersArr = [];
+        try {
+          membersArr = typeof r.members === 'string' ? JSON.parse(r.members) : r.members;
+        } catch (e) {
+          membersArr = r.members || [];
+        }
+        const membersRoster = `"${(membersArr.map(m => `${m.name} (${m.email} - Yr ${m.year})`).join('; ')).replace(/"/g, '""')}"`;
+
+        const row = [r.id, teamName, college, leaderName, email, phone, size, status, date, membersRoster].join(',');
+        csvContent += row + "\n";
+      });
+
+      // Download file
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `rush_hour_registrations_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('CSV export downloaded!', 'success');
+    });
+
+    // Accommodation CSV Export
+    els.exportAccommodationCsvBtn.addEventListener('click', () => {
+      if (accommodations.length === 0) {
+        showToast('No accommodation data available to export.', 'info');
+        return;
+      }
+
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "ID,Registration ID,Team Name,Leader Email,Boys Count,Girls Count,Status,Created At,Booked Members\n";
+
+      accommodations.forEach(a => {
+        const teamName = `"${(a.team_name || '').replace(/"/g, '""')}"`;
+        const email = a.leader_email || '';
+        const status = a.status || 'pending';
+        const date = new Date(a.created_at).toISOString();
+
+        let membersArr = [];
+        try {
+          membersArr = typeof a.booked_members === 'string' ? JSON.parse(a.booked_members) : a.booked_members;
+        } catch (e) {
+          membersArr = a.booked_members || [];
+        }
+        const roster = `"${(membersArr.map(m => `${m.name} (${m.gender})`).join('; ')).replace(/"/g, '""')}"`;
+
+        const row = [a.id, a.registration_id, teamName, email, a.boys_count || 0, a.girls_count || 0, status, date, roster].join(',');
+        csvContent += row + "\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `rush_hour_accommodations_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Accommodation CSV downloaded!', 'success');
+    });
+
+    // Evaluation Sheets Generation & Modal Logic
+    function populateEvaluationTeams() {
+      if (!registrations || registrations.length === 0) {
+        els.evalTeamsListBody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 10px; color: var(--white-40);">No registrations available.</td></tr>`;
+        return;
+      }
+      
+      els.evalTeamsListBody.innerHTML = registrations.map(r => `
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <td style="padding: 8px 6px; vertical-align: middle;">
+            <input type="checkbox" class="eval-team-checkbox" data-id="${r.id}" checked style="width: 16px; height: 16px; cursor: pointer;" />
+          </td>
+          <td style="padding: 8px 6px; vertical-align: middle;">
+            <div style="font-weight: 600; color: white;">#${r.id} ${r.team_name}</div>
+            <div style="font-size: 11px; color: var(--white-60);">${r.college}</div>
+          </td>
+          <td style="padding: 8px 6px; text-align: right; vertical-align: middle;">
+            <select class="eval-team-category form-control" data-id="${r.id}" style="padding: 4px 8px; border-radius: 6px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: white; font-size: 12px; outline: none; cursor: pointer;">
+              <option value="software" selected>Software</option>
+              <option value="hardware">Hardware</option>
+            </select>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    if (els.printEvaluationBtn) {
+      els.printEvaluationBtn.addEventListener('click', () => {
+        populateEvaluationTeams();
+        els.evaluationModal.classList.add('active');
+      });
+    }
+    
+    function closeEvaluationModal() {
+      els.evaluationModal.classList.remove('active');
+    }
+    
+    if (els.evaluationClose) els.evaluationClose.addEventListener('click', closeEvaluationModal);
+    if (els.evalCancelBtn) els.evalCancelBtn.addEventListener('click', closeEvaluationModal);
+    if (els.evaluationModal) {
+      els.evaluationModal.addEventListener('click', (e) => {
+        if (e.target === els.evaluationModal) closeEvaluationModal();
+      });
+    }
+
+    if (els.evalSelectAllTeams) {
+      els.evalSelectAllTeams.addEventListener('click', () => {
+        document.querySelectorAll('.eval-team-checkbox').forEach(cb => cb.checked = true);
+      });
+    }
+    if (els.evalDeselectAllTeams) {
+      els.evalDeselectAllTeams.addEventListener('click', () => {
+        document.querySelectorAll('.eval-team-checkbox').forEach(cb => cb.checked = false);
+      });
+    }
+    if (els.evalSetAllSoftware) {
+      els.evalSetAllSoftware.addEventListener('click', () => {
+        document.querySelectorAll('.eval-team-category').forEach(sel => sel.value = 'software');
+      });
+    }
+    if (els.evalSetAllHardware) {
+      els.evalSetAllHardware.addEventListener('click', () => {
+        document.querySelectorAll('.eval-team-category').forEach(sel => sel.value = 'hardware');
+      });
+    }
+
+    // Organizer ID Card Modal handlers
+    if (els.organizerIdBtn) {
+      els.organizerIdBtn.addEventListener('click', () => {
+        els.organizerIdModal.classList.add('active');
+      });
+    }
+    function closeOrganizerIdModal() {
+      els.organizerIdModal.classList.remove('active');
+    }
+    if (els.organizerIdClose) els.organizerIdClose.addEventListener('click', closeOrganizerIdModal);
+    if (els.orgCancelBtn) els.orgCancelBtn.addEventListener('click', closeOrganizerIdModal);
+    if (els.organizerIdModal) {
+      els.organizerIdModal.addEventListener('click', (e) => {
+        if (e.target === els.organizerIdModal) closeOrganizerIdModal();
+      });
+    }
+
+    if (els.orgGenerateBtn) {
+      els.orgGenerateBtn.addEventListener('click', () => {
+        const rawNames = els.orgNamesList.value.trim();
+        if (!rawNames) {
+          showToast('Please enter at least one organizer name.', 'info');
+          return;
+        }
+
+        const names = rawNames.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+        const role = els.orgRoleInput.value.trim() || 'ORGANIZER';
+        const theme = els.orgThemeSelect.value;
+
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+          showToast('Popup blocked! Please allow popups to open the print layout.', 'error');
+          return;
+        }
+
+        // Map theme colors
+        let accentGlow = '#f59e0b';
+        let accentLight = 'rgba(245, 158, 11, 0.1)';
+        if (theme === 'purple') {
+          accentGlow = '#8b5cf6';
+          accentLight = 'rgba(139, 92, 246, 0.1)';
+        } else if (theme === 'cyan') {
+          accentGlow = '#06b6d4';
+          accentLight = 'rgba(6, 182, 212, 0.1)';
+        } else if (theme === 'red') {
+          accentGlow = '#ef4444';
+          accentLight = 'rgba(239, 68, 68, 0.1)';
+        }
+
+        let idCardsHtml = '';
+        const cardsPerPage = 6;
+        for (let i = 0; i < names.length; i += cardsPerPage) {
+          const pageNames = names.slice(i, i + cardsPerPage);
+          let cardsGridHtml = '';
+
+          pageNames.forEach((name, idx) => {
+            const serialNum = String(i + idx + 1).padStart(3, '0');
+            cardsGridHtml += `
+              <div class="id-card">
+                <div class="card-glow-border"></div>
+                <div class="card-grid-bg"></div>
+                
+                <div class="card-header">
+                  <img src="/assets/logo-circle.png" class="card-logo" alt="RUSH HOUR" />
+                  <div class="card-header-titles">
+                    <div class="card-event-title">RUSH HOUR 24</div>
+                    <div class="card-event-sub">National 24H Hackathon</div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-avatar-box">
+                    <div class="card-avatar-inner">
+                      <span style="font-size: 28px; font-weight: 700; color: ${accentGlow};">${name.charAt(0).toUpperCase()}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="card-name">${name}</div>
+                  <div class="card-role-badge">${role}</div>
+                </div>
+
+                <div class="card-footer">
+                  <div class="barcode-box">
+                    <div class="barcode-line" style="height: 25px; background: linear-gradient(90deg, #111 2px, transparent 2px, #111 5px, transparent 6px, #111 10px, transparent 11px, #111 16px);"></div>
+                    <div class="serial-num">RH-24-ORG-${serialNum}</div>
+                  </div>
+                  <div class="sathyabama-logo">SATHYABAMA</div>
+                </div>
+              </div>
+            `;
+          });
+
+          idCardsHtml += `
+            <div class="print-page">
+              <div class="id-cards-grid">
+                ${cardsGridHtml}
+              </div>
+            </div>
+          `;
+        }
+
+        let htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RUSH HOUR 24 — Organizer ID Cards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: ${accentGlow};
+      --accent-alpha: ${accentLight};
+      --text-dark: #111827;
+      --text-muted: #6b7280;
+      --card-bg: #090a0f;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6;
+      padding: 20px;
+    }
+    .print-page {
+      background: white;
+      width: 210mm;
+      height: 297mm;
+      padding: 12mm 15mm;
+      margin: 20px auto;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+      }
+      .print-page {
+        margin: 0;
+        border: none;
+        box-shadow: none;
+        width: 210mm;
+        height: 297mm;
+        page-break-after: always;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+    .no-print-bar {
+      max-width: 210mm;
+      margin: 0 auto 20px auto;
+      background: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-print {
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+    }
+    
+    .id-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 75mm);
+      grid-template-rows: repeat(3, 110mm);
+      gap: 15mm 20mm;
+      justify-content: center;
+      align-content: center;
+    }
+
+    .id-card {
+      width: 75mm;
+      height: 110mm;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border: 1px dashed rgba(255,255,255,0.15); /* cutting guide */
+    }
+
+    .card-glow-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    
+    .card-grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 10px 10px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+    .card-logo {
+      height: 24px;
+      width: auto;
+    }
+    .card-header-titles {
+      line-height: 1.1;
+    }
+    .card-event-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.5px;
+    }
+    .card-event-sub {
+      font-size: 8px;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-grow: 1;
+      margin-top: 10px;
+      z-index: 2;
+    }
+    .card-avatar-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: 0 0 10px var(--accent-alpha);
+      margin-bottom: 8px;
+    }
+    .card-avatar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+    .card-role-badge {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      font-weight: 900;
+      color: #000;
+      background-color: var(--accent);
+      padding: 3px 12px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      box-shadow: 0 0 8px var(--accent-alpha);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 10px;
+      z-index: 2;
+    }
+    .barcode-box {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .barcode-line {
+      width: 100px;
+      filter: invert(1);
+      opacity: 0.8;
+    }
+    .serial-num {
+      font-size: 7px;
+      font-family: monospace;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .sathyabama-logo {
+      font-size: 8px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print no-print-bar">
+    <div style="font-weight: 600; font-size: 14px; color: var(--text-dark);">
+      🪪 Organizer ID Cards Layout
+    </div>
+    <button class="btn btn-print" onclick="window.print()">🖨️ Print ID Cards (${names.length})</button>
+  </div>
+  ${idCardsHtml}
+</body>
+</html>
+`;
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+        closeOrganizerIdModal();
+      });
+    }
+
+    if (els.evalGenerateBtn) {
+      els.evalGenerateBtn.addEventListener('click', () => {
+        const checkedBoxes = document.querySelectorAll('.eval-team-checkbox:checked');
+        if (checkedBoxes.length === 0) {
+          showToast('Please select at least one team to print.', 'info');
+          return;
+        }
+
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+          showToast('Popup blocked! Please allow popups to open the print layout.', 'error');
+          return;
+        }
+
+        const teamsToPrint = [];
+        checkedBoxes.forEach(cb => {
+          const teamId = parseInt(cb.getAttribute('data-id'));
+          const team = registrations.find(r => r.id === teamId);
+          if (team) {
+            const categorySelect = document.querySelector(`.eval-team-category[data-id="${teamId}"]`);
+            const category = categorySelect ? categorySelect.value : 'software';
+            teamsToPrint.push({
+              ...team,
+              category: category
+            });
+          }
+        });
+
+        let htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RUSH HOUR 24 — Judge Evaluation Sheets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --text-dark: #111827;
+      --text-muted: #4b5563;
+      --border-color: #d1d5db;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-dark);
+      background-color: #f3f4f6;
+      padding: 20px;
+    }
+    .print-page {
+      background: white;
+      width: 210mm;
+      height: 280mm;
+      padding: 8mm 15mm;
+      margin: 20px auto;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 8px;
+      page-break-after: always;
+    }
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+      }
+      .print-page {
+        margin: 0;
+        border: none;
+        box-shadow: none;
+        width: 210mm;
+        height: 280mm;
+        page-break-after: always;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+    .no-print-bar {
+      max-width: 210mm;
+      margin: 0 auto 20px auto;
+      background: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-print {
+      background: var(--primary);
+      color: white;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-img {
+      height: 38px;
+      width: auto;
+    }
+    .header-title-box h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text-dark);
+      line-height: 1.1;
+    }
+    .header-title-box p {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+      margin-top: 1px;
+    }
+    .header-right {
+      text-align: right;
+    }
+    .review-badges {
+      display: flex;
+      gap: 6px;
+      margin-top: 3px;
+    }
+    .badge {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 5px;
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      color: var(--text-muted);
+    }
+    .badge.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    .team-info-grid {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 11.5px;
+    }
+    .info-item {
+      border-bottom: 1.5px dotted var(--border-color);
+      padding-bottom: 2px;
+      display: flex;
+      align-items: baseline;
+      overflow: hidden;
+    }
+    .info-item label {
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-right: 4px;
+      text-transform: uppercase;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+    .info-item span {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .problem-stmt-row {
+      display: flex;
+      align-items: baseline;
+      border-bottom: 1.5px dotted var(--border-color);
+      padding-bottom: 2px;
+      margin-bottom: 10px;
+      font-size: 11.5px;
+    }
+    .problem-stmt-row label {
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-right: 4px;
+      text-transform: uppercase;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .tables-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .criteria-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    .criteria-table th {
+      background-color: #f9fafb;
+      border: 1px solid var(--border-color);
+      padding: 4.5px 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .criteria-table td {
+      border: 1px solid var(--border-color);
+      padding: 4.5px 8px;
+      line-height: 1.25;
+    }
+    .criteria-table tr.section-row td {
+      background-color: #f3f4f6;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 10.5px;
+    }
+    .max-marks-cell {
+      text-align: center;
+      font-weight: 700;
+      width: 45px;
+    }
+    .awarded-marks-cell {
+      width: 60px;
+    }
+    
+    .remarks-box {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      font-size: 11.5px;
+    }
+    .remarks-title {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 10px;
+      color: var(--primary);
+      margin-bottom: 4px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 2px;
+    }
+    .remarks-field {
+      margin-bottom: 4px;
+    }
+    .remarks-field label {
+      font-weight: 600;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 1px;
+    }
+    .remarks-line {
+      height: 14px;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    .rating-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 11px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 6px;
+    }
+    .rating-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .rating-opt {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+    }
+    .checkbox-square {
+      width: 11px;
+      height: 11px;
+      border: 1px solid var(--text-muted);
+      border-radius: 1.5px;
+      display: inline-block;
+    }
+
+    .footer-signs {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 8px;
+      font-size: 11px;
+    }
+    .sign-line {
+      border-top: 1px solid var(--text-dark);
+      width: 180px;
+      text-align: center;
+      padding-top: 3px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 9.5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print no-print-bar">
+    <div style="font-weight: 600; font-size: 14px; color: var(--text-dark);">
+      📋 Judge Evaluation Sheets — Dual Review Layout
+    </div>
+    <button class="btn btn-print" onclick="window.print()">🖨️ Print Sheets (${teamsToPrint.length})</button>
+  </div>
+`;
+
+        teamsToPrint.forEach(team => {
+          const isSoftware = team.category === 'software';
+          const categoryLabel = isSoftware ? 'Software Project' : 'Hardware Project';
+          
+          let review1TableHtml = '';
+          let finalTableHtml = '';
+
+          if (isSoftware) {
+            review1TableHtml = `
+              <table class="criteria-table">
+                <thead>
+                  <tr>
+                    <th style="width: 70%;">Review 1 (Software)</th>
+                    <th style="text-align: center; width: 15%;">Max</th>
+                    <th style="text-align: center; width: 15%;">Marks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Domain Relevance &amp; Problem Statement Quality:</strong> How well does the problem statement align with the selected domain and is it well-defined, relevant, and addresses a real-world challenge?</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Uniqueness &amp; Novelty:</strong> Originality of the solution (not existing/similar to common solutions).</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Innovation &amp; Solution Approach:</strong> Originality of the idea and effectiveness of the proposed solution.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Technical Feasibility &amp; Architecture:</strong> Suitability of the technology stack, system design, and implementation feasibility.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Dev Progress &amp; Technical Understanding:</strong> Progress made, technical knowledge, and clarity during presentation/Q&amp;A.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr style="background-color: #f9fafb; font-weight: bold; border-top: 1.5px solid var(--text-dark);">
+                    <td>Review 1 Total</td>
+                    <td class="max-marks-cell">50</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                </tbody>
+              </table>
+            `;
+            finalTableHtml = `
+              <table class="criteria-table">
+                <thead>
+                  <tr>
+                    <th style="width: 70%;">Review 2 (Software)</th>
+                    <th style="text-align: center; width: 15%;">Max</th>
+                    <th style="text-align: center; width: 15%;">Marks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Problem Solving Effectiveness:</strong> How effectively does the software solve the identified problem?</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Technical Implementation:</strong> Code quality, architecture, algorithms, and engineering practices.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Functionality &amp; Reliability:</strong> Working prototype, completeness, testing, and stability.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Scalability &amp; Practical Impact:</strong> Real-world applicability, maintainability, and deployment potential.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Presentation, Demonstration &amp; Q&amp;A:</strong> Communication, demo quality, and responses to judges.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr style="background-color: #f9fafb; font-weight: bold; border-top: 1.5px solid var(--text-dark);">
+                    <td>Review 2 Total</td>
+                    <td class="max-marks-cell">50</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                </tbody>
+              </table>
+            `;
+          } else {
+            review1TableHtml = `
+              <table class="criteria-table">
+                <thead>
+                  <tr>
+                    <th style="width: 70%;">Review 1 (Hardware)</th>
+                    <th style="text-align: center; width: 15%;">Max</th>
+                    <th style="text-align: center; width: 15%;">Marks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Domain Relevance &amp; Problem Statement Quality:</strong> Does the problem statement align with the selected hardware domain and is it meaningful, relevant, and clearly defined?</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Uniqueness &amp; Novelty:</strong> Originality of the solution (not existing/similar to common solutions).</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Innovation &amp; Engineering Concept:</strong> Originality and engineering value of the proposed solution.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Technical Feasibility &amp; System Design:</strong> Component selection, architecture, and implementation feasibility.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Prototype Progress &amp; Technical Understanding:</strong> Progress made, design understanding, and responses to judges.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr style="background-color: #f9fafb; font-weight: bold; border-top: 1.5px solid var(--text-dark);">
+                    <td>Review 1 Total</td>
+                    <td class="max-marks-cell">50</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                </tbody>
+              </table>
+            `;
+            finalTableHtml = `
+              <table class="criteria-table">
+                <thead>
+                  <tr>
+                    <th style="width: 70%;">Review 2 (Hardware)</th>
+                    <th style="text-align: center; width: 15%;">Max</th>
+                    <th style="text-align: center; width: 15%;">Marks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Problem Solving Effectiveness:</strong> How effectively does the hardware prototype solve the identified problem?</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Hardware Design &amp; Engineering Quality:</strong> Circuit design, system integration, and engineering excellence.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Prototype Performance &amp; Reliability:</strong> Functionality, testing, robustness, and working demonstration.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Practical Feasibility &amp; Scalability:</strong> Cost-effectiveness, deployment readiness, and future scalability.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Presentation, Demonstration &amp; Q&amp;A:</strong> Demonstration quality, communication, and technical justification.</td>
+                    <td class="max-marks-cell">10</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                  <tr style="background-color: #f9fafb; font-weight: bold; border-top: 1.5px solid var(--text-dark);">
+                    <td>Review 2 Total</td>
+                    <td class="max-marks-cell">50</td>
+                    <td class="awarded-marks-cell"></td>
+                  </tr>
+                </tbody>
+              </table>
+            `;
+          }
+
+          htmlContent += `
+  <div class="print-page">
+      <div class="header">
+        <div class="header-left">
+          <img src="/assets/logo-circle.png" alt="RUSH HOUR" class="logo-img" />
+          <div class="header-title-box">
+            <h1>RUSH HOUR 24</h1>
+            <p>National 24-Hours Hackathon</p>
+          </div>
+        </div>
+        <div class="header-right">
+          <h2 style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--text-dark);">Judge Evaluation Sheet</h2>
+          <div class="review-badges">
+            <span class="badge active">Review 1</span>
+            <span class="badge active">Review 2</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 9px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;">
+        Project Category: ${categoryLabel}
+      </div>
+
+      <div class="team-info-grid" style="grid-template-columns: 1fr 1.5fr 1fr;">
+        <div class="info-item">
+          <label>Team ID:</label>
+          <span>RH-${String(team.id).padStart(4, '0')}</span>
+        </div>
+        <div class="info-item">
+          <label>Team Name:</label>
+          <span>${team.team_name}</span>
+        </div>
+        <div class="info-item">
+          <label>Table No:</label>
+          <span>${team.table_no || '______'}</span>
+        </div>
+      </div>
+      
+      <div class="team-info-grid" style="grid-template-columns: 1.8fr 1.2fr; margin-bottom: 5px;">
+        <div class="info-item">
+          <label>College:</label>
+          <span>${team.college}</span>
+        </div>
+        <div class="info-item">
+          <label>Domain:</label>
+          <span>${team.domain || '_______________________'}</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 8px; font-size: 10px;">
+        <label style="font-weight: 700; color: var(--text-muted); text-transform: uppercase; font-size: 9px; display: block; margin-bottom: 2px;">Problem Statement Title:</label>
+        <div style="font-weight: 600; color: var(--text-dark); font-size: 10px; line-height: 1.3; min-height: 18px; border-bottom: 1px solid var(--border-color); padding-bottom: 2px;">
+          ${team.project_title || '<span style="color:#bbb;">__________________________________________________________________________________</span>'}
+        </div>
+      </div>
+
+      <div class="tables-grid">
+        <div>${review1TableHtml}</div>
+        <div>${finalTableHtml}</div>
+      </div>
+
+      <div class="remarks-box">
+        <div class="remarks-title">Judge Remarks</div>
+        <div class="remarks-field">
+          <label>Review 1 Remarks:</label>
+          <div class="remarks-line"></div>
+          <div class="remarks-line" style="margin-top: 4px;"></div>
+        </div>
+        <div class="remarks-field" style="margin-top: 8px;">
+          <label>Review 2 Remarks:</label>
+          <div class="remarks-line"></div>
+          <div class="remarks-line" style="margin-top: 4px;"></div>
+        </div>
+      </div>
+
+      <div class="rating-section">
+        <div style="font-weight: 700; text-transform: uppercase; font-size: 8.5px; color: var(--primary);">Overall Rating:</div>
+        <div class="rating-options">
+          <div class="rating-opt"><span class="checkbox-square"></span> Outstanding</div>
+          <div class="rating-opt"><span class="checkbox-square"></span> Excellent</div>
+          <div class="rating-opt"><span class="checkbox-square"></span> Very Good</div>
+          <div class="rating-opt"><span class="checkbox-square"></span> Good</div>
+          <div class="rating-opt"><span class="checkbox-square"></span> Fair</div>
+          <div class="rating-opt"><span class="checkbox-square"></span> Needs Improvement</div>
+        </div>
+      </div>
+
+      <div class="footer-signs">
+        <div class="sign-line" style="margin-bottom: 4px;">
+          Judge's Signature
+        </div>
+        <div style="text-align: center; width: 220px; margin-bottom: 4px;">
+          <div style="border-bottom: 1.5px dotted var(--border-color); height: 16px; margin-bottom: 2px;"></div>
+          <div style="font-size: 7.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Judge's Full Name &amp; Affiliation</div>
+        </div>
+        <!-- QR code in bottom right corner -->
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 8px; text-transform: uppercase; color: var(--text-dark); font-weight: 800; margin-bottom: -15px;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(window.location.origin + '/team-details.html?id=' + team.encrypted_id)}" style="width: 85px; height: 85px; margin-bottom: 2px;" alt="QR Code" />
+          <span>Scan Details</span>
+        </div>
+      </div>
+  </div>
+`;
+        });
+
+        htmlContent += `
+</body>
+</html>
+`;
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+      });
+    }
+
+    // Print Layout Generator
+    const printBtn = document.getElementById('printBtn');
+    if (printBtn) {
+      printBtn.addEventListener('click', () => {
+        if (registrations.length === 0) {
+          showToast('No registration data available to print.', 'info');
+          return;
+        }
+
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+          showToast('Popup blocked! Please allow popups to open the print layout.', 'error');
+          return;
+        }
+
+        const registrationsJson = JSON.stringify(registrations);
+
+        printWindow.document.write(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RUSH HOUR 24 — Print Registration Sheets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #a855f7;
+      --text: #1f2937;
+      --border: #e5e7eb;
+      --bg-light: #f9fafb;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background-color: #f3f4f6;
+      padding: 20px;
+      line-height: 1.5;
+    }
+    
+    .control-panel {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--border);
+    }
+    
+    .panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .panel-options {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .select-style {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 14px;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+    
+    .select-style:focus {
+      border-color: var(--primary);
+    }
+    
+    .btn-action {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s;
+    }
+    
+    .btn-print {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-print:hover {
+      background-color: #6d28d9;
+    }
+    
+    .btn-close {
+      background-color: #e5e7eb;
+      color: #374151;
+    }
+    
+    .btn-close:hover {
+      background-color: #d1d5db;
+    }
+    
+    .print-container {
+      background: white;
+      min-height: 297mm;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .print-header {
+      border-bottom: 2px solid #111827;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .header-logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #111827;
+    }
+    
+    .header-logo span {
+      color: var(--primary);
+    }
+    
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #374151;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    
+    .header-meta {
+      text-align: right;
+      font-size: 12px;
+      color: #6b7280;
+    }
+    
+    .summary-bar {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 25px;
+      background: var(--bg-light);
+      padding: 12px 20px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+    
+    .summary-item strong {
+      color: #111827;
+    }
+    
+    .table-view {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    
+    .table-view th {
+      background-color: var(--bg-light);
+      border: 1px solid #d1d5db;
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #374151;
+      text-align: left;
+    }
+    
+    .table-view td {
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      font-size: 12px;
+      vertical-align: top;
+      color: #1f2937;
+    }
+    
+    .table-view tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+    
+    .team-name {
+      font-weight: 700;
+      color: #111827;
+      font-size: 13px;
+    }
+    
+    .college-name {
+      color: #4b5563;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+    
+    .leader-info div {
+      margin-bottom: 2px;
+    }
+    
+    .member-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e5e7eb;
+      min-height: 36px;
+    }
+    
+    .member-row:last-child {
+      border-bottom: none;
+    }
+    
+    .member-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111827;
+      white-space: nowrap;
+    }
+    
+    .member-sign-line {
+      flex-grow: 1;
+      border-bottom: 1px solid #9ca3af;
+      margin-left: 15px;
+      min-width: 80px;
+      height: 20px;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .status-badge.verified {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    
+    .status-badge.pending {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    
+    .signature-box {
+      width: 80px;
+      border-bottom: 1px solid #9ca3af;
+      height: 24px;
+    }
+    
+    .cards-view {
+      display: none;
+    }
+    
+    .team-card {
+      border: 2px solid #111827;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+      background: white;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #111827;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111827;
+    }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    
+    .card-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+    
+    .card-meta p {
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    
+    .card-meta strong {
+      color: #111827;
+    }
+    
+    .card-members {
+      grid-column: span 2;
+    }
+    
+    .card-members-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    
+    .card-members-table th {
+      text-align: left;
+      padding: 6px 8px;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      font-weight: 600;
+    }
+    
+    .card-members-table td {
+      padding: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .card-footer-notes {
+      margin-top: 20px;
+      border-top: 1px dashed #d1d5db;
+      padding-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .notes-box {
+      flex-grow: 1;
+      margin-right: 40px;
+    }
+    
+    .notes-line {
+      border-bottom: 1px dashed #9ca3af;
+      margin-top: 10px;
+      height: 20px;
+    }
+    
+    .sign-off-box {
+      min-width: 200px;
+      text-align: center;
+    }
+    
+    .sign-off-line {
+      border-bottom: 1px solid #111827;
+      margin-bottom: 5px;
+      height: 30px;
+    }
+    
+    .sign-off-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #4b5563;
+      font-weight: 600;
+    }
+
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      
+      .control-panel {
+        display: none !important;
+      }
+      
+      .print-container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      
+      .page-break {
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="control-panel">
+    <div class="panel-title">
+      <span>🖨️</span>
+      <div>
+        <strong>RUSH HOUR 24</strong>
+        <div style="font-size: 11px; font-weight: normal; color: #4b5563; margin-top: 2px;">Print Sheet Generator</div>
+      </div>
+    </div>
+    <div class="panel-options">
+      <div>
+        <label style="font-size: 12px; font-weight: 600; color: #4b5563; display: block; margin-bottom: 4px;">Layout Style</label>
+        <select id="layoutSelect" class="select-style">
+          <option value="table">Check-in Sheet (Table)</option>
+          <option value="cards">Detailed Team Cards (A4 Breaks)</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size: 12px; font-weight: 600; color: #4b5563; display: block; margin-bottom: 4px;">Payment Status</label>
+        <select id="statusFilter" class="select-style">
+          <option value="all">All Teams</option>
+          <option value="verified">Verified Only</option>
+          <option value="pending">Pending Only</option>
+        </select>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 18px;">
+        <button class="btn-action btn-print" onclick="window.print()">🖨️ Print Sheets</button>
+        <button class="btn-action btn-close" onclick="window.close()">❌ Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-container">
+    <div class="print-header">
+      <div>
+        <div class="header-logo" style="display: flex; align-items: center; gap: 8px;"><img src="/assets/logo-circle.png" alt="RUSH HOUR" style="height: 40px; width: auto; object-fit: contain;" /> 24</div>
+        <div class="header-title" id="sheetTitle">Event Check-in Sheet</div>
+      </div>
+      <div class="header-meta">
+        <div>Generated: <span id="genDate"></span></div>
+        <div style="margin-top: 2px;">Sathyabama</div>
+      </div>
+    </div>
+
+    <div class="summary-bar">
+      <div class="summary-item">Total Teams: <strong id="statTotal">0</strong></div>
+      <div class="summary-item">Total Participants: <strong id="statParticipants">0</strong></div>
+      <div class="summary-item">Verified: <strong id="statVerified" style="color: #059669;">0</strong></div>
+      <div class="summary-item">Pending: <strong id="statPending" style="color: #d97706;">0</strong></div>
+    </div>
+
+    <table class="table-view" id="tableView">
+      <thead>
+        <tr>
+          <th style="width: 5%;">S.No</th>
+          <th style="width: 18%;">Team & College</th>
+          <th style="width: 20%;">Leader Details</th>
+          <th style="width: 22%;">Members</th>
+          <th style="width: 22%;">Signature</th>
+          <th style="width: 8%; text-align: center;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+
+    <div class="cards-view" id="cardsView">
+    </div>
+  </div>
+
+  <script>
+    const registrations = ${registrationsJson};
+    
+    document.getElementById('genDate').innerText = new Date().toLocaleString();
+
+    const layoutSelect = document.getElementById('layoutSelect');
+    const statusFilter = document.getElementById('statusFilter');
+    const sheetTitle = document.getElementById('sheetTitle');
+    const tableView = document.getElementById('tableView');
+    const cardsView = document.getElementById('cardsView');
+
+    layoutSelect.addEventListener('change', render);
+    statusFilter.addEventListener('change', render);
+
+    render();
+
+    function render() {
+      const layout = layoutSelect.value;
+      const filter = statusFilter.value;
+
+      let filtered = registrations;
+      if (filter === 'verified') {
+        filtered = registrations.filter(r => r.status === 'verified');
+      } else if (filter === 'pending') {
+        filtered = registrations.filter(r => r.status !== 'verified');
+      }
+
+      const totalTeams = filtered.length;
+      const verifiedCount = filtered.filter(r => r.status === 'verified').length;
+      const pendingCount = totalTeams - verifiedCount;
+      const totalParticipants = filtered.reduce((acc, r) => acc + (r.team_size || 0), 0);
+
+      document.getElementById('statTotal').innerText = totalTeams;
+      document.getElementById('statVerified').innerText = verifiedCount;
+      document.getElementById('statPending').innerText = pendingCount;
+      document.getElementById('statParticipants').innerText = totalParticipants;
+
+      if (layout === 'table') {
+        sheetTitle.innerText = "Event Check-in Sheet (" + filter.toUpperCase() + ")";
+        tableView.style.display = 'table';
+        cardsView.style.display = 'none';
+        renderTable(filtered);
+      } else {
+        sheetTitle.innerText = "Team Dossier Cards (" + filter.toUpperCase() + ")";
+        tableView.style.display = 'none';
+        cardsView.style.display = 'block';
+        renderCards(filtered);
+      }
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('tableBody');
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 30px; color: #6b7280;">No registration records match selected criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = data.map((r, index) => {
+        const isVerified = r.status === 'verified';
+        const badgeClass = isVerified ? 'verified' : 'pending';
+        const displayStatus = isVerified ? 'VERIFIED' : 'PENDING';
+        const leaderName = r.leader_name || r.teamLeader || 'N/A';
+        const email = r.leader_email || r.email || 'N/A';
+        const phone = r.leader_phone || r.phone || 'N/A';
+
+        let members = [];
+        try {
+          members = typeof r.members === 'string' ? JSON.parse(r.members) : r.members;
+        } catch(e) {
+          members = r.members || [];
+        }
+
+        const namesHtml = members.map((m, idx) => {
+          return '<div style="padding: 8px 0; border-bottom: 1px dashed #e5e7eb; font-size: 13px; font-weight: 600; color: #111827;">' + (idx+1) + '. ' + m.name + '</div>';
+        }).join('');
+
+        const signaturesHtml = members.map((m, idx) => {
+          return '<div style="padding: 8px 0; border-bottom: 1px dashed #e5e7eb; height: 36px;"><div style="border-bottom: 1px solid #9ca3af; height: 24px; margin-top: 4px;"></div></div>';
+        }).join('');
+
+        return '<tr>' +
+          '<td>' + (index + 1) + '</td>' +
+          '<td><div class="team-name">' + r.team_name + '</div><div class="college-name">' + r.college + '</div><div style="font-size:10px; color:#6b7280; margin-top:2px;">Size: ' + r.team_size + '</div></td>' +
+          '<td class="leader-info"><div><strong>' + leaderName + '</strong></div><div style="font-size:11px; color:#4b5563;">' + email + '</div><div style="font-size:11px; color:#4b5563;">' + phone + '</div></td>' +
+          '<td>' + (namesHtml || 'No other members') + '</td>' +
+          '<td>' + signaturesHtml + '</td>' +
+          '<td style="text-align: center;"><span class="status-badge ' + badgeClass + '">' + displayStatus + '</span></td>' +
+          '</tr>';
+      }).join('');
+    }
+
+    function renderCards(data) {
+      if (data.length === 0) {
+        cardsView.innerHTML = '<div style="text-align: center; padding: 40px; color: #6b7280; border: 1px dashed var(--border); border-radius: 8px;">No registration records match selected criteria.</div>';
+        return;
+      }
+
+      cardsView.innerHTML = data.map((r, index) => {
+        const isVerified = r.status === 'verified';
+        const badgeClass = isVerified ? 'verified' : 'pending';
+        const displayStatus = isVerified ? 'VERIFIED' : 'PENDING';
+        const leaderName = r.leader_name || r.teamLeader || 'N/A';
+        const email = r.leader_email || r.email || 'N/A';
+        const phone = r.leader_phone || r.phone || 'N/A';
+        const createdDate = new Date(r.created_at).toLocaleString();
+
+        let members = [];
+        try {
+          members = typeof r.members === 'string' ? JSON.parse(r.members) : r.members;
+        } catch(e) {
+          members = r.members || [];
+        }
+
+        const membersRows = members.map((m, idx) => {
+          return '<div class="member-row">' +
+            '<span class="member-name">' + (idx + 1) + '. ' + m.name + '</span>' +
+            '<div class="member-sign-line"></div>' +
+          '</div>';
+        }).join('');
+
+        return '<div class="team-card page-break">' +
+          '<div class="card-header">' +
+            '<div>' +
+              '<div class="card-title">' + r.team_name + '</div>' +
+              '<div style="font-size:12px; color:#4b5563; margin-top:2px;">' + r.college + '</div>' +
+            '</div>' +
+            '<div style="text-align: right;">' +
+              '<span class="status-badge ' + badgeClass + '" style="font-size:11px; padding: 4px 8px;">' + displayStatus + '</span>' +
+              '<div style="font-size:10px; color:#6b7280; margin-top:4px;">Team ID: #' + r.id + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="card-grid">' +
+            '<div class="card-meta">' +
+              '<div class="card-section-title">Registration Meta</div>' +
+              '<p><strong>Leader Name:</strong> ' + leaderName + '</p>' +
+              '<p><strong>Leader Email:</strong> ' + email + '</p>' +
+              '<p><strong>Leader Phone:</strong> ' + phone + '</p>' +
+              '<p><strong>Registered On:</strong> ' + createdDate + '</p>' +
+            '</div>' +
+            '<div class="card-meta">' +
+              '<div class="card-section-title">Check-in Status</div>' +
+              '<p><strong>Team Size:</strong> ' + r.team_size + ' Members</p>' +
+              '<p><strong>Attendance Pass:</strong> [ &nbsp; ] All Present &nbsp; [ &nbsp; ] Partial</p>' +
+              '<p><strong>Kit Received:</strong> [ &nbsp; ] Yes &nbsp; [ &nbsp; ] No</p>' +
+              '<p><strong>Table Assigned:</strong> ________________________</p>' +
+            '</div>' +
+            '<div class="card-members">' +
+              '<div class="card-section-title">Team Members &amp; Signatures</div>' +
+              membersRows +
+            '</div>' +
+          '</div>' +
+          '<div class="card-footer-notes">' +
+            '<div class="notes-box">' +
+              '<div style="font-size: 10px; font-weight: 700; color: #4b5563; text-transform: uppercase;">Organizers Verification Notes</div>' +
+              '<div class="notes-line"></div>' +
+              '<div class="notes-line"></div>' +
+            '</div>' +
+            '<div class="sign-off-box">' +
+              '<div class="sign-off-line"></div>' +
+              '<div class="sign-off-label">Verifier Signature</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+  ${'</' + 'script>'}
+</body>
+</html>
+        `);
+        printWindow.document.close();
+      });
+    }
+
+    // ─── Timer & Announcements Mainframe Logic ────────────────────────────────
+    let timerState = { actualStartTime: null, startDate: '', durationHours: 24, isRedAlert: false, remainingSeconds: 0 };
+    let saConfigPollCounter = 0;
+    let saListenersBound = false;
+
+    async function initTimerTab() {
+      if (timerTabInterval) clearInterval(timerTabInterval);
+      await syncSuperAdminConfig();
+      if (els.saStartDateInput && timerState.startDate) els.saStartDateInput.value = timerState.startDate;
+      if (els.saDurationInput) els.saDurationInput.value = timerState.durationHours;
+      if (els.saCurrentDuration) els.saCurrentDuration.textContent = timerState.durationHours + 'h';
+      fetchAnnouncements();
+      timerTabInterval = setInterval(updateTimerStatus, 1000);
+      setupTimerTabListeners();
+    }
+
+    async function updateTimerStatus() {
+      saConfigPollCounter++;
+      if (saConfigPollCounter >= 5) { saConfigPollCounter = 0; await syncSuperAdminConfig(); }
+      else if (timerState.actualStartTime && timerState.remainingSeconds > 0) timerState.remainingSeconds--;
+      renderSuperAdminClock();
+    }
+
+    async function syncSuperAdminConfig() {
+      try {
+        const res = await fetch('/api/hackathon-config');
+        const data = await res.json();
+        timerState.startDate = data.startDate;
+        timerState.actualStartTime = data.actualStartTime;
+        timerState.isRedAlert = !!data.isRedAlert;
+        timerState.durationHours = data.durationHours ? Number(data.durationHours) : 24;
+        if (data.actualStartTime) {
+          const end = new Date(new Date(data.actualStartTime).getTime() + timerState.durationHours * 3600000);
+          timerState.remainingSeconds = Math.max(0, Math.floor((end - Date.now()) / 1000));
+        } else { timerState.remainingSeconds = timerState.durationHours * 3600; }
+        if (els.saCurrentDuration) els.saCurrentDuration.textContent = timerState.durationHours + 'h';
+      } catch (e) { console.error('syncSuperAdminConfig error', e); }
+    }
+
+    function renderSuperAdminClock() {
+      if (!els.superAdminClock) return;
+      if (!timerState.actualStartTime) {
+        els.superAdminClock.innerText = pad2(timerState.durationHours) + ':00:00';
+        els.superAdminClock.style.color = '#a855f7';
+        els.superAdminTimerStatus.innerText = 'SYSTEM STANDBY';
+        els.superAdminTimerStatus.style.color = '#cfc2d6';
+      } else {
+        const r = timerState.remainingSeconds;
+        const h = Math.floor(r / 3600), m = Math.floor((r % 3600) / 60), s = r % 60;
+        els.superAdminClock.innerText = pad2(h) + ':' + pad2(m) + ':' + pad2(s);
+        if (r <= 0) {
+          els.superAdminClock.style.color = '#ef4444';
+          els.superAdminTimerStatus.innerText = 'HACKATHON CONCLUDED'; els.superAdminTimerStatus.style.color = '#ef4444';
+        } else if (timerState.isRedAlert) {
+          els.superAdminClock.style.color = '#f59e0b';
+          els.superAdminTimerStatus.innerText = 'OVERDRIVE RED ALERT ACTIVE'; els.superAdminTimerStatus.style.color = '#f59e0b';
+        } else {
+          els.superAdminClock.style.color = '#10b981';
+          els.superAdminTimerStatus.innerText = 'LIVE TIMER COUNTDOWN RUNNING'; els.superAdminTimerStatus.style.color = '#10b981';
+        }
+      }
+      if (els.saToggleRedAlertBtn) {
+        els.saToggleRedAlertBtn.innerText = timerState.isRedAlert ? '🚨 Stand Down (Disable Alert)' : '🚨 Toggle Overdrive (Red Alert)';
+        els.saToggleRedAlertBtn.style.background = timerState.isRedAlert ? 'linear-gradient(135deg,#ef4444 0%,#dc2626 100%)' : 'linear-gradient(135deg,#f59e0b 0%,#d97706 100%)';
+      }
+    }
+
+    function pad2(n) { return String(n).padStart(2,'0'); }
+
+    async function fetchAnnouncements() {
+      try {
+        const res = await fetch('/api/public/announcements');
+        if (res.ok) renderAnnouncementsList(await res.json());
+      } catch(e) {}
+    }
+
+    function renderAnnouncementsList(list) {
+      if (!els.saAnnouncementsList) return;
+      if (!list || !list.length) { els.saAnnouncementsList.innerHTML = '<div style="text-align:center;color:var(--white-40);font-size:13px;padding:20px;">No active announcements.</div>'; return; }
+      els.saAnnouncementsList.innerHTML = list.map(a => {
+        const icon = a.type === 'urgent' ? '🔥' : a.type === 'milestone' ? '🏆' : '💡';
+        const border = a.type === 'urgent' ? 'rgba(239,68,68,0.4)' : a.type === 'milestone' ? 'rgba(16,185,129,0.4)' : 'var(--glass-border)';
+        const t = new Date(a.created_at || new Date()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:8px;border:1px solid ${border};background:rgba(255,255,255,0.02);gap:15px;"><div style="display:flex;gap:10px;align-items:flex-start;flex-grow:1;"><span style="font-size:16px;margin-top:2px;">${icon}</span><div><div style="font-size:13px;font-weight:500;color:var(--white-90);line-height:1.4;">${a.message}</div><div style="font-size:10px;color:var(--white-40);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;">${a.type} • ${t}</div></div></div><button class="action-btn" onclick="window.deleteAnnouncement(${a.id})" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;padding:6px 12px;font-size:11px;cursor:pointer;border-radius:4px;">Delete</button></div>`;
+      }).join('');
+    }
+
+    async function deleteAnnouncement(id) {
+      const res = await fetch('/api/admin/announcements/' + id, { method: 'DELETE', headers: { Authorization: 'Bearer ' + activeToken } });
+      if (res.ok) { showToast('Deleted.', 'success'); fetchAnnouncements(); } else showToast('Delete failed.', 'error');
+    }
+    window.deleteAnnouncement = deleteAnnouncement;
+
+    function setupTimerTabListeners() {
+      if (saListenersBound) return;
+      saListenersBound = true;
+
+      els.saStartTimerBtn?.addEventListener('click', async () => {
+        const res = await fetch('/api/countdown/start', { method: 'POST', headers: { Authorization: 'Bearer ' + activeToken } });
+        if (res.ok) { showToast('Timer started!', 'success'); await syncSuperAdminConfig(); renderSuperAdminClock(); }
+        else showToast('Failed to start.', 'error');
+      });
+
+      els.saResetTimerBtn?.addEventListener('click', async () => {
+        const res = await fetch('/api/countdown/reset', { method: 'POST', headers: { Authorization: 'Bearer ' + activeToken } });
+        if (res.ok) { showToast('Timer reset.', 'success'); await syncSuperAdminConfig(); renderSuperAdminClock(); }
+        else showToast('Failed to reset.', 'error');
+      });
+
+      els.saToggleRedAlertBtn?.addEventListener('click', async () => {
+        const next = !timerState.isRedAlert;
+        const res = await fetch('/api/countdown/redalert', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + activeToken }, body: JSON.stringify({ isRedAlert: next }) });
+        if (res.ok) { showToast(next ? 'Overdrive ON!' : 'Overdrive OFF.', 'success'); await syncSuperAdminConfig(); renderSuperAdminClock(); }
+        else showToast('Failed.', 'error');
+      });
+
+      els.saSetStartDateBtn?.addEventListener('click', async () => {
+        const v = els.saStartDateInput.value.trim();
+        if (!v) { showToast('Enter a valid date.', 'error'); return; }
+        const res = await fetch('/api/countdown/set-start-date', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + activeToken }, body: JSON.stringify({ startDate: v }) });
+        if (res.ok) { showToast('Start date saved.', 'success'); await syncSuperAdminConfig(); renderSuperAdminClock(); }
+        else showToast('Failed to save date.', 'error');
+      });
+
+      els.saSetDurationBtn?.addEventListener('click', async () => {
+        const hours = parseInt(els.saDurationInput.value);
+        if (!hours || hours < 1) { showToast('Enter a valid duration.', 'error'); return; }
+        const res = await fetch('/api/countdown/set-duration', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + activeToken }, body: JSON.stringify({ durationHours: hours }) });
+        if (res.ok) { showToast('Duration saved: ' + hours + 'h', 'success'); timerState.durationHours = hours; if (els.saCurrentDuration) els.saCurrentDuration.textContent = hours + 'h'; await syncSuperAdminConfig(); renderSuperAdminClock(); }
+        else showToast('Failed to save duration.', 'error');
+      });
+
+      els.saSetRemainingBtn?.addEventListener('click', async () => {
+        const h = parseInt(els.saRemainingHrs.value) || 0;
+        const m = parseInt(els.saRemainingMins.value) || 0;
+        const s = parseInt(els.saRemainingSecs.value) || 0;
+        const totalSecs = h * 3600 + m * 60 + s;
+        if (totalSecs <= 0) { showToast('Enter a valid remaining time.', 'error'); return; }
+        // Backfill: set actualStartTime so that (now + totalSecs) = endTime
+        const durSecs = timerState.durationHours * 3600;
+        const newStartTime = new Date(Date.now() - (durSecs - totalSecs) * 1000).toISOString();
+        const res = await fetch('/api/countdown/set-start-time', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + activeToken }, body: JSON.stringify({ startTime: newStartTime }) });
+        if (res.ok) { showToast('Remaining time set to ' + pad2(h) + ':' + pad2(m) + ':' + pad2(s), 'success'); await syncSuperAdminConfig(); renderSuperAdminClock(); }
+        else showToast('Failed to set remaining time.', 'error');
+      });
+
+      els.saBroadcastBtn?.addEventListener('click', async () => {
+        const msg = els.saAnnouncementInput.value.trim();
+        const type = els.saAnnouncementType.value;
+        if (!msg) { showToast('Enter a message.', 'error'); return; }
+        const res = await fetch('/api/admin/announcements', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + activeToken }, body: JSON.stringify({ message: msg, type }) });
+        if (res.ok) { showToast('Broadcasted!', 'success'); els.saAnnouncementInput.value = ''; fetchAnnouncements(); }
+        else showToast('Failed to broadcast.', 'error');
+      });
+    }
+
+    // Toast notifications utility
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span class="toast-message">${message}</span>
+        <span class="toast-close" onclick="this.parentElement.remove()">&times;</span>
+      `;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.3s forwards';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+  </script>
+</body>
+
+</html>

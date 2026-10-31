@@ -1,0 +1,9 @@
+node_modules/
+.env
+scratch_email_preview.html
+uploads/
+private/backup_*.json
+private/zeroth_hour_features.json
+scratch/teams_current_db.json
+.vscode/
+vid/

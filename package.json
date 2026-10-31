@@ -1,0 +1,19 @@
+{
+  "name": "rush-hour-24-hackathon",
+  "version": "1.0.0",
+  "description": "24-Hours National Hackathon Landing Page & Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "multer": "^2.1.1",
+    "nodemailer": "^8.0.11",
+    "pg": "^8.11.5",
+    "resend": "^6.12.4",
+    "ws": "^8.21.0"
+  }
+}

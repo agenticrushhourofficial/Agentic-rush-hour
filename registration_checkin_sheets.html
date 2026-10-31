@@ -1,0 +1,4406 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RUSH HOUR 24 — Official Registration Check-in Sheets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-subtle: #e0e7ff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border-color: #cbd5e1;
+      --bg-header: #f8fafc;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      margin: 20px;
+      line-height: 1.2;
+      background-color: #ffffff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    tr {
+      page-break-inside: avoid;
+    }
+    th {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-header);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      font-size: 8.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    td {
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      font-size: 9.5px;
+      vertical-align: middle;
+    }
+    .team-id-badge {
+      display: inline-block;
+      background-color: var(--primary-subtle);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 9px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: 'Outfit', sans-serif;
+    }
+    .table-no-text {
+      font-size: 8.5px;
+      font-weight: 800;
+      color: #b45309;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+    .team-name {
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      margin-top: 4px;
+    }
+    .college {
+      font-size: 7.5px;
+      color: var(--text-muted);
+      margin-top: 1px;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+    .leader-info-block {
+      line-height: 1.3;
+    }
+    .leader-name {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .phone-text {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 10px;
+    }
+    
+    .roster-signature-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      max-width: 320px;
+    }
+    .roster-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 18px;
+    }
+    .member-name-text {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 9.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 180px;
+    }
+    .signature-underline {
+      border-bottom: 1px dashed var(--border-color);
+      width: 120px;
+      height: 14px;
+    }
+
+    @media print {
+      body {
+        margin: 10px;
+      }
+      .no-print {
+        display: none !important;
+      }
+      th {
+        background-color: var(--bg-header) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .team-id-badge {
+        background-color: var(--primary-subtle) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Control Bar (hidden during printing) -->
+  <div class="no-print" style="background: #1e1b4b; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; margin-bottom: 20px; font-family: 'Inter', sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div style="font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+      <span>📋 Check-in Sheets Preview</span>
+      <span style="background: rgba(255,255,255,0.2); font-size: 10px; padding: 2px 6px; border-radius: 12px; font-weight: 500;">Total Teams: 76</span>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button onclick="window.print()" style="background: #4f46e5; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; font-family: 'Inter', sans-serif;">🖨️ Print Sheets</button>
+      <a href="/api/admin/download-checkin-pdf?token=brvem27g0vaktgj5u3g46q&download=true" style="background: #10b981; color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; display: inline-block; font-size: 12px; font-family: 'Inter', sans-serif;">📥 Download PDF</a>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 55px; text-align: center;">ID / Table</th>
+        <th style="width: 170px;">Team / College</th>
+        <th style="width: 160px;">Leader Details</th>
+        <th>Roster Members & Signatures</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#1</span>
+          <div class="table-no-text">T-D4</div>
+        </td>
+        <td>
+          <div class="team-name">Byte Builders</div>
+          <div class="college">Sathyabama institute of science and technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Harshavardhani N</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">98841 33053</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Harshavardhani N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Priyadharshini S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Gokul S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Kaviya S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#2</span>
+          <div class="table-no-text">T-D6</div>
+        </td>
+        <td>
+          <div class="team-name">Grand Theft Algorithm</div>
+          <div class="college">SSN college of engineering</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Dharshan Sathish Kumar</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">9632371911</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Dharshan Sathish Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sanjev M P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. R Rohini Chella <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Ranjini S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#3</span>
+          <div class="table-no-text">T-B1</div>
+        </td>
+        <td>
+          <div class="team-name">After Hours !</div>
+          <div class="college">SRI SAIRAM ENGINEERING COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">MITHILESH M</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">8778908312</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. MITHILESH M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. PRANAV P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. HARSITA S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. MANODHARANI S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. THARSHANA S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#4</span>
+          <div class="table-no-text">T-A1</div>
+        </td>
+        <td>
+          <div class="team-name">Golden Dawn</div>
+          <div class="college">Thiagarajar college of engineering</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Kalaicharan S</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">8220961651</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Kalaicharan S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Solomon S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. D. PRASANNA <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Srirangarajan U <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. S.JEYANTHAN <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#5</span>
+          <div class="table-no-text">T-C1</div>
+        </td>
+        <td>
+          <div class="team-name">Lightning</div>
+          <div class="college">KPR Institute of Engineering and Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Nakul T</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">7604989091</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Nakul T <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sachin A S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Rajeswaran D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Sabaris <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Sanjay <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Praveen <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#6</span>
+          <div class="table-no-text">T-A4</div>
+        </td>
+        <td>
+          <div class="team-name">EcoCoders</div>
+          <div class="college">Sri Manakula Vinayagar Engineering college</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Sivapriya S</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">9629422115</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Sivapriya S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Meena C <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Priyanka A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Dharanya S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Vaishnavi G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#7</span>
+          <div class="table-no-text">T-B2</div>
+        </td>
+        <td>
+          <div class="team-name">HACK FORGE</div>
+          <div class="college">SSN COLLEGE OF ENGINEERING</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">I ADITYA ANNAMALAI</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8861671352</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. I ADITYA ANNAMALAI <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. JEEVAN SAI V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. AAKASH B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. JYOSHITHA D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. KAVIYA E <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Harish Rahul P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#8</span>
+          <div class="table-no-text">T-D2</div>
+        </td>
+        <td>
+          <div class="team-name">Adengappa Aru Peru</div>
+          <div class="college">Sathyabama Institute Of Science & Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Gopinath R</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8148448835</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Gopinath R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Pranesh Mithun G S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Meda Venkata Sai Charan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Shivani SK <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Ananya Harish <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. K Gopi <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#9</span>
+          <div class="table-no-text">T-D8</div>
+        </td>
+        <td>
+          <div class="team-name">Mighty Majo</div>
+          <div class="college">Sathyabama institution of science and technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Shriram Baskaran</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 93631 79481</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Shriram Baskaran <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sham Benedict Ruban S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Sundaravishal M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Shakthi R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#10</span>
+          <div class="table-no-text">T-A3</div>
+        </td>
+        <td>
+          <div class="team-name">TECHTONIC</div>
+          <div class="college">SRMIST,RAMAPURAM</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">PRASANNA VENKATESH R</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9363691387</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. PRASANNA VENKATESH R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. KIRAN U <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. ESWAR KRISHNA R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. TILAK A L <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. SANJAY R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. SYED AMMAAR AHAMED <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#11</span>
+          <div class="table-no-text">T-B11</div>
+        </td>
+        <td>
+          <div class="team-name">ECO-TECH</div>
+          <div class="college">Velammal college of engineering and technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">A. Vishnu vardan</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 94899 33127</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. A. Vishnu vardan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. M. SHARAVANA AJAY <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Dharshani R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Suvashika Mai K O <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#12</span>
+          <div class="table-no-text">T-C3</div>
+        </td>
+        <td>
+          <div class="team-name">Runtime Terrors</div>
+          <div class="college">Easwari Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Ashmitha R</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">6374306286</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Ashmitha R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Arul Prakash P S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Immanuel Raj E <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Harritha S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Bishwanth Kumar S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Sharmili J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#13</span>
+          <div class="table-no-text">T-B6</div>
+        </td>
+        <td>
+          <div class="team-name">Fivefold</div>
+          <div class="college">Amrita Vishwa vidyapeetham</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Padmavathi G</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 73588 23426</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Padmavathi G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Kiruthika sri <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Vijay Aditiya <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Thanishkar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Bhavadharani R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#14</span>
+          <div class="table-no-text">T-D3</div>
+        </td>
+        <td>
+          <div class="team-name">Cyber sentinals</div>
+          <div class="college">Sathyabama institute of science and technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Lokesh.J</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9042578882</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Lokesh.J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sarvesh.V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Shittesh.S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Kamalesh.S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Nandish.A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Nithish.B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#15</span>
+          <div class="table-no-text">T-A14</div>
+        </td>
+        <td>
+          <div class="team-name">THAMARAI.V</div>
+          <div class="college">SIMATS ENGINEERING</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Thamarai V</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">9790370516</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Thamarai V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Rithika K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Thasilma Nasreen J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Kanisha K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#16</span>
+          <div class="table-no-text">T-D1</div>
+        </td>
+        <td>
+          <div class="team-name">Hackronauts</div>
+          <div class="college">Sathyabama Institute of Science and Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Advika M</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">8838541892</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Advika M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Harshitha Kamachi B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Harshitha Devarapalli <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Anushka R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#17</span>
+          <div class="table-no-text">T-A9</div>
+        </td>
+        <td>
+          <div class="team-name">VENTURA</div>
+          <div class="college">KARPAGAM ACADEMY OF HIGHER EDUCATION</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">NIRANJAN R</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">9342683018</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. NIRANJAN R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. SHREEJAN V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. SELISON <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. VYAS D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. YASHWANTA B.S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#18</span>
+          <div class="table-no-text">T-C2</div>
+        </td>
+        <td>
+          <div class="team-name">Code Titans</div>
+          <div class="college">Prathyusha Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">RanjithKumar M</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">6374453851</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. RanjithKumar M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Roja V M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Madhu mitha B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#19</span>
+          <div class="table-no-text">T-B4</div>
+        </td>
+        <td>
+          <div class="team-name">TECH TITANS</div>
+          <div class="college">Sathyabama institute of technology and technology Sriperumbudur</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">MUNUSWAMY S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8122736257</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. MUNUSWAMY S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Dilip kumar R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Sharmila VS <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Dharani p <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Yeshwanth kumar K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Imran khan A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#20</span>
+          <div class="table-no-text">T-B3</div>
+        </td>
+        <td>
+          <div class="team-name">POWERHOUSE</div>
+          <div class="college">Sathyabama Institute of Science and Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Vinay E</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">7401005002</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Vinay E <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sara Fareen K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Akshaya RK <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Aishwarya S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#21</span>
+          <div class="table-no-text">T-B5</div>
+        </td>
+        <td>
+          <div class="team-name">Zyro</div>
+          <div class="college">KARPAGAM ACADEMY OF HIGHER EDUCATION</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Ashok N</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9385335847</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Ashok N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Bavithran R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Dharshini K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Dharshana R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Kamali S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Madhumitha S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#22</span>
+          <div class="table-no-text">T-C4</div>
+        </td>
+        <td>
+          <div class="team-name">TechSphere</div>
+          <div class="college">Sri Manakula Vinayagar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Yuvasri P</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">8925701714</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Yuvasri P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sharani V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Dharanii K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Nalini N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#23</span>
+          <div class="table-no-text">T-C5</div>
+        </td>
+        <td>
+          <div class="team-name">CIPHERGRID</div>
+          <div class="college">KARPAGAM ACADEMY OF HIGHER EDUCATION COIMBATORE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">IMRAWN S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">7094577165</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. IMRAWN S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Harshini Balasubramani <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. PRITHISHA R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. KAVYA S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. KISHORE G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. MELVIN <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#24</span>
+          <div class="table-no-text">T-A6</div>
+        </td>
+        <td>
+          <div class="team-name">Bug slayers</div>
+          <div class="college">Karpagam academy of higher education</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Harish I</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8015551614</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Harish I <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Deepak B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Hareesh K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Dharunram R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Gokulakrishnan S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Avinash R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#25</span>
+          <div class="table-no-text">T-C6</div>
+        </td>
+        <td>
+          <div class="team-name">Techpulse</div>
+          <div class="college">SRM RAMAPURAM IST</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Monish Ks</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8825744086</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Monish Ks <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Kesavsai <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Revant <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Adwaith <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Kishore <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Gowtam <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#26</span>
+          <div class="table-no-text">T-C2</div>
+        </td>
+        <td>
+          <div class="team-name">NovaX</div>
+          <div class="college">Panimalar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Harshini D</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9381362668</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Harshini D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Hansika Malapati <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Harshini A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#27</span>
+          <div class="table-no-text">T-A5</div>
+        </td>
+        <td>
+          <div class="team-name">InnovateX</div>
+          <div class="college">Panimalar engineering college</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Abishek K</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">8428391526</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Abishek K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Ajay Kumar D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Aakash Subramanian V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#28</span>
+          <div class="table-no-text">T-D11</div>
+        </td>
+        <td>
+          <div class="team-name">TrendSetter</div>
+          <div class="college">SRI MANAKULA VINAYAGAR ENGINEERING</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">SIVASANKAR S</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">6380268668</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. SIVASANKAR S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. JEEVANRAJ M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. KRISH K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. DARANITHARAN A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. ANANDTH ATHREYA R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#29</span>
+          <div class="table-no-text">T-A5</div>
+        </td>
+        <td>
+          <div class="team-name">PAWAN</div>
+          <div class="college">A.M.JAIN COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Abhaya saran Nayak</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9087256525</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Abhaya saran Nayak <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Deepak Paswan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. darshan sharma <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#30</span>
+          <div class="table-no-text">T-C7</div>
+        </td>
+        <td>
+          <div class="team-name">phoenix</div>
+          <div class="college">Kalasalingam Academy of Research and Education</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Revanth V</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9080415498</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Revanth V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Naveen <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Mohamed Tharik <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#31</span>
+          <div class="table-no-text">T-C7</div>
+        </td>
+        <td>
+          <div class="team-name">Code Crafters</div>
+          <div class="college">Lakshmi bangaru Arts and sciences collage</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Arun Kumar</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9384988196</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Arun Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Mohan Raj <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Tharun <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#32</span>
+          <div class="table-no-text">T-B7</div>
+        </td>
+        <td>
+          <div class="team-name">GALAXY</div>
+          <div class="college">KARPAGAM ACADEMY OF HIGHER EDUCATION</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">DARSHAN S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9385821205</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. DARSHAN S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. GOKUL M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. DEENADHAYALAN D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. GAYATHRI R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. GOKUL V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. BRIGHTSON V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#33</span>
+          <div class="table-no-text">T-D7</div>
+        </td>
+        <td>
+          <div class="team-name">NOVA-KNIGHTS</div>
+          <div class="college">SRI MANAKULA VINAYAGAR ENGINEERING COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">MANOJ D</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">6382123268</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. MANOJ D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. P SHANJJAAY <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. HARISH R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. MOHAMED BASHID J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. KALAIYARASAN T <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. SRIDHARSAN M K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#34</span>
+          <div class="table-no-text">T-A12</div>
+        </td>
+        <td>
+          <div class="team-name">Nexus one</div>
+          <div class="college">Hindustan institute of technology and science</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Lakshmanan R</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9176354570</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Lakshmanan R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Surya M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Pansin A S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#35</span>
+          <div class="table-no-text">T-A8</div>
+        </td>
+        <td>
+          <div class="team-name">Innovators United</div>
+          <div class="college">RMK ENGINEERING COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Suriya S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8072816532</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Suriya S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. karthigeyan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Akshaykumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. S.Vignesh Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Ivan Nilash X <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Sabarivasan M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#36</span>
+          <div class="table-no-text">T-B15</div>
+        </td>
+        <td>
+          <div class="team-name">CREVIOTICS</div>
+          <div class="college">NANDHA ENGINEERING COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Kavinraj R</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">7200629829</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Kavinraj R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Rupesh S Nair <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Praveen S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. GUHAN D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Harish S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#37</span>
+          <div class="table-no-text">T-A12</div>
+        </td>
+        <td>
+          <div class="team-name">aquanavix</div>
+          <div class="college">Jeppiaar institute of technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">A.Kishore</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9487058147</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. A.Kishore <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. R.D.Sharvesh <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. R.Sarankumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#38</span>
+          <div class="table-no-text">T-C8</div>
+        </td>
+        <td>
+          <div class="team-name">AI medX</div>
+          <div class="college">Karpagam Academy of higher education</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Anusri A</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">91050193003</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Anusri A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Suyambu Anandh J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Sreejith M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Nandhini H <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Mohamed Suhail M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Prabhu S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#39</span>
+          <div class="table-no-text">T-D13</div>
+        </td>
+        <td>
+          <div class="team-name">Atlas</div>
+          <div class="college">SRM IST KTR</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Naazim Jaleel</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9747405872</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Naazim Jaleel <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Mugilan M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Vetrivel Anbuvel <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#40</span>
+          <div class="table-no-text">T-D5</div>
+        </td>
+        <td>
+          <div class="team-name">VITALSYNC</div>
+          <div class="college">BANNARI AMMAN INSTITUTE OF TECHNOLOGY</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">MUKESH M</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">9361522578</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. MUKESH M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. MUGIL P S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. PRABAVATHI D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. MEGHA G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#41</span>
+          <div class="table-no-text">T-B9</div>
+        </td>
+        <td>
+          <div class="team-name">LUMORA</div>
+          <div class="college">SRI MANAKULA VINAYAGAR ENGINEERING COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">TAMIZHESAI.S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9360771221</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. TAMIZHESAI.S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. SUPRRIYA.P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. MANASTHA.S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. DEEPIKA.B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. ABINAYA.S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. MAMATHY.S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#42</span>
+          <div class="table-no-text">T-D9</div>
+        </td>
+        <td>
+          <div class="team-name">Debug Dynasty</div>
+          <div class="college">Thiagarajar College of Engineering</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">AMMETESH R</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9994534546</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. AMMETESH R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sundaram R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Agheleish R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Sajan Raj V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Anbu Pravin R R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Joel Raj J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#43</span>
+          <div class="table-no-text">T-D13</div>
+        </td>
+        <td>
+          <div class="team-name">TECHWALA</div>
+          <div class="college">Hindustan Institute Of Technology and Science</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">KODEESHWARAN</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9514734314</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. KODEESHWARAN <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. MUGILAN T <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. NISHANTH S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#44</span>
+          <div class="table-no-text">T-D4</div>
+        </td>
+        <td>
+          <div class="team-name">Project kaliyuga</div>
+          <div class="college">New prince shri bhavani college of engineering & technology,Sri Sivasubramaniya Nadar (SSN) College of Engineering,Rajalakshmi engineering college</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">YOKESHWARAN P</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9791149749</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. YOKESHWARAN P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Srihari P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Dewansh Singh <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#45</span>
+          <div class="table-no-text">T-A7</div>
+        </td>
+        <td>
+          <div class="team-name">Mutex</div>
+          <div class="college">Panimalar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Sabarish R</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">8220542450</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Sabarish R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Vignesh R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Shafeeq S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Rohith V K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#46</span>
+          <div class="table-no-text">T-C10</div>
+        </td>
+        <td>
+          <div class="team-name">GRID GUARD</div>
+          <div class="college">MEENAKSHI SUNDARARAJAN ENGINEERING COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">SARAVANA NAGESWAR B</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">7358620251</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. SARAVANA NAGESWAR B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. PRANAVH H <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. NIKESH KUMAR B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. MONISH KUMAR S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. MUTHU KUMARAN <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. MOHANA KARUPAYYA <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#47</span>
+          <div class="table-no-text">T-D10</div>
+        </td>
+        <td>
+          <div class="team-name">Impact Coders</div>
+          <div class="college">Panimalar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Saravanakumar G</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">6379961114</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Saravanakumar G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Manoj R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Mohammed Aaseef <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Sabarish J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. RONALD REX C H <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. DHARANI DHARAN J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#48</span>
+          <div class="table-no-text">T-D6</div>
+        </td>
+        <td>
+          <div class="team-name">VEER</div>
+          <div class="college">Panimalar engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">G V MANISH</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9840895668</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. G V MANISH <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Rayhaan B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Keerthana pugalenthi <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#49</span>
+          <div class="table-no-text">T-D8</div>
+        </td>
+        <td>
+          <div class="team-name">The Tech Sparks</div>
+          <div class="college">Chennai institute of technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Karunya Priya NS</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">9444455782</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Karunya Priya NS <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Tharnika <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Varun <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#50</span>
+          <div class="table-no-text">T-A11</div>
+        </td>
+        <td>
+          <div class="team-name">Avenix</div>
+          <div class="college">MEENAKSHI SUNDARARAJAN ENGINEERING COLLEGE</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">S.A. Dharaneesh</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">6369473107</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. S.A. Dharaneesh <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Gokula kannan S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Arul praksh S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Kumaravelu S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Akilesh L <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Muhammad thoufik ansari N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#51</span>
+          <div class="table-no-text">T-B8</div>
+        </td>
+        <td>
+          <div class="team-name">Code Huntrix</div>
+          <div class="college">Saveetha Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Deepshika Hemanth Kumar</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">6374531799</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Deepshika Hemanth Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Mohamed Riyaz Ahamed <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Ramitha Chowdary S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Nabithra Aravindan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#52</span>
+          <div class="table-no-text">T-C11</div>
+        </td>
+        <td>
+          <div class="team-name">Cold Boot</div>
+          <div class="college">Sri Sairam Engineering College  Chennai</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">VAJAHATH M S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 99405 90139</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. VAJAHATH M S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. KUGAN G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. JEEVAN PRAKASH T <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. DHAYALAN K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. BARATH CHAND PACHA <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. DHINAKARAN KK <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#53</span>
+          <div class="table-no-text">T-C9</div>
+        </td>
+        <td>
+          <div class="team-name">Invictus</div>
+          <div class="college">Rajalakshmi Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Gayathri S</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">8939630742</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Gayathri S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Rithvika B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Rounith Arrun Rathesh <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Bhavna Sarathy <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#54</span>
+          <div class="table-no-text">T-C12</div>
+        </td>
+        <td>
+          <div class="team-name">code crafters</div>
+          <div class="college">nadar saraswathi college of engineering and technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Chella Muthu Kumar</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">8681819529</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Chella Muthu Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. jothiram.k <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. kisho varma.k <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. joshua.A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#55</span>
+          <div class="table-no-text">T-B12</div>
+        </td>
+        <td>
+          <div class="team-name">AetherCode</div>
+          <div class="college">Sathyabama Institute of Science and Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Surya P</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">7094920056</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Surya P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Vignesh M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Rathish B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Vijay Ragavan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Shreyas S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Mathavan P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#56</span>
+          <div class="table-no-text">T-B11</div>
+        </td>
+        <td>
+          <div class="team-name">Goffy_coders</div>
+          <div class="college">Panimalar engineering college</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Bhavanesh L</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">8072140731</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Bhavanesh L <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Carol Antony Ranjith A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Bharath P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#57</span>
+          <div class="table-no-text">T-D12</div>
+        </td>
+        <td>
+          <div class="team-name">Hackmates</div>
+          <div class="college">Meenakshi Sundararajan engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Manikandan B</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">+918056019477</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Manikandan B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Akash M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Deepak K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Jeeva bharathi S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Baradhwaj M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Gokul A K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#58</span>
+          <div class="table-no-text">T-A13</div>
+        </td>
+        <td>
+          <div class="team-name">MERCX</div>
+          <div class="college">Meenakshi Sundararajan engineering college</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">G.GIRI</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8838204553</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. G.GIRI <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. R.K.ATHISH <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. MOHITH <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. V.DHASHVANTH <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. N.JOHEN GIOVANNI <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. B.PRAVEEN KUMAR <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#59</span>
+          <div class="table-no-text">T-C13</div>
+        </td>
+        <td>
+          <div class="team-name">CIPHER UNIT</div>
+          <div class="college">Sri sai ram engineering college</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Sakthi prakash S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9080921039</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Sakthi prakash S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. ATHISHWAR K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. VENKATESAN S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Karmugilan R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. SANJAY B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Siva Subramaniyan s <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#60</span>
+          <div class="table-no-text">T-B14</div>
+        </td>
+        <td>
+          <div class="team-name">AI Ignite</div>
+          <div class="college">Sathyabama institute of science and technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Kaaviya K S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 63839 60517</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Kaaviya K S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. SUBHA ANANTHI M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. SREEMATHI M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. PASUMPON K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. NARESH KUMAR P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. NITHINRAJ R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#61</span>
+          <div class="table-no-text">T-C14</div>
+        </td>
+        <td>
+          <div class="team-name">HyperSync</div>
+          <div class="college">Panimalar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Pavan K</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">7200486508</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Pavan K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Pravin Kumar A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Mohith Hariharan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Jeevitha P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Akshaya C J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Jamuna Rani V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#62</span>
+          <div class="table-no-text">T-B13</div>
+        </td>
+        <td>
+          <div class="team-name">AKIOT</div>
+          <div class="college">St Joseph's institute of technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Ashwin K</span> (5)<br>
+            <strong>Ph:</strong> <span class="phone-text">9942914466</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Ashwin K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Jai Prajan R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Adline Sharon R B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Sree Rajarajeshwari R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Sai Saran <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#63</span>
+          <div class="table-no-text">T-A14</div>
+        </td>
+        <td>
+          <div class="team-name">Team  Visionx</div>
+          <div class="college">RATHINAM TECHNICAL CAMPUS</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Makeshwaran Rangasamy</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">7418842259</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Makeshwaran Rangasamy <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Pradeep N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Nithish SA <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(I)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#64</span>
+          <div class="table-no-text">T-D14</div>
+        </td>
+        <td>
+          <div class="team-name">Autom Squad</div>
+          <div class="college">Sri Eshwar College of Engineering</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">MANISH RAGHUL S J</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8220563218</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. MANISH RAGHUL S J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Nethra V D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Deepika K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Sathish M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Pooja P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Nicksan Raj <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#65</span>
+          <div class="table-no-text">T-A15</div>
+        </td>
+        <td>
+          <div class="team-name">Circuit Breakers</div>
+          <div class="college">Panimalar engineering college</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Nenesh raj</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8056619082</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Nenesh raj <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Kabilesh <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Siva <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Akila <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Jagan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Inaya <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#66</span>
+          <div class="table-no-text">T-C15</div>
+        </td>
+        <td>
+          <div class="team-name">AOT</div>
+          <div class="college">Sri Manakula Vinayagar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Surendar Kumar</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9363532027</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Surendar Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Mahasweta S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Arsha Shanaki D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Daranya <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Arya R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Karthik Kishore <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#67</span>
+          <div class="table-no-text">T-D15</div>
+        </td>
+        <td>
+          <div class="team-name">Master of None</div>
+          <div class="college">Meenakshi Sundararajan Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Nithyalakshmi S</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9384647518</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Nithyalakshmi S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sarjanaa S N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Vaishnavi S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Ritika S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Saidharshini P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Nithya devi <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#68</span>
+          <div class="table-no-text">T-A16</div>
+        </td>
+        <td>
+          <div class="team-name">EdenCorp</div>
+          <div class="college">Panimalar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Sharan M</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">7010731497</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Sharan M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Tamilselvan M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. RAHUL KAUSHIK L <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Surya R M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. LOKESHWARAN K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Samuel <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#69</span>
+          <div class="table-no-text">T-B16</div>
+        </td>
+        <td>
+          <div class="team-name">QuantumSix</div>
+          <div class="college">Sathyabama Institute of Science and Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Haripriya KP</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">8056150274</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Haripriya KP <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. sharika.s <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. A Aishwarya <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. krithik nithin <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Shashwat Raam <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Sesu Roshan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#70</span>
+          <div class="table-no-text">T-C16</div>
+        </td>
+        <td>
+          <div class="team-name">Alpha4CJ</div>
+          <div class="college">Panimalar Engineering College</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Amalanathan R</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">9342521339</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Amalanathan R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Adithyan S K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Adithya Pai A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Asbanesh Joel <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Ashwin I S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Bharathi Caestrou <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#71</span>
+          <div class="table-no-text">T-B10</div>
+        </td>
+        <td>
+          <div class="team-name">Team Titans</div>
+          <div class="college">Nehru Institute of Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Rethish S</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">94428 83003</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Rethish S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Rithanya Shree.V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Selvam <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. B.Dharsini <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#72</span>
+          <div class="table-no-text">T-X</div>
+        </td>
+        <td>
+          <div class="team-name">Foresight</div>
+          <div class="college">Vellore Institute Of Technology, Vellore</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Mohammed Kaif K</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">9952890468</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Mohammed Kaif K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Pravin G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Gowtham G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(IV)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. E Suhas <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#73</span>
+          <div class="table-no-text">T-D16</div>
+        </td>
+        <td>
+          <div class="team-name">Ai makeover minds</div>
+          <div class="college">J.J.COLLEGE OF ENGINEERING AND TECHNOLOGY TRICHY</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">R.J.SHINEE</span> (6)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 94886 29629</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. R.J.SHINEE <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. M.MOHAMED SAMEER <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Mohamed Rashik Jabar Sheik <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. M MOHAMED RAYYAN <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Mohanraj S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Mukeshvel M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#74</span>
+          <div class="table-no-text">T-A10</div>
+        </td>
+        <td>
+          <div class="team-name">Team Mavericks</div>
+          <div class="college">Nehru Institute of Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Abishek.A</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">96596 06660</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Abishek.A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. P Ashvitha <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Thibhiksha M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Praveen Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(II)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#75</span>
+          <div class="table-no-text">T-A2</div>
+        </td>
+        <td>
+          <div class="team-name">lnnovix</div>
+          <div class="college">Dr. N.G.P Institute of Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Shanthini C P</span> (3)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 95855 38107</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Shanthini C P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sandhiya G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Priya Dharshini J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#76</span>
+          <div class="table-no-text">T-A2</div>
+        </td>
+        <td>
+          <div class="team-name">Sparkshift</div>
+          <div class="college">Dr. N.G.P Institute of Technology</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Ldr:</strong> <span class="leader-name">Rithanya Sri S P</span> (4)<br>
+            <strong>Ph:</strong> <span class="phone-text">+91 90806 77055</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Rithanya Sri S P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Thirush Nitha S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Sridharan K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Vasanth Kumar S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(III)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+</body>
+</html>

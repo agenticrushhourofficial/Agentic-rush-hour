@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyan">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUSH HOUR 24 — Accommodation | Sathyabama</title>
+  <meta name="description"
+    content="Book accommodation for your registered team members. Subject to limited availability of 30 boys and 30 girls slots." />
+  <link rel="icon" type="image/png" href="assets/logo-circle.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    #particleCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .info-stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .info-stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--theme-accent-light);
+      font-family: var(--font-heading);
+      margin-top: 4px;
+    }
+
+    .info-stat-num.danger {
+      color: #ef4444;
+    }
+
+    .accommodation-member-row {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .accommodation-member-row.selected {
+      border-color: var(--theme-accent-light);
+      background: rgba(var(--theme-accent-rgb), 0.05);
+    }
+
+    @media (min-width: 576px) {
+      .accommodation-member-row {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .member-select-chk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .member-select-chk input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--theme-accent-light);
+      cursor: pointer;
+    }
+
+    .member-gender-select {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .member-gender-select:focus {
+      border-color: var(--theme-accent-light);
+    }
+
+    .pg-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    .pg-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .pg-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .pg-details {
+      font-size: 0.9rem;
+      color: var(--white-60);
+      line-height: 1.5;
+    }
+
+    .pg-phone {
+      margin-top: 10px;
+      display: inline-block;
+      color: var(--theme-accent-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .suggestion-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--white-80);
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .suggestion-item:hover {
+      background: rgba(var(--theme-accent-rgb), 0.15);
+      color: white;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+
+<body data-page="accommodation">
+  <!-- ===== FLOATING PARTICLE CANVAS ===== -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ===== TOAST NOTIFICATION CONTAINER ===== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html#hero" class="nav-brand" style="display: flex; align-items: center;"><img src="/assets/logo-circle.png" alt="RUSH HOUR" style="height: 50px; width: auto; object-fit: contain;" /></a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about" class="nav-item">About</a></li>
+        <li><a href="index.html#prizes" class="nav-item">Prizes</a></li>
+        <li><a href="timeline.html" class="nav-item">Timeline</a></li>
+        <li><a href="index.html#domains" class="nav-item">Domains</a></li>
+        <li><a href="index.html#details" class="nav-item">Details</a></li>
+        <li><a href="index.html#faq" class="nav-item">FAQ</a></li>
+        <li><a href="sponsors.html" class="nav-item">Sponsors</a></li>
+        <li><a href="zeroth-hour.html" class="nav-item">Zeroth Hour</a></li>
+        <li><a href="index.html#contact" class="nav-item">Contact</a></li>
+        <li><a href="accommodation.html" class="nav-item active">Accommodation</a></li>
+      </ul>
+
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== SUBPAGE HERO ===== -->
+  <section class="subpage-hero">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <h1 class="subpage-hero-title">Hostel Accommodation</h1>
+      <p class="subpage-hero-subtitle">On-Campus Stay Booking for Registered Teams</p>
+    </div>
+  </section>
+
+  <!-- ===== ACCOMMODATION BOOKING SECTION ===== -->
+  <section class="registration section-padding" id="accommodationSection">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">🏢 HOSTEL STAY</span>
+        <h2 class="section-title">Book Accommodation</h2>
+        <p class="section-description">Available only to verified registered teams on a first-come, first-served basis.</p>
+      </div>
+
+      <div class="registration-wrapper" style="display: flex; flex-direction: column; align-items: center; gap: 40px; justify-content: center; width: 100%;">
+        
+        <!-- Main Form Container -->
+        <div class="registration-form-container glass-card reveal" style="width: 100%; max-width: 750px; margin: 0 auto;">
+          <form class="registration-form" id="accommodationForm" novalidate>
+            
+            <!-- Step Indicators -->
+            <div class="form-steps-header">
+              <span class="form-step-title" id="formStepTitle">Lookup Team</span>
+              <span class="form-step-fraction">Step <span id="formStepCount">1</span>/3</span>
+            </div>
+            
+            <div class="form-progressbar">
+              <div class="form-progress-fill" id="formProgressFill" style="width: 33%"></div>
+            </div>
+
+            <!-- STEP 1: Search Team -->
+            <div class="form-section active" id="formSection1">
+              <div class="form-grid" style="grid-template-columns: 1fr;">
+                <div class="form-group">
+                  <label for="searchQuery">Team Name or Leader Email <span class="required">*</span></label>
+                  <div style="display: flex; gap: 10px; position: relative; align-items: center;">
+                    <div style="position: relative; flex-grow: 1; display: flex; align-items: center;">
+                      <input type="text" id="searchQuery" placeholder="e.g. Code Ninjas or leader@gmail.com" required style="width: 100%; padding-right: 40px;" autocomplete="off" />
+                      <span id="toggleDropdownArrow" style="position: absolute; right: 15px; cursor: pointer; color: var(--white-40); transition: color 0.2s; user-select: none;">▼</span>
+                      <div id="suggestionsDropdown" class="glass-card" style="display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 100; max-height: 200px; overflow-y: auto; background: rgba(12, 10, 20, 0.98); border: 1px solid var(--glass-border); border-radius: 8px; margin-top: 5px;"></div>
+                    </div>
+                  </div>
+                  <span class="error-msg" id="searchErrorMsg">Please enter a valid search term</span>
+                </div>
+                
+                <div class="form-group" style="margin-top: 15px;">
+                  <label for="searchTeamId">Team ID (Format: RH-XXXX) <span class="required">*</span></label>
+                  <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="searchTeamId" placeholder="e.g. RH-0018" required style="flex-grow: 1; height: 50px;" autocomplete="off" />
+                    <button type="button" class="btn-primary" id="searchTeamBtn" style="padding: 0 24px; min-width: auto; white-space: nowrap; height: 50px;">Search</button>
+                  </div>
+                  <span class="error-msg" id="teamIdErrorMsg">Please enter a valid Team ID</span>
+                </div>
+              </div>
+
+              <!-- Found Team Info Card (hidden initially) -->
+              <div id="foundTeamCard" class="glass-card" style="display: none; margin-top: 24px; padding: 20px; background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.1);">
+                <h3 style="color: var(--theme-accent-light); margin-bottom: 8px; font-family: var(--font-heading); font-size: 1.2rem;">Team Verified!</h3>
+                <p style="margin: 0; color: white;"><strong>Team:</strong> <span id="foundTeamName">Code Ninjas</span></p>
+                <p style="margin: 4px 0 0 0; color: var(--white-60);"><strong>Leader Email:</strong> <span id="foundLeaderEmail">leader@domain.com</span></p>
+              </div>
+
+              <div class="form-controls" style="margin-top: 30px;">
+                <button type="button" class="btn-primary disabled" id="toStep2Btn" disabled>Next: Select Members →</button>
+              </div>
+            </div>
+
+            <!-- STEP 2: Select Members & Genders -->
+            <div class="form-section" id="formSection2">
+              <div class="info-grid">
+                <div class="info-stat-card">
+                  <div class="metric-label" style="font-size: 0.8rem;">Boys Hostel Slots Left</div>
+                  <div class="info-stat-num" id="boysSlotsLeft">30</div>
+                </div>
+                <div class="info-stat-card">
+                  <div class="metric-label" style="font-size: 0.8rem;">Girls Hostel Slots Left</div>
+                  <div class="info-stat-num" id="girlsSlotsLeft">30</div>
+                </div>
+              </div>
+
+              <p class="form-sub-header">Select members needing accommodation and specify their gender:</p>
+              
+              <div id="membersContainer" style="margin-top: 15px;">
+                <!-- Dynamically populated roster -->
+              </div>
+
+              <div class="form-controls" style="margin-top: 30px;">
+                <button type="button" class="btn-secondary" id="backToStep1Btn">← Back</button>
+                <button type="button" class="btn-primary" id="toStep3Btn">Next: Payment →</button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Payment Proof (Flat ₹500) -->
+            <div class="form-section" id="formSection3">
+              <div class="payment-banner" style="background: linear-gradient(135deg, rgba(var(--theme-accent-rgb), 0.15), rgba(0, 0, 0, 0.4));">
+                <div class="payment-banner-icon">🏢</div>
+                <div class="payment-banner-info">
+                  <span class="payment-label">Accommodation Charge (Flat per Team)</span>
+                  <span class="payment-total">₹500</span>
+                  <span class="payment-breakdown" id="accomodationSummary">For 0 team members</span>
+                </div>
+              </div>
+
+              <p class="form-sub-header" style="margin-top: 24px;">
+                Scan the QR code below to complete your accommodation payment.<br>
+                <span style="font-size: 0.85em; color: var(--theme-accent-light); margin-top: 8px; display: inline-block;">
+                  <em>Ensure you type your <strong>Team Name (Accommodation)</strong> in the payment description.</em>
+                </span>
+              </p>
+
+              <div class="qr-codes-grid">
+                <div class="qr-card">
+                  <img src="assets/qr1.jpeg" alt="QR Code" />
+                </div>
+              </div>
+
+              <div class="payment-upload-section" style="margin-top: 24px;">
+                <div class="form-group">
+                  <label for="paymentProof">Upload Payment Screenshot <span class="required">*</span></label>
+                  <label class="file-drop-zone" id="fileDropZone" for="paymentProof">
+                    <input type="file" id="paymentProof" name="paymentProof" accept="image/*" style="display:none" />
+                    <div class="file-drop-content">
+                      <span class="file-drop-icon">📸</span>
+                      <span class="file-drop-text" id="fileDropText">Click to upload or drag &amp; drop</span>
+                      <span class="file-drop-hint">JPG, PNG, WEBP — Max 3MB</span>
+                    </div>
+                  </label>
+                  <span class="error-msg" id="proofErrorMsg">Payment screenshot is required</span>
+                </div>
+              </div>
+
+              <div class="form-controls">
+                <button type="button" class="btn-secondary" id="backToStep2Btn">← Back</button>
+                <button type="submit" class="btn-primary btn-submit" id="submitBtn">
+                  <span class="btn-text">Book Accommodation →</span>
+                  <span class="spinner"></span>
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+          <!-- Success State -->
+          <div class="form-success" id="formSuccess" style="display: none;">
+            <div class="form-success-icon">🎉</div>
+            <h3>Accommodation Requested!</h3>
+            <p>Your accommodation request for team <strong id="successTeamName">Code Ninjas</strong> has been submitted.</p>
+            <p class="success-details">
+              Once verified by our organizers, an Accommodation Pass will be sent to <span id="successLeaderEmail">leader@domain.com</span>. Please allow up to 1-2 hours for verification.
+            </p>
+            <a href="index.html" class="btn-secondary" style="display: inline-block; margin-top: 15px; text-decoration: none;">Return Home</a>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logos">
+          <img src="assets/sathyabama-logo.PNG" alt="Sathyabama Logo" class="footer-sathya" />
+        </div>
+        
+        <div class="footer-links-col">
+          <a href="index.html#about">About</a>
+          <a href="index.html#prizes">Prizes</a>
+          <a href="timeline.html">Timeline</a>
+          <a href="sponsors.html">Sponsors</a>
+          <a href="accommodation.html" class="nav-item">Accommodation</a>
+          <a href="index.html#faq">FAQs</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 <span>Sathyabama Institute</span>. Chennai, India. All rights reserved.</p>
+        <p class="built-by">Designed for RUSH HOUR Hackathon.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+
+</html>

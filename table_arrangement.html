@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Table Arrangement — Rush Hour 24</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1e1b4b;
+      --indigo: #4f46e5;
+      --indigo-light: #e0e7ff;
+      --amber: #f59e0b;
+      --amber-light: #fef3c7;
+      --green: #10b981;
+      --green-light: #d1fae5;
+      --col-a: #dbeafe;
+      --col-b: #fce7f3;
+      --col-c: #dcfce7;
+      --col-d: #fef9c3;
+      --col-x: #f3e8ff;
+      --border: #94a3b8;
+      --text: #0f172a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .no-print {
+      background: var(--navy);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 210mm;
+      font-size: 13px;
+    }
+    .no-print button {
+      background: var(--amber);
+      color: var(--navy);
+      border: none;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .a4 {
+      width: 210mm;
+      min-height: 297mm;
+      background: white;
+      padding: 8mm 8mm 8mm 8mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    /* TITLE */
+    .title-bar {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 7px 10px;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+    }
+    .title-bar h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .title-bar p {
+      font-size: 8px;
+      color: #c7d2fe;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* STAGE */
+    .stage {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      text-align: center;
+      padding: 7px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border: 2px solid #4f46e5;
+      margin-bottom: 4px;
+    }
+
+    /* COLUMN HEADERS */
+    .col-headers {
+      display: grid;
+      grid-template-columns: 1fr 1fr 20px 1fr 1fr;
+      gap: 4px;
+      margin-bottom: 3px;
+    }
+    .col-header {
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 3px;
+      border-radius: 3px;
+    }
+    .col-header.a { background: var(--col-a); color: #1e40af; }
+    .col-header.b { background: var(--col-b); color: #9d174d; }
+    .col-header.gap { background: transparent; }
+    .col-header.c { background: var(--col-c); color: #166534; }
+    .col-header.d { background: var(--col-d); color: #854d0e; }
+
+    /* GRID */
+    .seating-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 20px 1fr 1fr;
+      gap: 3px;
+    }
+
+    .aisle {
+      grid-column: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .aisle-line {
+      writing-mode: vertical-rl;
+      font-size: 6px;
+      color: #94a3b8;
+      letter-spacing: 1px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* TABLE CELL */
+    .table-cell {
+      border-radius: 4px;
+      padding: 3px 5px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 28px;
+    }
+    .table-cell.col-a { background: var(--col-a); border-color: #93c5fd; }
+    .table-cell.col-b { background: var(--col-b); border-color: #f9a8d4; }
+    .table-cell.col-c { background: var(--col-c); border-color: #86efac; }
+    .table-cell.col-d { background: var(--col-d); border-color: #fde047; }
+    .table-cell.col-x { background: var(--col-x); border-color: #d8b4fe; border: 2px dashed #a855f7; }
+
+    .table-id {
+      font-size: 7px;
+      font-weight: 800;
+      color: #475569;
+      letter-spacing: 0.5px;
+    }
+    .table-cell.col-a .table-id { color: #1d4ed8; }
+    .table-cell.col-b .table-id { color: #be185d; }
+    .table-cell.col-c .table-id { color: #15803d; }
+    .table-cell.col-d .table-id { color: #a16207; }
+    .table-cell.col-x .table-id { color: #7c3aed; }
+
+    .team-name {
+      font-size: 7.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .member-count {
+      font-size: 6.5px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .empty-cell {
+      min-height: 28px;
+    }
+
+    /* ENTRANCE */
+    .entrance {
+      background: var(--green-light);
+      border: 2px solid var(--green);
+      color: #065f46;
+      text-align: center;
+      padding: 5px;
+      margin-top: 4px;
+      border-radius: 0 0 5px 5px;
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 5px;
+      padding: 4px 6px;
+      background: #f8fafc;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+      font-size: 6.5px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    @page { size: A4 portrait; margin: 0; }
+    @media print {
+      body { background: white; padding: 0; }
+      .no-print { display: none !important; }
+      .a4 { box-shadow: none; width: 100%; min-height: 100vh; padding: 8mm; }
+    }
+  </style>
+</head>
+<body>
+
+<div style="display:flex; flex-direction:column; align-items:center;">
+
+  <!-- Control Bar -->
+  <div class="no-print">
+    <span>📋 Rush Hour 24 — Table Arrangement (A4 Portrait)</span>
+    <button onclick="window.print()">🖨️ Print / Save PDF</button>
+  </div>
+
+  <!-- A4 Sheet -->
+  <div class="a4">
+
+    <!-- Title -->
+    <div class="title-bar">
+      <h1>⚡ Table Arrangement — Rush Hour 24</h1>
+      <p>Sathyabama Institute of Science & Technology &nbsp;|&nbsp; Hackathon Venue Seating Plan</p>
+    </div>
+
+    <!-- Stage -->
+    <div class="stage">▲ &nbsp; STAGE / PRESENTATION AREA &nbsp; ▲</div>
+
+    <!-- Column Headers -->
+    <div class="col-headers">
+      <div class="col-header a">COLUMN A</div>
+      <div class="col-header b">COLUMN B</div>
+      <div class="col-header gap"></div>
+      <div class="col-header c">COLUMN C</div>
+      <div class="col-header d">COLUMN D</div>
+    </div>
+
+    <!-- Seating Grid -->
+    <div class="seating-grid">
+
+      <!-- ROW 1 -->
+      <div class="table-cell col-a"><div class="table-id">A1</div><div class="team-name">Golden Dawn</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B1</div><div class="team-name">After Hours!</div><div class="member-count">👥 5 members</div></div>
+      <div class="aisle"><div class="aisle-line">AISLE</div></div>
+      <div class="table-cell col-c"><div class="table-id">C1</div><div class="team-name">Lightning</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D1</div><div class="team-name">Hackronauts</div><div class="member-count">👥 4 members</div></div>
+
+      <!-- ROW 2 -->
+      <div class="table-cell col-a"><div class="table-id">A2</div><div class="team-name">Spark + Innovix ★</div><div class="member-count">👥 7 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B2</div><div class="team-name">HACK FORGE</div><div class="member-count">👥 6 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C2</div><div class="team-name">CodeTitan + Nova</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D2</div><div class="team-name">Adengappa Aru Peru</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 3 -->
+      <div class="table-cell col-a"><div class="table-id">A3</div><div class="team-name">TECHTONIC</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B3</div><div class="team-name">POWERHOUSE</div><div class="member-count">👥 4 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C3</div><div class="team-name">Runtime Terror</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D3</div><div class="team-name">Cyber Sentinel</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 4 -->
+      <div class="table-cell col-a"><div class="table-id">A4</div><div class="team-name">EcoCoders</div><div class="member-count">👥 5 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B4</div><div class="team-name">TECH TITANS</div><div class="member-count">👥 6 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C4</div><div class="team-name">TechSphere</div><div class="member-count">👥 4 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D4</div><div class="team-name">Byte + Project</div><div class="member-count">👥 7 members</div></div>
+
+      <!-- ROW 5 -->
+      <div class="table-cell col-a"><div class="table-id">A5</div><div class="team-name">Innovators + PAWAN</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B5</div><div class="team-name">Zyro</div><div class="member-count">👥 6 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C5</div><div class="team-name">CIPHERGRID</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D5</div><div class="team-name">VITALSYNC</div><div class="member-count">👥 4 members</div></div>
+
+      <!-- ROW 6 -->
+      <div class="table-cell col-a"><div class="table-id">A6</div><div class="team-name">Bug Slayers</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B6</div><div class="team-name">Fivefold</div><div class="member-count">👥 5 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C6</div><div class="team-name">Techpulse</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D6</div><div class="team-name">Grand + VEER</div><div class="member-count">👥 7 members</div></div>
+
+      <!-- ROW 7 -->
+      <div class="table-cell col-a"><div class="table-id">A7</div><div class="team-name">Mutex</div><div class="member-count">👥 4 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B7</div><div class="team-name">GALAXY</div><div class="member-count">👥 6 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C7</div><div class="team-name">Phoenix + Craft</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D7</div><div class="team-name">NOVA-KNIGHT</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 8 -->
+      <div class="table-cell col-a"><div class="table-id">A8</div><div class="team-name">Innovators</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B8</div><div class="team-name">Code Huntrix</div><div class="member-count">👥 4 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C8</div><div class="team-name">AI medX</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D8</div><div class="team-name">Mighty Sparks</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 9 -->
+      <div class="table-cell col-a"><div class="table-id">A9</div><div class="team-name">VENTURA</div><div class="member-count">👥 5 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B9</div><div class="team-name">LUMORA</div><div class="member-count">👥 6 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C9</div><div class="team-name">Invictus</div><div class="member-count">👥 4 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D9</div><div class="team-name">Debug Dynasty</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 10 -->
+      <div class="table-cell col-a"><div class="table-id">A10</div><div class="team-name">Mavericks ★</div><div class="member-count">👥 4 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B10</div><div class="team-name">Titans ★</div><div class="member-count">👥 4 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C10</div><div class="team-name">GRID GUARD</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D10</div><div class="team-name">Impact Coders</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 11 -->
+      <div class="table-cell col-a"><div class="table-id">A11</div><div class="team-name">Avenix</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B11</div><div class="team-name">ECO-TECH + Goffy</div><div class="member-count">👥 7 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C11</div><div class="team-name">Cold Boot</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D11</div><div class="team-name">TrendSetter</div><div class="member-count">👥 5 members</div></div>
+
+      <!-- ROW 12 -->
+      <div class="table-cell col-a"><div class="table-id">A12</div><div class="team-name">Nexus + Aquan</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B12</div><div class="team-name">AetherCode</div><div class="member-count">👥 6 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C12</div><div class="team-name">Code Crafters</div><div class="member-count">👥 4 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D12</div><div class="team-name">Hackmates</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 13 -->
+      <div class="table-cell col-a"><div class="table-id">A13</div><div class="team-name">MERCX</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B13</div><div class="team-name">AKIOT</div><div class="member-count">👥 4 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C13</div><div class="team-name">CIPHER UNIT</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D13</div><div class="team-name">Atlas + TECH</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 14 -->
+      <div class="table-cell col-a"><div class="table-id">A14</div><div class="team-name">THAMARA + Visio</div><div class="member-count">👥 7 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B14</div><div class="team-name">AI Ignite</div><div class="member-count">👥 6 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C14</div><div class="team-name">HyperSync</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D14</div><div class="team-name">Autom Squad</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 15 -->
+      <div class="table-cell col-a"><div class="table-id">A15</div><div class="team-name">Circuit Breakers</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b"><div class="table-id">B15</div><div class="team-name">CREVIOTICS</div><div class="member-count">👥 5 members</div></div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C15</div><div class="team-name">AOT</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D15</div><div class="team-name">Master of None</div><div class="member-count">👥 6 members</div></div>
+
+      <!-- ROW 16 -->
+      <div class="table-cell col-a"><div class="table-id">A16</div><div class="team-name">EdenCorp</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-b" style="display:flex; flex-direction:column; gap:2px; padding:2px 4px;">
+        <div style="display:flex; flex-direction:column; justify-content:center; flex:1; border-bottom:1px dashed #f9a8d4; padding-bottom:2px;">
+          <div class="table-id">B16</div><div class="team-name">Quantum Six</div><div class="member-count">👥 6 members</div>
+        </div>
+        <div class="table-cell col-x" style="border:1px dashed #a855f7; border-radius:3px; padding:2px 3px; margin-top:2px;">
+          <div class="table-id" style="color:#7c3aed;">X</div><div class="team-name">Foresight</div><div class="member-count">👥 4 members</div>
+        </div>
+      </div>
+      <div class="aisle"></div>
+      <div class="table-cell col-c"><div class="table-id">C16</div><div class="team-name">Alpha4CJ</div><div class="member-count">👥 6 members</div></div>
+      <div class="table-cell col-d"><div class="table-id">D16</div><div class="team-name">AI Makeover Minds</div><div class="member-count">👥 6 members</div></div>
+
+    </div>
+    <!-- End Seating Grid -->
+
+    <!-- Entrance -->
+    <div class="entrance">▼ &nbsp; ENTRANCE / EXIT &nbsp; ▼</div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--col-a);border:1px solid #93c5fd;"></div><span>Column A</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--col-b);border:1px solid #f9a8d4;"></div><span>Column B</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--col-c);border:1px solid #86efac;"></div><span>Column C</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--col-d);border:1px solid #fde047;"></div><span>Column D</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--col-x);border:1px dashed #a855f7;"></div><span>X = Extra Table</span></div>
+      <div class="legend-item"><span>★ = Shared / combined team</span></div>
+      <div style="margin-left:auto; font-size:6px; color:#94a3b8;">Total: 65 teams &nbsp;|&nbsp; Rush Hour 24 Hackathon</div>
+    </div>
+
+  </div>
+  <!-- End A4 -->
+
+</div>
+</body>
+</html>

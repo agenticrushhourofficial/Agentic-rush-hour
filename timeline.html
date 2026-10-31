@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyan">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentic Rush HOUR v2.0 — Schedule | Sathyabama</title>
+  <meta name="description"
+    content="Official 24-hour online schedule and milestone checkpoints for Agentic Rush HOUR v2.0 hackathon on November 10, 2026." />
+  <link rel="icon" type="image/png" href="assets/logo-circle.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    /* Full-page particle canvas for subpages */
+    #particleCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body data-page="timeline">
+  <!-- ===== FLOATING PARTICLE CANVAS ===== -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ===== TOAST NOTIFICATION CONTAINER ===== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html#hero" class="nav-brand" style="display: flex; align-items: center;"><img src="/assets/logo-circle.png" alt="RUSH HOUR" style="height: 50px; width: auto; object-fit: contain;" /></a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about" class="nav-item">About</a></li>
+        <li><a href="index.html#prizes" class="nav-item">Prizes</a></li>
+        <li><a href="timeline.html" class="nav-item active">Timeline</a></li>
+        <li><a href="index.html#domains" class="nav-item">Tracks</a></li>
+        <li><a href="assets/rule/Agentic_Rush_Hour_Professional_Guidelines.pdf" download="Agentic_Rush_Hour_Rules_and_Guidelines.pdf" target="_blank" class="nav-item">Rules</a></li>
+        <li><a href="index.html#faq" class="nav-item">FAQ</a></li>
+        <li><a href="sponsors.html" class="nav-item">Sponsors</a></li>
+        <li><a href="index.html#contact" class="nav-item">Contact</a></li>
+      </ul>
+
+
+
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== SUBPAGE HERO ===== -->
+  <section class="subpage-hero">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <h1 class="subpage-hero-title">Event Schedule</h1>
+      <p class="subpage-hero-subtitle">November 10 – November 11, 2026 · 100% Online Hackathon</p>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE ===== -->
+  <section class="timeline section-padding" id="timeline">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">📅 24-HOUR SPRINT &amp; TIMELINE</span>
+        <h2 class="section-title">Schedule of Events</h2>
+        <p class="section-description">Prepare yourself for 24 hours of autonomous agent orchestration, milestone checkpoints, and live adversarial challenges. Here is your roadmap.</p>
+        <div class="timeline-filters">
+          <button class="time-filter-btn active" data-day="day1">Sprint Day 1 (Nov 10)</button>
+          <button class="time-filter-btn" data-day="day2">Sprint Day 2 &amp; Finale (Nov 11)</button>
+          <button class="time-filter-btn" data-day="day3">Roadmap &amp; Prelims</button>
+        </div>
+      </div>
+
+      <div class="timeline-wrapper reveal">
+        <div class="timeline-progress-bar">
+          <div class="timeline-progress-line" id="timelineProgress"></div>
+        </div>
+
+        <div class="timeline-items" id="timelineItems">
+
+          <!-- ===== DAY 1 SCHEDULE (NOV 10) ===== -->
+          <div class="timeline-item day1 active" data-time-id="1">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">08:30 – 09:30 AM</div>
+            <div class="timeline-content glass-card">
+              <h3>🌐 Global Virtual Onboarding &amp; Keynote</h3>
+              <p>Online participant verification on the hackathon portal, platform orientation, and opening keynote by Sathyabama &amp; Relyce Infotech leadership.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day1 active" data-time-id="2">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">09:30 AM</div>
+            <div class="timeline-content glass-card">
+              <h3>💎 Stone Prompt Release &amp; API Credentials</h3>
+              <p>Official release of problem statements across <strong>The Blip</strong> (6 Infinity Stones), <strong>Synthezoids</strong>, and <strong>Incursion</strong>. Model credits &amp; sandbox environments unlocked.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day1 active" data-time-id="3">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">10:00 AM</div>
+            <div class="timeline-content glass-card">
+              <h3>⚡ 24-Hour Countdown Commences — Sprint Begins!</h3>
+              <p>The 24-hour hackathon clock starts ticking. Teams orchestrate multi-agent graphs, memory layers, tool contracts, and autonomous workflows.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day1 active" data-time-id="4">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">01:00 PM</div>
+            <div class="timeline-content glass-card">
+              <h3>🍽️ Midday Recharge &amp; AI Tech Talk</h3>
+              <p>Lunch pause accompanied by an exclusive fireside session on Multi-Agent Resilience by Relyce Infotech AI research engineers.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day1 active" data-time-id="5">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">03:00 PM (Hour 6)</div>
+            <div class="timeline-content glass-card">
+              <h3>🔍 Milestone Review 1 — Agent Topology &amp; Architecture</h3>
+              <p>First mentor checkpoint: evaluation of agent orchestration graphs (LangGraph/AutoGen/CrewAI), planning-action-verification loops, and schema definitions.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day1 active" data-time-id="6">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">06:30 PM</div>
+            <div class="timeline-content glass-card">
+              <h3>☕ Virtual Tech Lounge &amp; Mentor Office Hours</h3>
+              <p>Short refreshment break. Open technical office hours with mentors for API debugging and system integration tips.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day1 active" data-time-id="7">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">09:00 PM (Hour 12)</div>
+            <div class="timeline-content glass-card">
+              <h3>📊 Milestone Review 2 — Midpoint Simulation &amp; Stress Test</h3>
+              <p>Second evaluation round assessing agent reasoning accuracy, tool execution success rates, and resilience under synthetic workloads. Scoreboard updated.</p>
+            </div>
+          </div>
+
+          <!-- ===== DAY 2 SCHEDULE (NOV 11) ===== -->
+          <div class="timeline-item day2" data-time-id="8">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">12:00 – 01:00 AM</div>
+            <div class="timeline-content glass-card">
+              <h3>🌙 Multiverse Midnight Surge</h3>
+              <p>Algorithmic easter egg sprint, surprise sponsor swag &amp; course voucher drops, and a virtual lo-fi coding lounge for night hackers.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day2" data-time-id="9">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">03:30 AM</div>
+            <div class="timeline-content glass-card">
+              <h3>🛠️ Self-Healing &amp; Fallback Hardening</h3>
+              <p>Deep-night optimization sprint: stress-testing fallback agents, dynamic retries, token budgeting, and guardrail constraints.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day2" data-time-id="10">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">07:00 AM (Hour 22)</div>
+            <div class="timeline-content glass-card">
+              <h3>⚠️ LIVE TWIST: DOOM PROTOCOL ACTIVATED</h3>
+              <p>Surprise adversarial challenge injected into live runtime environments! Agents must detect prompt drift, resolve hallucination anomalies, and maintain multi-agent consensus.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day2" data-time-id="11">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">08:30 AM</div>
+            <div class="timeline-content glass-card">
+              <h3>🥞 Breakfast &amp; Final Commit Prep</h3>
+              <p>Final documentation sprint, repo containerization checks, and preparation of live demonstration walk-throughs.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day2" data-time-id="12">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">09:00 AM – 10:00 AM</div>
+            <div class="timeline-content glass-card">
+              <h3>🛑 Code Freeze &amp; Repository Lock</h3>
+              <p>The 24-hour build window concludes. Code commits locked, repository links submitted, and demonstration slots finalized.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day2" data-time-id="13">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">10:00 AM – 01:00 PM</div>
+            <div class="timeline-content glass-card">
+              <h3>🎯 Live Demonstrations &amp; Jury Defense</h3>
+              <p>Finalist teams present working autonomous agent workflows live to an international jury panel of industry architects and Relyce Infotech executives.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day2" data-time-id="14">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">02:00 – 03:30 PM</div>
+            <div class="timeline-content glass-card">
+              <h3>🏆 Grand Finale &amp; Valedictory Ceremony</h3>
+              <p>Declaration of winners, presentation of ₹50,000 cash prizes, Relyce Infotech ₹500 course vouchers, internship awards, and <em>Avengers: Doomsday</em> tickets!</p>
+            </div>
+          </div>
+
+          <!-- ===== DAY 3 / ROADMAP & PRELIMS ===== -->
+          <div class="timeline-item day3" data-time-id="15">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">Oct 15 – Nov 05, 2026</div>
+            <div class="timeline-content glass-card">
+              <h3>📝 Phase 1: Registration &amp; Track Selection</h3>
+              <p>Teams of 1–6 register for Single Submission (₹200 / $5) or Dual Submission (₹300 / $7). Choose between The Blip, Synthezoids, or Incursion and submit preliminary architectural proposal.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day3" data-time-id="16">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">Nov 06 – Nov 07, 2026</div>
+            <div class="timeline-content glass-card">
+              <h3>🛡️ Phase 2: Preliminary Track Evaluation &amp; Advancement</h3>
+              <p>Expert review of submitted proposals based on feasibility, track alignment, and originality. Advancement rates: <strong>50%</strong> for The Blip, <strong>75%</strong> for Synthezoids, and <strong>90%</strong> for Incursion.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item day3" data-time-id="17">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">Nov 08 – Nov 09, 2026</div>
+            <div class="timeline-content glass-card">
+              <h3>🔑 Phase 3: Finalist Confirmation &amp; Sandbox Access</h3>
+              <p>Advancing teams receive confirmation, agentic sandbox API access, DOOM Protocol briefing packets, and final instructions for the Nov 10 24-hour sprint.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logos">
+          <img src="assets/sathyabama-logo.PNG" alt="Sathyabama Logo" class="footer-sathya" />
+        </div>
+        
+        <div class="footer-links-col">
+          <a href="index.html#about">About</a>
+          <a href="index.html#prizes">Prizes</a>
+          <a href="timeline.html">Timeline</a>
+          <a href="sponsors.html">Sponsors</a>
+          <a href="index.html#domains">Tracks</a>
+          <a href="#" style="opacity: 0.5; pointer-events: none; cursor: not-allowed;">Register (Closed)</a>
+          <a href="index.html#faq">FAQs</a>
+        </div>
+
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/rush.hour2026?igsh=c2Fna3c5ZjZmaW0%3D" class="footer-social" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/rush-hour-2026" class="footer-social" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="Website" title="Website">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 <span>Sathyabama Institute</span>. Chennai, India. All rights reserved.</p>
+        <p class="built-by">Designed for RUSH HOUR Hackathon.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+
+</html>

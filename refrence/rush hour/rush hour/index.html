@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUSH HOUR 24 — Hackathon | Cyber Summit × Sathyabama</title>
+  <meta name="description"
+    content="RUSH HOUR is a 24-hours hackathon by Cyber Summit × Sathyabama Institute of Science and Technology. Build Fast. Break Limits. March 27–28, Chennai." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#hero" class="nav-brand">RUSH<span>HOUR</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#prizes">Prizes</a></li>
+        <li><a href="#domains">Domains</a></li>
+        <li><a href="#details">Details</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#register" class="btn-primary nav-cta">Register</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="bg-grid"></div>
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+      <div class="hero-logo-top">
+        <img src="assets/sathyabama-logo.png" alt="Sathyabama Institute" />
+      </div>
+      <h1 class="hero-title">RUSH HOUR</h1>
+      <p class="hero-title-sub">24-HOURS HACKATHON</p>
+
+      <div class="countdown-wrapper">
+        <p class="countdown-label">Event Starts In</p>
+        <div class="countdown" id="countdown">
+          <div class="countdown-item">
+            <div class="countdown-value" id="cd-days">00</div>
+            <span class="countdown-unit">Days</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <div class="countdown-value" id="cd-hours">00</div>
+            <span class="countdown-unit">Hours</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <div class="countdown-value" id="cd-minutes">00</div>
+            <span class="countdown-unit">Minutes</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <div class="countdown-value" id="cd-seconds">00</div>
+            <span class="countdown-unit">Seconds</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="#register" class="btn-primary">Register Now →</a>
+        <a href="#about" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="about section-padding" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <span class="section-badge">🧠 ABOUT THE EVENT</span>
+          <h2 class="section-title">What is Rush Hour?</h2>
+          <p>RUSH HOUR is a 24-hours hackathon designed to promote creativity, innovation, and real-world problem
+            solving. Participants collaborate, build impactful solutions, interact with industry experts, and push
+            technological boundaries.</p>
+          <p>This high-energy event brings together the brightest minds from across India to solve challenges across
+            multiple cutting-edge technology domains.</p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-number">24h</div>
+              <div class="stat-label">Hacking</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">9+</div>
+              <div class="stat-label">Domains</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">₹1 Lakh</div>
+              <div class="stat-label">Prizes</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-visual reveal">
+          <div class="about-visual-card">
+            <div class="about-visual-icon">🚀</div>
+            <div class="about-visual-text">Innovate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRIZES ===== -->
+  <section class="prizes section-padding" id="prizes">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">💰 PRIZE POOL</span>
+        <h2 class="section-title">Rewards & Recognition</h2>
+        <p class="section-description">Outstanding innovations deserve outstanding rewards. Compete for a massive prize
+          pool plus premium internship opportunities.</p>
+      </div>
+      <div class="prizes-grid">
+        <div class="glass-card prize-card reveal">
+          <div class="shine"></div>
+          <div class="prize-icon">🏆</div>
+          <div class="prize-rank">1st Prize</div>
+          <div class="prize-amount">₹50,000</div>
+          <span class="prize-perk">+ Internship</span>
+        </div>
+        <div class="glass-card prize-card reveal">
+          <div class="shine"></div>
+          <div class="prize-icon">🥈</div>
+          <div class="prize-rank">2nd Prize</div>
+          <div class="prize-amount">₹25,000</div>
+          <span class="prize-perk">+ Internship</span>
+        </div>
+        <div class="glass-card prize-card reveal">
+          <div class="shine"></div>
+          <div class="prize-icon">🥉</div>
+          <div class="prize-rank">3rd Prize</div>
+          <div class="prize-amount">₹10,000</div>
+          <span class="prize-perk">+ Internship</span>
+        </div>
+        <div class="glass-card prize-card reveal">
+          <div class="shine"></div>
+          <div class="prize-icon">⭐</div>
+          <div class="prize-rank">Special Mentions</div>
+          <div class="prize-amount">₹5,000 Each</div>
+          <span class="prize-perk">+ Internship</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DOMAINS ===== -->
+  <section class="domains section-padding" id="domains">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">💡 DOMAINS</span>
+        <h2 class="section-title">Hackathon Tracks</h2>
+        <p class="section-description">Choose from our diverse technology domains and build solutions that redefine
+          what's possible.</p>
+
+        <div class="uniqueness-box">
+          <p>The uniqueness of this hackathon is that <strong>no specific problem statements</strong> are provided.
+            Rather, only <strong>domains</strong> are given, granting you the creative freedom to identify and solve
+            real-world challenges within these fields.</p>
+        </div>
+
+        <div class="domain-filters">
+          <button class="filter-btn active" data-filter="software">Software</button>
+          <button class="filter-btn" data-filter="hardware">Hardware</button>
+        </div>
+      </div>
+      <div class="domains-grid filter-software" id="domainsGrid">
+        <!-- AI & Health -->
+        <div class="glass-card domain-card reveal" data-category="software">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">🧬</div>
+              <div class="domain-name">AI & Health</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Leveraging AI for medical diagnostics, personalized treatment, and health monitoring.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Cyber Security -->
+        <div class="glass-card domain-card reveal" data-category="software">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">🔐</div>
+              <div class="domain-name">Cyber Security</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Protecting systems and data from digital attacks with advanced encryption and threat detection.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Quantum Computing -->
+        <div class="glass-card domain-card reveal" data-category="software">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">⚛️</div>
+              <div class="domain-name">Quantum Computing</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Utilizing quantum mechanics to solve complex computational problems faster than classical computers.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- IoT -->
+        <div class="glass-card domain-card reveal" data-category="hardware">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">📡</div>
+              <div class="domain-name">IoT</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Building ecosystems of connected devices to collect and share data for smarter environments.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Autonomous Systems -->
+        <div class="glass-card domain-card reveal" data-category="hardware">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">🤖</div>
+              <div class="domain-name">Autonomous Systems</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Developing self-operating machines and vehicles that navigate and interact with the world.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Green Tech -->
+        <div class="glass-card domain-card reveal" data-category="hardware">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">🌿</div>
+              <div class="domain-name">Green Tech</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Creating sustainable solutions to minimize environmental impact and promote renewable energy.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Open Innovation -->
+        <div class="glass-card domain-card reveal" data-category="software hardware">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">💡</div>
+              <div class="domain-name">Open Innovation</div>
+            </div>
+            <div class="domain-card-back">
+              <p>A playground for unconventional ideas that solve real-world problems outside existing categories.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Intelligent Automation -->
+        <div class="glass-card domain-card reveal" data-category="software">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">⚙️</div>
+              <div class="domain-name">Intelligent Automation</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Streamlining repetitive tasks using AI and robotics to improve efficiency and accuracy.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Product Development -->
+        <div class="glass-card domain-card reveal" data-category="hardware">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">📦</div>
+              <div class="domain-name">Product Development</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Designing and building physical or digital products from concept to functional prototype.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Decentralization -->
+        <div class="glass-card domain-card reveal" data-category="software">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">🔗</div>
+              <div class="domain-name">Decentralization</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Implementing blockchain and P2P technologies to build transparent and secure decentralized systems.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Cognitive Computer Vision -->
+        <div class="glass-card domain-card reveal" data-category="software">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">👁️</div>
+              <div class="domain-name">Cognitive Computer Vision</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Enabling machines to interpret and understand visual information from the world like humans.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Defence -->
+        <div class="glass-card domain-card reveal" data-category="hardware">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">⚔️</div>
+              <div class="domain-name">Defence</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Engineering solutions for national security, ranging from surveillance to protective equipment.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Environmental Safety & Protection -->
+        <div class="glass-card domain-card reveal" data-category="hardware">
+          <div class="domain-card-inner">
+            <div class="domain-card-front">
+              <div class="domain-icon">🛡️</div>
+              <div class="domain-name">Environmental Safety & Protection</div>
+            </div>
+            <div class="domain-card-back">
+              <p>Developing technologies to monitor hazards and ensure the safety of ecosystems and people.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EVENT DETAILS ===== -->
+  <section class="event-details section-padding" id="details">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">📋 EVENT DETAILS</span>
+        <h2 class="section-title">Everything You Need to Know</h2>
+      </div>
+      <div class="details-grid">
+        <div class="glass-card detail-card reveal">
+          <div class="detail-icon">📍</div>
+          <div class="detail-label">Venue</div>
+          <div class="detail-value">Sathyabama Indoor Stadium</div>
+        </div>
+        <div class="glass-card detail-card reveal">
+          <div class="detail-icon">📅</div>
+          <div class="detail-label">Date</div>
+          <div class="detail-value">March 27 – March 28</div>
+        </div>
+        <div class="glass-card detail-card reveal">
+          <div class="detail-icon">👥</div>
+          <div class="detail-label">Team Size</div>
+          <div class="detail-value">3 to 6 Members</div>
+        </div>
+        <div class="glass-card detail-card reveal">
+          <div class="detail-icon">💰</div>
+          <div class="detail-label">Registration Fee</div>
+          <div class="detail-value">₹200 / Member</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REGISTRATION ===== -->
+  <section class="registration section-padding" id="register">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">📝 REGISTRATION</span>
+        <h2 class="section-title">Register Your Team</h2>
+        <p class="section-description">Secure your spot now and get ready for 24 hours of innovation, collaboration, and
+          breakthroughs.</p>
+      </div>
+      <div class="registration-wrapper">
+        <div class="registration-info reveal">
+          <h3>Why Participate?</h3>
+          <p>Rush Hour offers more than just a hackathon. It's an opportunity to learn, network, and showcase your
+            skills on a national stage with real-world impact.</p>
+          <div class="reg-features">
+            <div class="reg-feature">
+              <span class="reg-feature-icon">🏆</span>
+              <span class="reg-feature-text">Compete for ₹1 Lakh+ prize pool</span>
+            </div>
+            <div class="reg-feature">
+              <span class="reg-feature-icon">💼</span>
+              <span class="reg-feature-text">Win guaranteed internships</span>
+            </div>
+            <div class="reg-feature">
+              <span class="reg-feature-icon">🎓</span>
+              <span class="reg-feature-text">Learn from industry experts</span>
+            </div>
+            <div class="reg-feature">
+              <span class="reg-feature-icon">🤝</span>
+              <span class="reg-feature-text">Network with top talent across India</span>
+            </div>
+            <div class="reg-feature">
+              <span class="reg-feature-icon">📜</span>
+              <span class="reg-feature-text">Get participation certificates</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <form class="registration-form" id="registrationForm">
+            <div class="form-grid" id="formFields">
+              <div class="form-group">
+                <label for="teamName">Team Name</label>
+                <input type="text" id="teamName" placeholder="e.g. Code Ninjas" required />
+              </div>
+              <div class="form-group">
+                <label for="teamLeader">Team Leader</label>
+                <input type="text" id="teamLeader" placeholder="Full name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="leader@email.com" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required />
+              </div>
+              <div class="form-group">
+                <label for="college">College Name</label>
+                <input type="text" id="college" placeholder="Institution name" required />
+              </div>
+              <div class="form-group">
+                <label for="teamSize">Team Size</label>
+                <select id="teamSize" required>
+                  <option value="" disabled selected>Select size</option>
+                  <option value="3">3 Members</option>
+                  <option value="4">4 Members</option>
+                  <option value="5">5 Members</option>
+                  <option value="6">6 Members</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label for="members">Team Members</label>
+                <textarea id="members" placeholder="Enter all member names, separated by commas" required></textarea>
+              </div>
+            </div>
+            <div class="form-submit">
+              <button type="submit" class="btn-primary btn-submit" id="submitBtn">
+                <span class="btn-text">Register Now →</span>
+                <span class="spinner"></span>
+              </button>
+            </div>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <h3>Registration Successful!</h3>
+            <p>Your team has been registered for RUSH HOUR. Check your email for confirmation details.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CYBER SUMMIT ===== -->
+  <section class="cyber-summit section-padding" id="cybersummit">
+    <div class="container">
+      <div class="summit-content">
+        <div class="summit-text reveal">
+          <span class="section-badge">🌐 CYBER SUMMIT</span>
+          <h2 class="section-title">Part of Something Bigger</h2>
+          <p>This hackathon is part of <strong style="color:var(--purple-light)">Cyber Summit</strong>, a flagship
+            cyber-technology innovation event hosted by Sathyabama Institute of Science and Technology.</p>
+          <p>Cyber Summit brings together industry leaders, researchers, and the next generation of tech innovators for
+            workshops, talks, and competitions that push the boundaries of cybersecurity and emerging technology.</p>
+          <a href="#register" class="btn-primary" style="margin-top:16px">Join Rush Hour →</a>
+        </div>
+        <div class="summit-visual reveal">
+          <div class="summit-logo-card">
+            <img src="assets/cyber-summit-logo.png" alt="Cyber Summit Logo" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact section-padding" id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">📞 CONTACT</span>
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-description">Have questions? Reach out to us and we'll get back to you as soon as possible.
+        </p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="contact-item">
+            <div class="contact-item-icon">📞</div>
+            <div>
+              <div class="contact-item-label">Phone</div>
+              <div class="contact-item-value">+91 9444673035</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div>
+              <div class="contact-item-label">Location</div>
+              <div class="contact-item-value">Chennai, India</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🏫</div>
+            <div>
+              <div class="contact-item-label">Venue</div>
+              <div class="contact-item-value">Sathyabama Institute of Science and Technology</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-map reveal">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.966894148437!2d80.22002631482215!3d12.871111990920318!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525b0e4a5e3e37%3A0x64286c1a52277043!2sSathyabama%20Institute%20of%20Science%20and%20Technology!5e0!3m2!1sen!2sin!4v1693986321413!5m2!1sen!2sin"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Sathyabama Institute Location"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logos">
+          <img src="assets/cyber-summit-logo.png" alt="Cyber Summit" />
+          <img src="assets/sathyabama-logo.png" alt="Sathyabama" />
+        </div>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="Instagram" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="LinkedIn" title="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="Website" title="Website">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 <span>Cyber Summit</span> × <span>Sathyabama Institute</span>. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+
+</html>

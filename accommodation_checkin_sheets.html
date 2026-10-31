@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RUSH HOUR 24 — Accommodation Check-in Sheets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-subtle: #f5f3ff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border-color: #cbd5e1;
+      --bg-header: #f8fafc;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      margin: 20px;
+      line-height: 1.2;
+      background-color: #ffffff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    tr {
+      page-break-inside: avoid;
+    }
+    th {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-header);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      font-size: 8.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    td {
+      border: 1px solid var(--border-color);
+      padding: 6px 8px;
+      font-size: 9.5px;
+      vertical-align: middle;
+    }
+    .team-id-badge {
+      display: inline-block;
+      background-color: var(--primary-subtle);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 9px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: 'Outfit', sans-serif;
+    }
+    .count-badge {
+      font-size: 8.5px;
+      font-weight: 800;
+      color: #b45309;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+    .team-name {
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      margin-top: 4px;
+    }
+    .leader-info-block {
+      line-height: 1.3;
+    }
+    .leader-name {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .phone-text {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 10px;
+    }
+    .roster-signature-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      max-width: 320px;
+    }
+    .roster-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 18px;
+    }
+    .member-name-text {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 9.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 180px;
+    }
+    .signature-underline {
+      border-bottom: 1px dashed var(--border-color);
+      width: 120px;
+      height: 14px;
+    }
+    @media print {
+      body {
+        margin: 10px;
+      }
+      .no-print {
+        display: none !important;
+      }
+      th {
+        background-color: var(--bg-header) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .team-id-badge {
+        background-color: var(--primary-subtle) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print" style="background: #6d28d9; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; margin-bottom: 20px; font-family: 'Inter', sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div style="font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+      <span>🏢 Accommodation Check-in Sheets Preview</span>
+      <span style="background: rgba(255,255,255,0.2); font-size: 10px; padding: 2px 6px; border-radius: 12px; font-weight: 500;">Total Bookings: 11</span>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button onclick="window.print()" style="background: #8b5cf6; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; font-family: 'Inter', sans-serif;">🖨️ Print Sheets</button>
+      <a href="/api/admin/download-accommodation-checkin-pdf?token=60uownqjvwu3hs0rnrd5fx&download=true" style="background: #10b981; color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; display: inline-block; font-size: 12px; font-family: 'Inter', sans-serif;">📥 Download PDF</a>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 70px; text-align: center;">ID / Capacity</th>
+        <th style="width: 170px;">Team Name</th>
+        <th style="width: 160px;">Contact & Status</th>
+        <th>Roster Stay Members & Signatures</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#4</span>
+          <div class="count-badge">B:2 | G:2</div>
+        </td>
+        <td>
+          <div class="team-name">Team Titans</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #71</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>rethishsugu28@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">94428 83003</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Rethish S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Rithanya Shree.V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Selvam <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. B.Dharsini <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#5</span>
+          <div class="count-badge">B:2 | G:2</div>
+        </td>
+        <td>
+          <div class="team-name">Team Mavericks</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #74</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>abishekaruchamy6660@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">96596 06660</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Abishek.A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. P Ashvitha <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Thibhiksha M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Praveen Kumar <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#6</span>
+          <div class="count-badge">B:6 | G:0</div>
+        </td>
+        <td>
+          <div class="team-name">Golden Dawn</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #4</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>kalaicharan680294@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">8220961651</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Kalaicharan S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Solomon S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. D. PRASANNA <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Srirangarajan U <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. GANESHRAJA S S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. S.JEYANTHAN <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#7</span>
+          <div class="count-badge">B:4 | G:0</div>
+        </td>
+        <td>
+          <div class="team-name">Debug Dynasty</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #42</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>ammetesh@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">9994534546</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. AMMETESH R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sundaram R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Agheleish R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Anbu Pravin R R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#8</span>
+          <div class="count-badge">B:4 | G:2</div>
+        </td>
+        <td>
+          <div class="team-name">AI medX</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #38</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>asanusri2006@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">9150193003</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Anusri A <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Suyambu Anandh J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Sreejith M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Nandhini H <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Mohamed Suhail M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Prabhu S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#9</span>
+          <div class="count-badge">B:6 | G:0</div>
+        </td>
+        <td>
+          <div class="team-name">Bug slayers</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #24</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>harish10922007@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">8015551614</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Harish I <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Deepak B <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Hareesh K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Dharunram R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Gokulakrishnan S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Avinash R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#10</span>
+          <div class="count-badge">B:0 | G:4</div>
+        </td>
+        <td>
+          <div class="team-name">TechSphere</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #22</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>yuvasriwork@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">8925701714</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Yuvasri P <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Sharani V <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Dharanii K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Nalini N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#11</span>
+          <div class="count-badge">B:2 | G:2</div>
+        </td>
+        <td>
+          <div class="team-name">ECO-TECH</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #11</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>vishnuamdu@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">+91 94899 33127</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. A. Vishnu vardan <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. M. SHARAVANA AJAY <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Dharshani R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Suvashika Mai K O <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#12</span>
+          <div class="count-badge">B:3 | G:2</div>
+        </td>
+        <td>
+          <div class="team-name">Autom Squad</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #64</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>manishrahul1705@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">8220563218</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. MANISH RAGHUL S J <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Nethra V D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Deepika K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Sathish M <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Nicksan Raj <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#13</span>
+          <div class="count-badge">B:0 | G:2</div>
+        </td>
+        <td>
+          <div class="team-name">VITALSYNC</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #40</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>mukeshm.bt25@bitsathy.ac.in</span><br>
+            <strong>Phone:</strong> <span class="phone-text">9361522578</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. PRABAVATHI D <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. MEGHA G <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="text-align: center; vertical-align: middle;">
+          <span class="team-id-badge">#14</span>
+          <div class="count-badge">B:1 | G:4</div>
+        </td>
+        <td>
+          <div class="team-name">Zyro</div>
+          <div style="font-size:7.5px; color:var(--text-muted); margin-top:2px;">Reg ID: #21</div>
+        </td>
+        <td>
+          <div class="leader-info-block">
+            <strong>Email:</strong> <span>ashoknagarajan1108@gmail.com</span><br>
+            <strong>Phone:</strong> <span class="phone-text">9385335847</span><br>
+            <strong>Status:</strong> <span style="font-weight:700; color: #10b981;">VERIFIED</span>
+          </div>
+        </td>
+        <td>
+          <div class="roster-signature-container">
+            
+        <div class="roster-row">
+          <div class="member-name-text">
+            1. Ashok N <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            2. Dharshini K <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            3. Dharshana R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            4. Kamali S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            5. Madhumitha S <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Girl ♀)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+        <div class="roster-row">
+          <div class="member-name-text">
+            6. Bavithran R <span style="font-size:7.5px; color:var(--text-muted); font-weight:400;">(Boy ♂)</span>
+          </div>
+          <div class="signature-underline"></div>
+        </div>
+      
+          </div>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyan">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | Agentic Rush HOUR v2.0 — Sathyabama</title>
+  <meta name="description"
+    content="Register your team for Agentic Rush HOUR v2.0 - 24-Hour Online Hackathon on November 10, 2026." />
+  <link rel="icon" type="image/png" href="assets/logo-circle.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    #particleCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .reg-page-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .track-choice-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: var(--white-05);
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+
+    .track-choice-card:hover {
+      border-color: var(--theme-accent-glow);
+      background: var(--theme-accent-subtle);
+    }
+
+    .track-choice-card.selected {
+      border-color: var(--theme-accent-light);
+      background: rgba(56, 189, 248, 0.12);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+
+    .track-choice-card input[type="checkbox"],
+    .track-choice-card input[type="radio"] {
+      accent-color: var(--theme-accent-light);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .submission-type-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .domains-selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .domain-choice-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--white-05);
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .domain-choice-card:hover {
+      border-color: var(--theme-accent-glow);
+      background: var(--theme-accent-subtle);
+    }
+
+    .domain-choice-card.selected {
+      border-color: var(--theme-accent-light);
+      background: rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .domain-choice-card input {
+      accent-color: var(--theme-accent-light);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .track-group-heading {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--theme-accent-light);
+      font-family: var(--font-heading);
+      margin: 16px 0 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+
+<body data-page="register">
+  <!-- ===== FLOATING PARTICLE CANVAS ===== -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ===== TOAST NOTIFICATION CONTAINER ===== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html#hero" class="nav-brand" style="display: flex; align-items: center;" aria-label="Agentic Rush HOUR v2.0">
+        <img src="assets/logo-circle.png" alt="Agentic Rush HOUR" style="height: 48px; width: 48px; object-fit: contain; filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7));" />
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about" class="nav-item">About</a></li>
+        <li><a href="index.html#prizes" class="nav-item">Prizes</a></li>
+        <li><a href="timeline.html" class="nav-item">Timeline</a></li>
+        <li><a href="index.html#domains" class="nav-item">Tracks</a></li>
+        <li><a href="assets/rule/Agentic_Rush_Hour_Professional_Guidelines.pdf" download="Agentic_Rush_Hour_Rules_and_Guidelines.pdf" target="_blank" class="nav-item">Rules</a></li>
+        <li><a href="index.html#faq" class="nav-item">FAQ</a></li>
+        <li><a href="sponsors.html" class="nav-item">Sponsors</a></li>
+        <li><a href="register.html" class="nav-item active">Register</a></li>
+        <li><a href="accommodation.html" class="nav-item">Accommodation</a></li>
+      </ul>
+
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== SUBPAGE HERO ===== -->
+  <section class="subpage-hero">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <h1 class="subpage-hero-title">Team Registration</h1>
+      <p class="subpage-hero-subtitle">Agentic Rush HOUR v2.0 · November 10, 2026 · 100% Online Hackathon</p>
+    </div>
+  </section>
+
+  <!-- ===== REGISTRATION SECTION ===== -->
+  <section class="registration section-padding reg-page-container" id="registerSection">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge">📝 REGISTRATION PORTAL</span>
+        <h2 class="section-title">Register Your Team</h2>
+        <p class="section-description">Fill in team metadata, organization details, choose your domain(s), and complete registration.</p>
+      </div>
+
+      <div class="registration-wrapper">
+        <div class="registration-form-container glass-card reveal">
+          
+          <!-- Stepper Header -->
+          <div class="form-steps-header">
+            <span class="form-step-title" id="formStepTitle">Team & Track Info</span>
+            <span class="form-step-fraction">Step <span id="formStepCount">1</span> of 3</span>
+          </div>
+
+          <div class="form-progressbar">
+            <div class="form-progress-fill" id="formProgressFill" style="width: 33%;"></div>
+          </div>
+
+          <!-- Registration Closed Overlay -->
+          <div id="registrationClosed" style="display: none; text-align: center; padding: 40px 20px;">
+            <div style="font-size: 3rem; margin-bottom: 16px;">⏳</div>
+            <h3 style="font-family: var(--font-heading); color: var(--white); font-size: 1.4rem; margin-bottom: 8px;">Registration is Currently Closed</h3>
+            <p style="color: var(--white-60); font-size: 0.95rem;">All available team slots are currently filled. Please check back later or contact support.</p>
+          </div>
+
+          <!-- The Registration Form -->
+          <form class="registration-form" id="registrationForm" novalidate>
+            
+            <!-- STEP 1: Team & Leader Metadata -->
+            <div class="form-section active" id="formSection1">
+              <div class="form-sub-header">Step 1: Team Leader, Organization & Track Selection</div>
+              <div class="form-grid">
+
+                <!-- Team Leader Name -->
+                <div class="form-group">
+                  <label for="teamLeader">Team Leader Name <span class="required">*</span></label>
+                  <input type="text" id="teamLeader" name="teamLeader" placeholder="Full name of leader" required />
+                  <span class="error-msg">Leader name is required</span>
+                </div>
+
+                <!-- Team Name -->
+                <div class="form-group">
+                  <label for="teamName">Team Name <span class="required">*</span></label>
+                  <input type="text" id="teamName" name="teamName" placeholder="e.g. Neural Nexus" required />
+                  <span class="error-msg">Team name is required</span>
+                </div>
+
+                <!-- Number of Participants -->
+                <div class="form-group">
+                  <label for="teamSize">No. of Participants <span class="required">*</span></label>
+                  <select id="teamSize" name="teamSize" required>
+                    <option value="1">1 Participant (Solo)</option>
+                    <option value="2">2 Participants</option>
+                    <option value="3">3 Participants</option>
+                    <option value="4">4 Participants</option>
+                    <option value="5">5 Participants</option>
+                    <option value="6">6 Participants</option>
+                  </select>
+                  <span class="error-msg">Please select participant count</span>
+                </div>
+
+                <!-- Organization Type -->
+                <div class="form-group">
+                  <label for="orgType">Organization Category <span class="required">*</span></label>
+                  <select id="orgType" name="orgType" required>
+                    <option value="" disabled selected>Select category...</option>
+                    <option value="University">University</option>
+                    <option value="College">College</option>
+                    <option value="Working Professional">Working Professional</option>
+                    <option value="Senior Secondary">Senior Secondary School</option>
+                  </select>
+                  <span class="error-msg">Select organization category</span>
+                </div>
+
+                <!-- Organization Name -->
+                <div class="form-group full-width">
+                  <label for="college">Organization Name (University / College / Working / Senior Secondary) <span class="required">*</span></label>
+                  <input type="text" id="college" name="college" placeholder="Full institution / company / school name" required />
+                  <span class="error-msg">Organization name is required</span>
+                </div>
+
+                <!-- Leader Phone -->
+                <div class="form-group">
+                  <label for="phone">Phone No. (WhatsApp) <span class="required">*</span></label>
+                  <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" required />
+                  <span class="error-msg">Enter a valid 10-digit phone number</span>
+                </div>
+
+                <!-- Leader Mail -->
+                <div class="form-group">
+                  <label for="email">Mail ID <span class="required">*</span></label>
+                  <input type="email" id="email" name="email" placeholder="leader@example.com" required />
+                  <span class="error-msg">Enter a valid email address</span>
+                </div>
+
+                <!-- Single / Dual Submission Selection -->
+                <div class="form-group full-width">
+                  <label>Submission Package <span class="required">*</span></label>
+                  <div class="submission-type-selector">
+                    <label class="track-choice-card selected" id="pkgSingleLabel">
+                      <input type="radio" name="submissionPackage" value="single" checked />
+                      <div>
+                        <div style="font-weight: 700; color: var(--white); font-size: 0.95rem;">Single Submission</div>
+                        <div style="font-size: 0.8rem; color: var(--theme-accent-light); margin-top: 2px;">₹200 per head · Choose exactly 1 Domain</div>
+                      </div>
+                    </label>
+
+                    <label class="track-choice-card" id="pkgDualLabel">
+                      <input type="radio" name="submissionPackage" value="dual" />
+                      <div>
+                        <div style="font-weight: 700; color: var(--white); font-size: 0.95rem;">Dual Submission (Best Value)</div>
+                        <div style="font-size: 0.8rem; color: #a855f7; margin-top: 2px;">₹300 per head · Choose 2 Domains (Track 1+1 or 1+2)</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Choose Track / Domain Section -->
+                <div class="form-group full-width">
+                  <label id="chooseTrackLabel">Choose Innovation Domain(s) <span class="required">*</span></label>
+                  <p id="chooseTrackHint" style="font-size: 0.78rem; color: var(--white-60); margin: 2px 0 10px 0;">
+                    Select <strong>1 domain</strong> for Single Submission (₹200 per head).
+                  </p>
+
+                  <!-- Track 1: The Blip (6 Domains) -->
+                  <div class="track-group-heading">
+                    <span>💎 Track 01: The Blip (Innovation Domains)</span>
+                  </div>
+                  <div class="domains-selection-grid">
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Healthcare & Accessibility" data-track="The Blip" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #ff8c00;">🟠 Healthcare & Accessibility</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Soul Stone · Clinical triage & assistive tech</div>
+                      </div>
+                    </label>
+
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Education & Employability" data-track="The Blip" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #ffd700;">🟡 Education & Employability</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Mind Stone · Adaptive learning & career maps</div>
+                      </div>
+                    </label>
+
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Climate & Sustainability" data-track="The Blip" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #c084fc;">🟣 Climate & Sustainability</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Power Stone · Campus resource & energy telemetry</div>
+                      </div>
+                    </label>
+
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Smart Cities & Mobility" data-track="The Blip" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #38bdf8;">🔵 Smart Cities & Mobility</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Space Stone · Transit intelligence & disaster coordination</div>
+                      </div>
+                    </label>
+
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Cybersecurity & Trust" data-track="The Blip" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #f43f5e;">🔴 Cybersecurity & Trust</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Reality Stone · Scam detection & PII redaction</div>
+                      </div>
+                    </label>
+
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Open Innovation" data-track="The Blip" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #34d399;">🟢 Open Innovation</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Time Stone · Agritech, FinTech, Creative AI</div>
+                      </div>
+                    </label>
+                  </div>
+
+                  <!-- Track 2: Synthezoids (Agentic AI) -->
+                  <div class="track-group-heading" style="margin-top: 24px;">
+                    <span>🤖 Track 02: Synthezoids (Agentic AI Workflows)</span>
+                  </div>
+                  <div class="domains-selection-grid">
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Synthezoids: Enterprise Workflows" data-track="Synthezoids" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #60a5fa;">⚡ Enterprise Workflows</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Autonomous service & multi-tool support agents</div>
+                      </div>
+                    </label>
+
+                    <label class="domain-choice-card">
+                      <input type="checkbox" name="domainsSelected" value="Synthezoids: Engineering & Research" data-track="Synthezoids" />
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.88rem; color: #fb923c;">🔥 Engineering & Research</div>
+                        <div style="font-size: 0.72rem; color: var(--white-40);">Automated code-fix & hypothesis test agents</div>
+                      </div>
+                    </label>
+                  </div>
+
+                  <span class="error-msg" id="trackSelectError">Please select domain(s) matching your package</span>
+                </div>
+
+              </div>
+
+              <div class="form-controls">
+                <button type="button" class="btn-primary" id="nextStepBtn">
+                  <span>Continue to Member Details →</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: Team Members Details -->
+            <div class="form-section" id="formSection2">
+              <div class="form-sub-header">Step 2: Team Members Information (Name, Organization, Phone, Mail)</div>
+              <div class="dynamic-members-list" id="dynamicMembersContainer">
+                <!-- Dynamically populated by JS based on teamSize -->
+              </div>
+
+              <div class="form-controls">
+                <button type="button" class="btn-secondary" id="prevStepBtn">
+                  <span>← Back</span>
+                </button>
+                <button type="button" class="btn-primary" id="nextStepBtn2">
+                  <span>Proceed to Payment →</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Payment & Verification -->
+            <div class="form-section" id="formSection3">
+              <div class="form-sub-header">Step 3: Registration Fee & Payment Proof</div>
+              
+              <!-- Total Banner -->
+              <div class="payment-banner">
+                <div class="payment-banner-icon">💳</div>
+                <div class="payment-banner-info">
+                  <div class="payment-label">Total Amount Due</div>
+                  <div class="payment-total" id="paymentTotal">₹200</div>
+                  <div class="payment-breakdown" id="paymentCalc">1 participant × ₹200 (Single Submission)</div>
+                </div>
+              </div>
+
+              <!-- Payment QR Codes -->
+              <div style="margin-bottom: 20px;">
+                <label style="font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--white-40); font-family: var(--font-heading); display: block; margin-bottom: 12px;">
+                  Scan & Pay via UPI / GPay / PhonePe / Paytm:
+                </label>
+                <div class="qr-codes-grid">
+                  <div class="qr-card">
+                    <img src="assets/qr1.jpeg" alt="UPI QR Code 1" onerror="this.parentElement.innerHTML='<div class=\'qr-placeholder-box\'><span class=\'qr-box-icon\'>📱</span><span class=\'qr-box-label\'>UPI QR 1</span><span class=\'qr-box-note\'>Scan with any UPI App</span></div>'" />
+                  </div>
+                  <div class="qr-card">
+                    <img src="assets/qr2.jpeg" alt="UPI QR Code 2" onerror="this.parentElement.innerHTML='<div class=\'qr-placeholder-box\'><span class=\'qr-box-icon\'>📱</span><span class=\'qr-box-label\'>UPI QR 2</span><span class=\'qr-box-note\'>Scan with any UPI App</span></div>'" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upload Proof Drop Zone -->
+              <div class="payment-upload-section">
+                <label style="font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--white-40); font-family: var(--font-heading); display: block; margin-bottom: 8px;">
+                  Upload Payment Screenshot <span class="required" style="color: #ff4444;">*</span>
+                </label>
+                <input type="file" id="paymentProof" name="paymentProof" accept="image/*" style="display: none;" required />
+                <div class="file-drop-zone" id="fileDropZone" onclick="document.getElementById('paymentProof').click()">
+                  <div class="file-drop-content">
+                    <span class="file-drop-icon">📎</span>
+                    <span class="file-drop-text" id="fileDropText">Click to upload or drag & drop payment screenshot</span>
+                    <span style="font-size: 0.72rem; color: var(--white-40);">Supports JPG, PNG, WEBP (Max 3MB)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-controls">
+                <button type="button" class="btn-secondary" id="prevStepBtn3">
+                  <span>← Back</span>
+                </button>
+                <button type="submit" class="btn-primary btn-submit" id="submitBtn">
+                  <span class="btn-text">Submit Registration 🚀</span>
+                  <span class="spinner"></span>
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+          <!-- Success Overlay -->
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">🎉</div>
+            <h3>Registration Submitted Successfully!</h3>
+            <p>Your team <strong id="successTeamName" style="color: var(--theme-accent-light);"></strong> has been registered. A confirmation has been sent to <strong id="successLeaderEmail" style="color: var(--white);"></strong>.</p>
+            <div class="success-details">
+              <span>Status:</span> Under Review & Verification · Our admins will verify your payment proof within 2–4 hours.
+            </div>
+            <button type="button" class="btn-secondary" id="resetFormBtn" style="margin-top: 24px;">
+              <span>Register Another Team</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logos">
+          <img src="assets/sathyabama-logo.PNG" alt="Sathyabama Logo" class="footer-sathya" />
+        </div>
+        
+        <div class="footer-links-col">
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-col-links">
+            <li><a href="index.html#hero">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#prizes">Prizes</a></li>
+            <li><a href="timeline.html">Timeline</a></li>
+            <li><a href="index.html#domains">Tracks & Domains</a></li>
+            <li><a href="register.html">Register</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <div class="footer-col-title">Resources</div>
+          <ul class="footer-col-links">
+            <li><a href="assets/rule/Agentic_Rush_Hour_Professional_Guidelines.pdf" download>Rules & Guidelines</a></li>
+            <li><a href="accommodation.html">Hostel Accommodation</a></li>
+            <li><a href="sponsors.html">Sponsors</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 <span>Agentic Rush HOUR v2.0</span> · Sathyabama Institute of Science and Technology. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
