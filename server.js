@@ -67,9 +67,15 @@ app.use('/private', (req, res) => res.status(404).send('Not Found'));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'register.html'));
+});
+app.get('/accommodation', (req, res) => {
+  res.sendFile(path.join(__dirname, 'accommodation.html'));
+});
 
 // Serve static assets and html pages
-app.use(express.static(__dirname));
+app.use(express.static(path.resolve(__dirname)));
 
 // ─── Admin Security & Authentication ──────────────────────────────────────
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';

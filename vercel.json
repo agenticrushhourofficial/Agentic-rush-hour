@@ -2,7 +2,10 @@
   "version": 2,
   "functions": {
     "api/index.js": {
-      "includeFiles": "private/**"
+      "includeFiles": "**"
+    },
+    "server.js": {
+      "includeFiles": "**"
     }
   },
   "rewrites": [
