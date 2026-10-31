@@ -2,7 +2,6 @@
   "name": "rush-hour-24-hackathon",
   "version": "1.0.0",
   "description": "24-Hours National Hackathon Landing Page & Backend",
-  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
