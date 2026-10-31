@@ -62,10 +62,14 @@ const upload = multer({
 app.use(express.json());
 // Block direct access to /private directory
 app.use('/private', (req, res) => res.status(404).send('Not Found'));
-app.use(express.static(__dirname, {
-  // Ensure private folder is never served statically
-  index: 'index.html'
-}));
+
+// Serve explicit root route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Serve static assets and html pages
+app.use(express.static(__dirname));
 
 // ─── Admin Security & Authentication ──────────────────────────────────────
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
@@ -2648,7 +2652,12 @@ app.get(SUPERADMIN_SECRET_PATH, (req, res) => {
 console.log(`🔐 Admin panel is available at: http://localhost:${PORT}${ADMIN_SECRET_PATH}`);
 console.log(`🔐 Super Admin panel is available at: http://localhost:${PORT}${SUPERADMIN_SECRET_PATH}`);
 
-// ─── Start Server ─────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`⚡ Server running on http://localhost:${PORT}`);
-});
+// ─── Export app for Vercel serverless ──────────────────────────────────────
+module.exports = app;
+
+// Only listen when run directly (local node execution)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`⚡ Server running on http://localhost:${PORT}`);
+  });
+}

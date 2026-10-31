@@ -1,15 +1,17 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
+      "source": "/api/(.*)",
+      "destination": "/server.js"
+    },
     {
-      "src": "/(.*)",
-      "dest": "server.js"
+      "source": "/rh24-panel-x9q7m",
+      "destination": "/server.js"
+    },
+    {
+      "source": "/rh24-super-panel-x9q7m",
+      "destination": "/server.js"
     }
   ]
 }
