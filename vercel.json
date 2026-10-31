@@ -3,15 +3,15 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server.js"
+      "destination": "/api/index.js"
     },
     {
       "source": "/rh24-panel-x9q7m",
-      "destination": "/server.js"
+      "destination": "/api/index.js"
     },
     {
       "source": "/rh24-super-panel-x9q7m",
-      "destination": "/server.js"
+      "destination": "/api/index.js"
     }
   ]
 }
